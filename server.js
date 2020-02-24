@@ -8,11 +8,10 @@ console.log('ici');
 //mysql db management
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize(process.env.DB_HOST);
-// const sequelize = new Sequelize('madbtest', 'observer', '', {
-//     host: 'localhost',
-//     dialect: 'mysql'
-//   });
+const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, '', {
+    host: process.env.DB_HOST,
+    dialect: 'mysql'
+  });
 sequelize
   .authenticate()
   .then(() => {
