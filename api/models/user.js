@@ -1,51 +1,45 @@
-const Model = Sequelize.Model;
-class User extends Model { }
-User.init({
-    // attributes
-    id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
+const sequelize = require('sequelize')
+
+const User = sequelize.define('user', {
     login: {
-        type: Sequelize.STRING,
+        type: sequelize.STRING,
         allowNull: false
     },
     firstName: {
-        type: Sequelize.STRING,
+        type: sequelize.STRING,
         allowNull: false
     },
     lastName: {
-        type: Sequelize.STRING,
+        type: sequelize.STRING,
         allowNull: false
-        // allowNull defaults to true
     },
     department_id: {
-        type: Sequelize.INTEGER
+        type: sequelize.INTEGER
     },
     created_at: {
-        type: Sequelize.DATE,
+        type: sequelize.DATE,
         allowNull: false
     },
     updated_at: {
-        type: Sequelize.DATE,
+        type: sequelize.DATE,
         allowNull: false
     },
     role_id: {
-        type: Sequelize.INTEGER
+        type: sequelize.INTEGER
     },
     email: {
-        type: Sequelize.STRING
+        type: sequelize.STRING
     },
     passw: {
-        type: Sequelize.STRING,
+        type: sequelize.STRING,
         allowNull: false
     },
     token: {
-        type: Sequelize.STRING
+        type: sequelize.STRING
     }
 
 }, {
-    sequelize,
-    modelName: 'user'
-    // options
+    timestamps: false
 });
+
+module.exports = User;

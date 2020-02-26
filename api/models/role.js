@@ -1,19 +1,13 @@
-const Sequelize = require('sequelize')
+const sequelize = require('sequelize')
 
-const Model = Sequelize.Model;
-
-const  Role = Sequelize.define( 'role', {
-    // attributes
-    id: {
-        type: Sequelize.INTEGER
-    },
-    Name: {
-        type: Sequelize.STRING,
+const  Role = sequelize.define( 'role', {
+    name: {
+        type: sequelize.STRING,
         allowNull: false
     }
 
 }, {
+    timestamps : false
 });
-
 
 module.exports = Role

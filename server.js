@@ -1,20 +1,14 @@
-// import Role from './api/models/role';
-
 //config values
 const dotEnv = require('dotenv')
-dotEnv.config({path: './development.env'})
-console.log('ici');
-
-
+dotEnv.config({ path: './development.env' })
 
 //mysql db management
-
 const Sequelize = require('sequelize');
-
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, '', {
-    host: process.env.DB_HOST,
-    dialect: 'mysql'
-  });
+  host: process.env.DB_HOST,
+  dialect: 'mysql'
+});
+
 sequelize
   .authenticate()
   .then(() => {
@@ -24,37 +18,31 @@ sequelize
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
-console.log('ici');
 
-
-
-
-const Role = sequelize.define('role', {
-    id: {
-        type: Sequelize.INTEGER
-    },
-    Name: {
-        type: Sequelize.STRING,
-        allowNull: false
-    }
+/*const Role = sequelize.define('role', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
 
 }, {
-});
+  timestamps: false
+});*/
+
+const initApp = () => {
+  const app = require('./app')
+  app.listen(process.env.PORT, () => {
+    console.log(`Express app is running at port : ${process.env.PORT}`)
 
 
+    // Role.findOne({where :{id: 3}}).then(role => {
+    //   console.log(role);
+    // })
 
 
-const initApp=()=>{
+    // Role.bulkCreate([{name: "user"},{name: "moderator"},{name: "administrator"}]).then(role => {
+    //   console.log(role);;
+    // });
 
-  
-
-    const app = require('./app')
-    app.listen(process.env.PORT,()=>{
-      console.log(`Express app is running at port : ${process.env.PORT}`)
-
-      Role.create({ name: "user"}).then(role => {
-        console.log("Role's auto-generated ID:", role.id);
-      });
-
-    })  
+  })
 }

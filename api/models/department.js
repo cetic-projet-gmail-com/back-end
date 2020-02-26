@@ -1,29 +1,23 @@
-const Sequelize = require('sequelize')
+const sequelize = require('sequelize')
 
-const Model = Sequelize.Model;
-
-const Department = Sequelize.define('department', {
-    // attributes
-    id: {
-        type: Sequelize.INTEGER
-    },
-    Name: {
-        type: Sequelize.STRING,
+const Department = sequelize.define('department', {
+    name: {
+        type: sequelize.STRING,
         allowNull: false
     },
     responsible_id: {
-        type: Sequelize.INTEGER
+        type: sequelize.INTEGER
     },
     created_at: {
-        type: Sequelize.DATE,
+        type: sequelize.DATE,
         allowNull: false
     },
     updated_at: {
-        type: Sequelize.DATE,
+        type: sequelize.DATE,
         allowNull: false
     }
 }, {
+    timestamps: false
 });
 
-
-module.exports = Role
+module.exports = Department
