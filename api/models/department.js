@@ -30,7 +30,5 @@ module.exports = (sequelize, type) => {
     });
     Department.associate = (models) => {
         console.log(models);
-
-        
     }
 }
