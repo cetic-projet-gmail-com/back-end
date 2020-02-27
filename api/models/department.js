@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define('department', {
+    const Department = sequelize.define('department', {
         id: {
             type: type.INTEGER,
             primaryKey: true,
@@ -25,6 +25,12 @@ module.exports = (sequelize, type) => {
             allowNull: false
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        underscored: true
     });
+    Department.associate = (models) => {
+        console.log(models);
+
+        
+    }
 }

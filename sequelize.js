@@ -2,11 +2,11 @@ const dotEnv = require('dotenv')
 dotEnv.config({ path: './development.env' })
 const UserModel = require('./api/models/user')
 const DepartmentModel = require('./api/models/user')
-const RoleModel = require('./api/models/user')
-const TaskModel = require('./api/models/user')
-const EventModel = require('./api/models/user')
-const ColorModel = require('./api/models/user')
-const ActivityModel = require('./api/models/user')
+const RoleModel = require('./api/models/role')
+const TaskModel = require('./api/models/task')
+const EventModel = require('./api/models/event')
+const ColourModel = require('./api/models/colour')
+const ActivityModel = require('./api/models/activity')
 
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, '', {
@@ -25,7 +25,7 @@ Department = DepartmentModel(sequelize, Sequelize)
 Role = RoleModel(sequelize, Sequelize)
 Task = TaskModel(sequelize, Sequelize)
 Event = EventModel(sequelize, Sequelize)
-Color = ColorModel(sequelize, Sequelize)
+Colour = ColourModel(sequelize, Sequelize)
 Activity = ActivityModel(sequelize, Sequelize)
 
 
@@ -39,4 +39,4 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-  module.exports = {User, Department, Role, Task, Event, Color, Activity}
+  module.exports = {User, Department, Role, Task, Event, Colour, Activity}

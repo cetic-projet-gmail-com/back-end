@@ -50,12 +50,13 @@ module.exports = (sequelize, type) => {
             allowNull: false
         }
     }, {
-        timestamps: false
+        timestamps: false,
+        underscored: true
     });
     User.associate = (models) => {
         console.log(models);
         
-        User.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'})
+        User.hasMany(models.Department, {foreignKey: 'user_id', as: 'responsible_id'})
     }
     return User;
 }

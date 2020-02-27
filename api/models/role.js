@@ -10,10 +10,13 @@ module.exports = (sequelize, type) => {
             allowNull: false
         }
     }, {
+        underscored: true,
         timestamps: false
     });
 
     Role.associate = (models) => {
-        Role.hasMany(models.User)
+        console.log(models);
+        Role.hasMany(models.User);
     }
+    return Role;
 }

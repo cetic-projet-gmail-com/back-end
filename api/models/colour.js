@@ -1,22 +1,21 @@
 module.exports = (sequelize, type) => {
-    const A_type = sequelize.define('role', {
+    const Colour = sequelize.define( 'colour', {
         id: {
             type: type.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
         name: {
-            type: sequelize.STRING,
+            type: type.STRING,
             allowNull: false
         }
     }, {
         underscored: true,
         timestamps: false
     });
-
-    A_type.associate = (models) => {
+    Colour.associate = (models) => {
         console.log(models);
-        A_type.hasMany(models.Activity);
+
+        Colour.hasMany(models.Activity);
     }
-    return A_type;
 }
