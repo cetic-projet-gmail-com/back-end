@@ -1,45 +1,61 @@
-const sequelize = require('sequelize')
-
-const User = sequelize.define('user', {
-    login: {
-        type: sequelize.STRING,
-        allowNull: false
-    },
-    firstName: {
-        type: sequelize.STRING,
-        allowNull: false
-    },
-    lastName: {
-        type: sequelize.STRING,
-        allowNull: false
-    },
-    department_id: {
-        type: sequelize.INTEGER
-    },
-    created_at: {
-        type: sequelize.DATE,
-        allowNull: false
-    },
-    updated_at: {
-        type: sequelize.DATE,
-        allowNull: false
-    },
-    role_id: {
-        type: sequelize.INTEGER
-    },
-    email: {
-        type: sequelize.STRING
-    },
-    passw: {
-        type: sequelize.STRING,
-        allowNull: false
-    },
-    token: {
-        type: sequelize.STRING
+module.exports = (sequelize, type) => {
+    const User = sequelize.define('user', {
+        id: {
+            type: type.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        login: {
+            type: type.STRING,
+            allowNull: false
+        },
+        firstName: {
+            type: type.STRING,
+            allowNull: false
+        },
+        lastName: {
+            type: type.STRING,
+            allowNull: false
+        },
+        department_id: {
+            type: type.INTEGER,
+            allowNull: true,
+            references: {
+                model: Department,
+                key: id
+            }
+        },
+        created_at: {
+            type: type.DATE,
+            allowNull: false
+        },
+        updated_at: {
+            type: type.DATE,
+            allowNull: false
+        },
+        role_id: {
+            type: type.INTEGER,
+            defaultValue: null,
+            allowNull: true,
+            references: {
+                model: Role,
+                key: id
+            }
+        },
+        email: {
+            type: type.STRING
+        },
+        passw: {
+            type: type.STRING,
+            allowNull: false
+        }
+    }, {
+        timestamps: false
+    });
+    User.associate = (models) => {
+        console.log(models);
+        
+        User.belongsTo(models.Department, {foreignKey: 'department_id', as: 'department'})
     }
-
-}, {
-    timestamps: false
-});
-
-module.exports = User;
+    return User;
+}
