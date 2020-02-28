@@ -9,3 +9,12 @@ exports.findOne = async (req, res) => {
         res.status(500).json({error : {message: e.message}})
     }
 }
+
+exports.find = async (req, res) => {
+    try{
+        let user = await User.findAll();
+        res.json({data:{users: [user]}})
+    } catch(e) {
+        res.status(500).json({error : {message: e.message}})
+    }
+}

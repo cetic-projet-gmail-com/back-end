@@ -1,19 +1,17 @@
 module.exports = (sequelize, type) => {
-    const Event = sequelize.define('event', {
+    const Activities_assignement = sequelize.define('activities_assignement', {
         user_id: {
             type: type.INTEGER,
-            allowNull: false
+            primaryKey: true,
+            autoIncrement: true
         },
-        task_id: {
+        activity_id: {
             type: type.INTEGER,
-            allowNull: false
+            primaryKey: true,
+            autoIncrement: true
         },
         description: {
             type: type.TEXT,
-            allowNull: true
-        },
-        duration: {
-            type: type.FLOAT,
             allowNull: false
         },
         created_at: {
@@ -23,23 +21,14 @@ module.exports = (sequelize, type) => {
         updated_at: {
             type: type.DATE,
             allowNull: false
-        },
-        start: {
-            type: type.DATE,
-            allowNull: true
-        },
-        end: {
-            type: type.DATE,
-            allowNull: true
         }
     }, {
         underscored: true,
         timestamps: false
     });
 
-    Event.associate = (models) => {
+    Activities_assignement.associate = (models) => {
         console.log(models);
-
     }
-    return Event;
+    return Activities_assignement;
 }

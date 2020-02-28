@@ -1,10 +1,5 @@
 module.exports = (sequelize, type) => {
-    const A_type = sequelize.define('role', {
-        id: {
-            type: type.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
+    const A_type = sequelize.define('a_type', {
         name: {
             type: sequelize.STRING,
             allowNull: false
@@ -16,7 +11,6 @@ module.exports = (sequelize, type) => {
 
     A_type.associate = (models) => {
         console.log(models);
-        A_type.hasMany(models.Activity);
     }
     return A_type;
 }

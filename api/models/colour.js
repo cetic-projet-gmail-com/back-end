@@ -1,10 +1,5 @@
 module.exports = (sequelize, type) => {
-    const Colour = sequelize.define( 'colour', {
-        id: {
-            type: type.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
+    const Colour = sequelize.define('colour', {
         name: {
             type: type.STRING,
             allowNull: false
@@ -13,9 +8,10 @@ module.exports = (sequelize, type) => {
         underscored: true,
         timestamps: false
     });
+
     Colour.associate = (models) => {
         console.log(models);
-
-        Colour.hasMany(models.Activity);
+        Colour.hasMany(models.User);
     }
+    return Colour;
 }

@@ -1,10 +1,5 @@
 module.exports = (sequelize, type) => {
     const User = sequelize.define('user', {
-        id: {
-            type: type.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
         login: {
             type: type.STRING,
             allowNull: false
@@ -19,11 +14,7 @@ module.exports = (sequelize, type) => {
         },
         department_id: {
             type: type.INTEGER,
-            allowNull: true,
-            references: {
-                model: Department,
-                key: id
-            }
+            allowNull: true
         },
         created_at: {
             type: type.DATE,
@@ -36,11 +27,7 @@ module.exports = (sequelize, type) => {
         role_id: {
             type: type.INTEGER,
             defaultValue: null,
-            allowNull: true,
-            references: {
-                model: Role,
-                key: id
-            }
+            allowNull: true
         },
         email: {
             type: type.STRING
@@ -55,8 +42,8 @@ module.exports = (sequelize, type) => {
     });
     User.associate = (models) => {
         console.log(models);
-        
-        User.hasMany(models.Department, {foreignKey: 'user_id', as: 'responsible_id'})
+
+        User.hasMany(models.Department, { foreignKey: 'user_id', as: 'responsible_id' })
     }
     return User;
 }
