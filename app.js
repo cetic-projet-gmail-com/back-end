@@ -1,23 +1,76 @@
+/* ----------------------- Nodes and externals Modules ---------------------- */
 const express = require('express');
-const AdminRouter = require('./api/routes/administration')
-const HomeRouter = require('./api/routes/home')
-const ProfileRouter = require('./api/routes/profile')
-const bodyParser = require('body-parser')
-const dotEnv = require('dotenv')
-dotEnv.config({ path: './development.env' })
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+// const bodyParser = require('body-parser');
+const dotEnv = require('dotenv');
+
+dotEnv.config({ path: process.cwd() +'/development.env' });
+const cors= require('cors');
+const cookieParser = require('cookie-parser');
+
+const expressJwt = require('express-jwt');
+/* --------------------------------- Router --------------------------------- */
+
+const AdminRouter = require(process.cwd() + '/api/routes/administration');
+const GeneralRouter = require(process.cwd() +'/api/routes/general');
+// const ProfileRouter = require(process.cwd() +'/api/routes/profile');
+
 
 const app = express();
 
-//GLOBAL MIDDLEWARES
-app.use(bodyParser.json())
+/* ------------------------------- Middlewares ------------------------------ */
 
-// SPECIFIC ROUTES
-// app.use('/', HomeRouter)
-// app.use('/profile', ProfileRouter)
-// app.use('/administration', AdminRouter)
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+//! SuccessStatus is 204 for IE11
+app.use(cors({
+  origin: process.env.CORS_ORIGIN,
+  optionsSuccessStatus: 200
+}));
+app.use(cookieParser());
+app.use(passport.initialize());
 
-  app.listen(process.env.PORT, () => {
-    console.log(`Express app is running at port : ${process.env.PORT}`)
+//TODO Relier à la DB
+passport.use(new LocalStrategy({
+  usernameField: 'login'
+  },
+  async (username, password, done) => {
+    /*
+      let usersArr = fs.readFileSync(process.cwd()+'/api/models/users.json');
+
+      let users = await JSON.parse(usersArr).users;
+      let index = await users.findIndex(element => username === element.login);
+      console.log(password)
+      if (index !== -1) {
+          if (users[index].password === password) {
+              console.log("Good pass")
+              return done(null, users[index]);
+          }
+          return done(null, false, {
+              message: 'Password is wrong.'
+          });
+
+      } else {
+          return done(null, false, {
+              message: 'User not found'
+          });
+      }*/
+  }
+));
+
+var auth = expressJwt({
+  secret: process.env.JWT_SECRET,
+  userProperty: 'payload'
+});
+const Login = require(process.cwd() + '/api/controllers/login');
+app.use('/login', Login);
+//TODO app.use('/administration',auth, AdminRouter);
+
+app.use('/', /*auth,*/ GeneralRouter);
+
+  // app.listen(process.env.PORT, () => {
+  //   console.log(`Express app is running at port : ${process.env.PORT}`)
 
 
     // Role.findOne({where :{id: 3}}).then(role => {
@@ -29,4 +82,4 @@ app.use(bodyParser.json())
     //   console.log(role);;
     // });
 
-  })
+module.exports = app;
