@@ -29,6 +29,8 @@ module.exports = (sequelize, type) => {
 
     Activities_assignement.associate = (models) => {
         console.log(models);
+        Activities_assignement.belongsTo(models.User, { foreignKey: 'user_id' });
+        Activities_assignement.belongsTo(models.Activity, { foreignKey: 'activity_id' });
     }
     return Activities_assignement;
 }

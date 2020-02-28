@@ -23,6 +23,7 @@ const initApp = () => {
   let httpsServer = http.createServer(app);
   httpsServer.listen(process.env.PORT, () => {
     console.log('server (not secure )started on port ' + process.env.PORT);
+    console.log(`http://localhost:${process.env.PORT}`);
 
   });
     // Role.findOne({where :{id: 3}}).then(role => {

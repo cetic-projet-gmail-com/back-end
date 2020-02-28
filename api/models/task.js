@@ -32,6 +32,7 @@ module.exports = (sequelize, type) => {
 
     Task.associate = (models) => {
         console.log(models);
+        WorkingDay.belongsToMany(models.User, {through: 'UsersWorkingDays', foreignKey: 'workingDayId', as: 'employes'});
     }
     return Task;
 }

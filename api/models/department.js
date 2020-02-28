@@ -21,5 +21,8 @@ module.exports = (sequelize, type) => {
     });
     Department.associate = (models) => {
         console.log(models);
+        Department.hasMany(models.User, { as: 'users' });
+        Department.belongsTo(models.User, { foreignKey: 'user_id', as: 'responsible' });
     }
+    return Department;
 }

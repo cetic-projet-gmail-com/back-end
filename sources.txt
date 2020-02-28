@@ -4,3 +4,4 @@ https://sequelize.org/v5/manual/associations.html
 https://sequelize.org/v5/class/lib/associations/base.js~Association.html
 https://medium.com/@eth3rnit3/sequelize-relationships-ultimate-guide-f26801a75554
 https://www.codementor.io/@mirko0/how-to-use-sequelize-with-node-and-express-i24l67cuz
+https://sequelize.org/v5/manual/associations.html#difference-between-hasone-and-belongsto

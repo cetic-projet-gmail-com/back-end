@@ -11,7 +11,8 @@ module.exports = (sequelize, type) => {
 
     Role.associate = (models) => {
         console.log(models);
-        Role.hasMany(models.User);
+        Role.hasMany(models.User, {as: users});
+        Department.belongsTo(models.User, { foreignKey: 'user_id', as: 'responsible' });
     }
     return Role;
 }

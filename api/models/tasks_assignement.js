@@ -25,8 +25,8 @@ module.exports = (sequelize, type) => {
 
     Tasks_assignement.associate = (models) => {
         console.log(models);
-        Tasks_assignement.belongsTo(models.User, {foreignKey: 'userId'})
-        Tasks_assignement.belongsTo(models.WorkingDay, {foreignKey: 'workingDayId'})
+        Tasks_assignement.belongsTo(models.User, { foreignKey: 'user_id' });
+        Tasks_assignement.belongsTo(models.Task, { foreignKey: 'task_Id' });
     }
     return Tasks_assignement;
 }

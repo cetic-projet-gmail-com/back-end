@@ -42,8 +42,9 @@ module.exports = (sequelize, type) => {
     });
     User.associate = (models) => {
         console.log(models);
-
-        User.hasMany(models.Department, { foreignKey: 'user_id', as: 'responsible_id' })
+        User.belongsToMany(models.Tasks_assignement, { through: 'tasks_assignement', foreignKey: 'user_id' });
+        // User.belongsTo(models.Department, { foreignKey: 'user_id' });
+        User.hasOne(models.Department, { as: 'department' });
     }
     return User;
 }
