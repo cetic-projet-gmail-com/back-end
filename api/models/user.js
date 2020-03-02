@@ -42,6 +42,9 @@ module.exports = (sequelize, type) => {
     });
     User.associate = (models) => {
         console.log(models);
+        User.belongsTo(models.Role)
+
+        
         User.belongsToMany(models.Tasks_assignement, { through: 'tasks_assignement', foreignKey: 'user_id' });
         User.belongsTo(models.Department, { foreignKey: 'user_id' });
     }
