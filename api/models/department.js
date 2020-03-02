@@ -4,9 +4,9 @@ module.exports = (sequelize, type) => {
             type: type.STRING,
             allowNull: false
         },
-        responsible_id: {
-            type: type.INTEGER
-        },
+        // responsible_id: {
+        //     type: type.INTEGER
+        // },
         created_at: {
             type: type.DATE,
             allowNull: false

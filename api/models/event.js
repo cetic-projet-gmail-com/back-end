@@ -1,13 +1,13 @@
 module.exports = (sequelize, type) => {
     const Event = sequelize.define('event', {
-        user_id: {
-            type: type.INTEGER,
-            allowNull: false
-        },
-        task_id: {
-            type: type.INTEGER,
-            allowNull: false
-        },
+        // user_id: {
+        //     type: type.INTEGER,
+        //     allowNull: false
+        // },
+        // task_id: {
+        //     type: type.INTEGER,
+        //     allowNull: false
+        // },
         description: {
             type: type.TEXT,
             allowNull: true

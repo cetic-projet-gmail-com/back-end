@@ -11,6 +11,7 @@ module.exports = (sequelize, type) => {
 
     A_type.associate = (models) => {
         console.log(models);
+        
     }
     return A_type;
 }

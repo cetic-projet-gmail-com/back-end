@@ -8,10 +8,10 @@ module.exports = (sequelize, type) => {
             type: type.TEXT,
             allowNull: false
         },
-        activity_id: {
-            type: type.INTEGER,
-            allowNull: false
-        },
+        // activity_id: {
+        //     type: type.INTEGER,
+        //     allowNull: false
+        // },
         created_at: {
             type: type.DATE,
             allowNull: false

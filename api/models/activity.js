@@ -8,10 +8,10 @@ module.exports = (sequelize, type) => {
             type: type.TEXT,
             allowNull: false
         },
-        project_manager_id: {
-            type: type.INTEGER,
-            allowNull: true
-        },
+        // project_manager_id: {
+        //     type: type.INTEGER,
+        //     allowNull: true
+        // },
         created_at: {
             type: type.DATE,
             allowNull: false
@@ -20,14 +20,14 @@ module.exports = (sequelize, type) => {
             type: type.DATE,
             allowNull: false
         },
-        colour_id: {
-            type: type.INTEGER,
-            allowNull: false
-        },
-        a_type_id: {
-            type: type.INTEGER,
-            allowNull: false
-        },
+        // colour_id: {
+        //     type: type.INTEGER,
+        //     allowNull: false
+        // },
+        // a_type_id: {
+        //     type: type.INTEGER,
+        //     allowNull: false
+        // },
         ended: {
             type: type.BOOLEAN,
             allowNull: false,

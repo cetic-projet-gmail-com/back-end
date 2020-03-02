@@ -12,10 +12,10 @@ module.exports = (sequelize, type) => {
             type: type.STRING,
             allowNull: false
         },
-        department_id: {
-            type: type.INTEGER,
-            allowNull: true
-        },
+        // department_id: {
+        //     type: type.INTEGER,
+        //     allowNull: true
+        // },
         created_at: {
             type: type.DATE,
             allowNull: false
@@ -24,11 +24,11 @@ module.exports = (sequelize, type) => {
             type: type.DATE,
             allowNull: false
         },
-        role_id: {
-            type: type.INTEGER,
-            defaultValue: null,
-            allowNull: true
-        },
+        // role_id: {
+        //     type: type.INTEGER,
+        //     defaultValue: null,
+        //     allowNull: true
+        // },
         email: {
             type: type.STRING
         },
@@ -43,8 +43,7 @@ module.exports = (sequelize, type) => {
     User.associate = (models) => {
         console.log(models);
         User.belongsToMany(models.Tasks_assignement, { through: 'tasks_assignement', foreignKey: 'user_id' });
-        // User.belongsTo(models.Department, { foreignKey: 'user_id' });
-        User.hasOne(models.Department, { as: 'department' });
+        User.belongsTo(models.Department, { foreignKey: 'user_id' });
     }
     return User;
 }
