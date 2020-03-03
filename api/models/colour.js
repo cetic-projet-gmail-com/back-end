@@ -10,8 +10,8 @@ module.exports = (sequelize, type) => {
     });
 
     Colour.associate = (models) => {
-        console.log(models);
-        Colour.hasMany(models.User);
+        // console.log(models);
+        Colour.hasMany(models.Activity, {foreignKey: 'colour_id', as: 'colour'}); // 1-n
     }
     return Colour;
 }

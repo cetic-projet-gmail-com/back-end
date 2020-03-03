@@ -12,10 +12,10 @@ module.exports = (sequelize, type) => {
             type: type.STRING,
             allowNull: false
         },
-        // department_id: {
-        //     type: type.INTEGER,
-        //     allowNull: true
-        // },
+        department_id: {
+            type: type.INTEGER,
+            allowNull: true
+        },
         created_at: {
             type: type.DATE,
             allowNull: false
@@ -24,11 +24,11 @@ module.exports = (sequelize, type) => {
             type: type.DATE,
             allowNull: false
         },
-        // role_id: {
-        //     type: type.INTEGER,
-        //     defaultValue: null,
-        //     allowNull: true
-        // },
+        role_id: {
+            type: type.INTEGER,
+            defaultValue: null,
+            allowNull: true
+        },
         email: {
             type: type.STRING
         },
@@ -41,12 +41,18 @@ module.exports = (sequelize, type) => {
         underscored: true
     });
     User.associate = (models) => {
-        console.log(models);
-        User.belongsTo(models.Role)
+        // console.log(models);
+        User.belongsTo(models.Role, { foreignKey: 'role_id' }); // 1-1
 
-        
-        User.belongsToMany(models.Tasks_assignement, { through: 'tasks_assignement', foreignKey: 'user_id' });
-        User.belongsTo(models.Department, { foreignKey: 'user_id' });
+        User.belongsTo(models.Department, { foreignKey: 'department_id' }); // 1-1
+
+        User.hasMany(models.Activity, { foreignKey: 'project_manager_id', as: 'managedActivities' }); // 1-n
+
+        User.hasMany(models.Event, { foreignKey: 'user_id', as: 'events' }); // 1-n
+
+        User.belongsToMany(models.Task, { through: models.Tasks_assignment, foreignKey: 'user_id', as: 'tasks' })
+
+        User.belongsToMany(models.Activity, { through: models.Activity_assignment, foreignKey: 'user_id', as: 'activity' })
     }
     return User;
 }

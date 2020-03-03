@@ -1,13 +1,13 @@
 module.exports = (sequelize, type) => {
     const Event = sequelize.define('event', {
-        // user_id: {
-        //     type: type.INTEGER,
-        //     allowNull: false
-        // },
-        // task_id: {
-        //     type: type.INTEGER,
-        //     allowNull: false
-        // },
+        user_id: {
+            type: type.INTEGER,
+            allowNull: false
+        },
+        task_id: {
+            type: type.INTEGER,
+            allowNull: false
+        },
         description: {
             type: type.TEXT,
             allowNull: true
@@ -38,8 +38,10 @@ module.exports = (sequelize, type) => {
     });
 
     Event.associate = (models) => {
-        console.log(models);
+        // console.log(models);
+        Event.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' }); // 1-1
 
+        Event.belongsTo(models.Task, { foreignKey: 'task_id', as: 'task' }); // 1-1
     }
     return Event;
 }

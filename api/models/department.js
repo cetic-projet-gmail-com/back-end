@@ -4,9 +4,9 @@ module.exports = (sequelize, type) => {
             type: type.STRING,
             allowNull: false
         },
-        // responsible_id: {
-        //     type: type.INTEGER
-        // },
+        responsible_id: {
+            type: type.INTEGER
+        },
         created_at: {
             type: type.DATE,
             allowNull: false
@@ -20,9 +20,10 @@ module.exports = (sequelize, type) => {
         underscored: true
     });
     Department.associate = (models) => {
-        console.log(models);
-        Department.hasMany(models.User, { as: 'users' });
-        Department.belongsTo(models.User, { foreignKey: 'user_id', as: 'responsible' });
+        // console.log(models);
+        Department.hasMany(models.User, { foreignKey: 'department_id', as: 'employees'}); // 1-n
+
+        Department.belongsTo(models.User, { foreignKey: 'responsible_id', as: 'responsible', constraints: false }); // 1-1
     }
     return Department;
 }

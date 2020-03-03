@@ -10,8 +10,8 @@ module.exports = (sequelize, type) => {
     });
 
     A_type.associate = (models) => {
-        console.log(models);
-        
+        // console.log(models);
+        A_type.hasMany(models.Activity, {foreignKey: 'a_type_id', as: 'type'}); // 1-n
     }
     return A_type;
 }

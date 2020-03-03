@@ -8,10 +8,10 @@ module.exports = (sequelize, type) => {
             type: type.TEXT,
             allowNull: false
         },
-        // activity_id: {
-        //     type: type.INTEGER,
-        //     allowNull: false
-        // },
+        activity_id: {
+            type: type.INTEGER,
+            allowNull: false
+        },
         created_at: {
             type: type.DATE,
             allowNull: false
@@ -31,8 +31,12 @@ module.exports = (sequelize, type) => {
     });
 
     Task.associate = (models) => {
-        console.log(models);
-        WorkingDay.belongsToMany(models.User, {through: 'UsersWorkingDays', foreignKey: 'workingDayId', as: 'employes'});
+        // console.log(models);
+        Task.belongsTo(models.Activity, { foreignKey: 'activity_id', as: 'activity' }); // 1-1
+
+        Task.hasMany(models.Event, { foreignKey: 'task_id', as: 'events' }); // 1-n
+
+        Task.belongsToMany(models.User, { through: models.Tasks_assignment, foreignKey: 'task_id', as: 'users' })
     }
     return Task;
 }
