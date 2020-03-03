@@ -8,23 +8,23 @@ module.exports = (sequelize, type) => {
             type: type.TEXT,
             allowNull: false
         },
-        project_manager_id: {
+        projectManagerId: {
             type: type.INTEGER,
             allowNull: true
         },
-        created_at: {
+        createdAt: {
             type: type.DATE,
             allowNull: false
         },
-        updated_at: {
+        updatedAt: {
             type: type.DATE,
             allowNull: false
         },
-        colour_id: {
+        colourId: {
             type: type.INTEGER,
             allowNull: false
         },
-        a_type_id: {
+        aTypeId: {
             type: type.INTEGER,
             allowNull: false
         },
@@ -33,26 +33,24 @@ module.exports = (sequelize, type) => {
             allowNull: false,
             defaultValue: false
         },
-        crm_id: {
+        crmId: {
             type: type.STRING,
             allowNull: true
         }
     }, {
-        underscored: true,
-        timestamps: false
     });
 
     Activity.associate = (models) => {
         // console.log(models);
-        Activity.belongsTo(models.A_type, { foreignKey: 'a_type_id', as: 'type' }); // 1-1
+        Activity.belongsTo(models.AType, { foreignKey: 'aTypeId', as: 'type' }); // 1-1
 
-        Activity.belongsTo(models.Colour, { foreignKey: 'colour_id', as: 'colour' }); // 1-1
+        Activity.belongsTo(models.Colour, { foreignKey: 'colourId', as: 'colour' }); // 1-1
 
-        Activity.belongsTo(models.User, {foreignKey: 'project_manager_id', as: 'projectManager'}); // 1-1
+        Activity.belongsTo(models.User, {foreignKey: 'projectManagerId', as: 'projectManager'}); // 1-1
 
-        Activity.hasMany(models.Task, { foreignKey: 'activity_id', as: 'tasks'}); // 1-n
+        Activity.hasMany(models.Task, { foreignKey: 'activityId', as: 'tasks'}); // 1-n
 
-        Activity.belongsToMany(models.User, { through: models.Activity_assignment, foreignKey: 'activity_id', as: 'users' })
+        Activity.belongsToMany(models.User, { through: models.ActivityAssignment, foreignKey: 'activityId', as: 'users' })
 
     }
     return Activity;

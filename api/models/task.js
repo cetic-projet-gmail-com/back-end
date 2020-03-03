@@ -8,15 +8,15 @@ module.exports = (sequelize, type) => {
             type: type.TEXT,
             allowNull: false
         },
-        activity_id: {
+        activityId: {
             type: type.INTEGER,
             allowNull: false
         },
-        created_at: {
+        createdAt: {
             type: type.DATE,
             allowNull: false
         },
-        updated_at: {
+        updatedAt: {
             type: type.DATE,
             allowNull: false
         },
@@ -26,17 +26,15 @@ module.exports = (sequelize, type) => {
             defaultValue: false
         }
     }, {
-        underscored: true,
-        timestamps: false
     });
 
     Task.associate = (models) => {
         // console.log(models);
-        Task.belongsTo(models.Activity, { foreignKey: 'activity_id', as: 'activity' }); // 1-1
+        Task.belongsTo(models.Activity, { foreignKey: 'activityId', as: 'activity' }); // 1-1
 
-        Task.hasMany(models.Event, { foreignKey: 'task_id', as: 'events' }); // 1-n
+        Task.hasMany(models.Event, { foreignKey: 'taskId', as: 'events' }); // 1-n
 
-        Task.belongsToMany(models.User, { through: models.Tasks_assignment, foreignKey: 'task_id', as: 'users' })
+        Task.belongsToMany(models.User, { through: models.TasksAssignment, foreignKey: 'taskId', as: 'users' })
     }
     return Task;
 }

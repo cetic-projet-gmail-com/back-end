@@ -1,10 +1,10 @@
 module.exports = (sequelize, type) => {
     const Event = sequelize.define('event', {
-        user_id: {
+        userId: {
             type: type.INTEGER,
             allowNull: false
         },
-        task_id: {
+        taskId: {
             type: type.INTEGER,
             allowNull: false
         },
@@ -16,11 +16,11 @@ module.exports = (sequelize, type) => {
             type: type.FLOAT,
             allowNull: false
         },
-        created_at: {
+        createdAt: {
             type: type.DATE,
             allowNull: false
         },
-        updated_at: {
+        updatedAt: {
             type: type.DATE,
             allowNull: false
         },
@@ -33,15 +33,13 @@ module.exports = (sequelize, type) => {
             allowNull: true
         }
     }, {
-        underscored: true,
-        timestamps: false
     });
 
     Event.associate = (models) => {
         // console.log(models);
-        Event.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' }); // 1-1
+        Event.belongsTo(models.User, { foreignKey: 'userId', as: 'user' }); // 1-1
 
-        Event.belongsTo(models.Task, { foreignKey: 'task_id', as: 'task' }); // 1-1
+        Event.belongsTo(models.Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
     }
     return Event;
 }

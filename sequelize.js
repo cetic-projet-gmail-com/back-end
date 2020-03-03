@@ -1,7 +1,7 @@
 const dotEnv = require('dotenv')
 dotEnv.config({ path: './development.env' })
 const UserModel = require('./api/models/user')
-const DepartmentModel = require('./api/models/user')
+const DepartmentModel = require('./api/models/department')
 const RoleModel = require('./api/models/role')
 const TaskModel = require('./api/models/task')
 const EventModel = require('./api/models/event')
@@ -33,7 +33,7 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
-    initApp();
+    // initApp();
   })
   .catch(err => {
     console.error('Unable to connect to the database:', err);

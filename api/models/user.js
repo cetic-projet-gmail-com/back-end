@@ -12,19 +12,19 @@ module.exports = (sequelize, type) => {
             type: type.STRING,
             allowNull: false
         },
-        department_id: {
+        departmentId: {
             type: type.INTEGER,
             allowNull: true
         },
-        created_at: {
+        createdAt: {
             type: type.DATE,
             allowNull: false
         },
-        updated_at: {
+        updatedAt: {
             type: type.DATE,
             allowNull: false
         },
-        role_id: {
+        roleId: {
             type: type.INTEGER,
             defaultValue: null,
             allowNull: true
@@ -37,22 +37,22 @@ module.exports = (sequelize, type) => {
             allowNull: false
         }
     }, {
-        timestamps: false,
-        underscored: true
+        // timestamps: false,
+        // underscored: true
     });
     User.associate = (models) => {
         // console.log(models);
-        User.belongsTo(models.Role, { foreignKey: 'role_id' }); // 1-1
+        User.belongsTo(models.Role, { foreignKey: 'roleId', as: 'role' }); // 1-1
 
-        User.belongsTo(models.Department, { foreignKey: 'department_id' }); // 1-1
+        User.belongsTo(models.Department, { foreignKey: 'departmentId', as: 'department' }); // 1-1
 
-        User.hasMany(models.Activity, { foreignKey: 'project_manager_id', as: 'managedActivities' }); // 1-n
+        User.hasMany(models.Activity, { foreignKey: 'projectManagerId', as: 'managedActivities' }); // 1-n
 
-        User.hasMany(models.Event, { foreignKey: 'user_id', as: 'events' }); // 1-n
+        User.hasMany(models.Event, { foreignKey: 'userId', as: 'events' }); // 1-n
 
-        User.belongsToMany(models.Task, { through: models.Tasks_assignment, foreignKey: 'user_id', as: 'tasks' })
+        User.belongsToMany(models.Task, { through: models.Tasks_assignment, foreignKey: 'userId', as: 'tasks' })
 
-        User.belongsToMany(models.Activity, { through: models.Activity_assignment, foreignKey: 'user_id', as: 'activity' })
+        User.belongsToMany(models.Activity, { through: models.ActivityAssignment, foreignKey: 'userId', as: 'activity' })
     }
     return User;
 }

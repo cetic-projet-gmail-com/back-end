@@ -1,11 +1,11 @@
 module.exports = (sequelize, type) => {
-    const Activities_assignement = sequelize.define('activities_assignement', {
-        user_id: {
+    const ActivitiesAssignement = sequelize.define('activitiesAssignement', {
+        userId: {
             type: type.INTEGER,
             // primaryKey: true,
             // autoIncrement: true
         },
-        activity_id: {
+        activityId: {
             type: type.INTEGER,
             // primaryKey: true,
             // autoIncrement: true
@@ -14,21 +14,24 @@ module.exports = (sequelize, type) => {
             type: type.TEXT,
             allowNull: false
         },
-        created_at: {
+        createdAt: {
             type: type.DATE,
             allowNull: false
         },
-        updated_at: {
+        updatedAt: {
             type: type.DATE,
             allowNull: false
         }
     }, {
-        underscored: true,
-        timestamps: false
+        // underscored: true,
+        // timestamps: false
     });
 
-    Activities_assignement.associate = (models) => {
+    ActivitiesAssignement.associate = (models) => {
         // console.log(models);
+        ActivitiesAssignement.belongsTo(models.User, { foreignKey: 'userId', as: 'user' }); // 1-1
+
+        ActivitiesAssignement.belongsTo(models.Activity, { foreignKey: 'ActivityId', as: 'Activity' }); // 1-1
     }
-    return Activities_assignement;
+    return ActivitiesAssignement;
 }

@@ -4,26 +4,24 @@ module.exports = (sequelize, type) => {
             type: type.STRING,
             allowNull: false
         },
-        responsible_id: {
+        responsibleId: {
             type: type.INTEGER
         },
-        created_at: {
+        createdAt: {
             type: type.DATE,
             allowNull: false
         },
-        updated_at: {
+        updatedAt: {
             type: type.DATE,
             allowNull: false
         }
     }, {
-        timestamps: false,
-        underscored: true
     });
     Department.associate = (models) => {
         // console.log(models);
-        Department.hasMany(models.User, { foreignKey: 'department_id', as: 'employees'}); // 1-n
+        Department.hasMany(models.User, { foreignKey: 'departmentId', as: 'employees' }); // 1-n
 
-        Department.belongsTo(models.User, { foreignKey: 'responsible_id', as: 'responsible', constraints: false }); // 1-1
+        Department.belongsTo(models.User, { foreignKey: 'responsibleId', as: 'responsible', constraints: false }); // 1-1
     }
     return Department;
 }
