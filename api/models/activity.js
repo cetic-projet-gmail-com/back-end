@@ -41,16 +41,15 @@ module.exports = (sequelize, type) => {
     });
 
     Activity.associate = (models) => {
-        // console.log(models);
-        Activity.belongsTo(models.AType, { foreignKey: 'aTypeId', as: 'type' }); // 1-1
+        // Activity.belongsTo(models.AType, { foreignKey: 'aTypeId', as: 'type' }); // 1-1
 
-        Activity.belongsTo(models.Colour, { foreignKey: 'colourId', as: 'colour' }); // 1-1
+        // Activity.belongsTo(models.Colour, { foreignKey: 'colourId', as: 'colour' }); // 1-1
 
-        Activity.belongsTo(models.User, {foreignKey: 'projectManagerId', as: 'projectManager'}); // 1-1
+        // Activity.belongsTo(models.User, {foreignKey: 'projectManagerId', as: 'projectManager'}); // 1-1
 
-        Activity.hasMany(models.Task, { foreignKey: 'activityId', as: 'tasks'}); // 1-n
+        // Activity.hasMany(models.Task, { foreignKey: 'activityId', as: 'tasks'}); // 1-n
 
-        Activity.belongsToMany(models.User, { through: models.ActivityAssignment, foreignKey: 'activityId', as: 'users' })
+        // Activity.belongsToMany(models.User, { through: models.ActivityAssignment, foreignKey: 'activityId', as: 'users' })
 
     }
     return Activity;

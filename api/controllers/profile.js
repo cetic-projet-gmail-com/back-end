@@ -1,18 +1,15 @@
-const { User, Department, Role, } = require('../../sequelize');
+const { User, Department, Role } = require('../../sequelize');
 let resErrors = require(process.cwd() + '/api/helpers/res-errors');
 
 
 exports.findProfile = async (req, res) => {
-    // let user_id = req.payload.id;
-    // let id = 99;
-    console.log("ici");
-    User
+    let user = await User
         .findOne({
             where: { id: 99 },
-            include: 'department'
+            include: ['role', 'department']
         })
         .then((user) => {
-            console.log(user.department)
+            return { user };
         })
         .catch((err) => {
             console.log("Error while find user : ", err)
@@ -28,7 +25,7 @@ exports.findProfile = async (req, res) => {
     //     .catch((err) => {
     //         console.log("Error while find user : ", err)
     //     })
-    res.json({ "data": "user_data" });
+    res.json(user);
 }
 
 exports.updateProfile = async (req, res) => {

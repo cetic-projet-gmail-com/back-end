@@ -29,12 +29,11 @@ module.exports = (sequelize, type) => {
     });
 
     Task.associate = (models) => {
-        // console.log(models);
-        Task.belongsTo(models.Activity, { foreignKey: 'activityId', as: 'activity' }); // 1-1
+        // Task.belongsTo(models.Activity, { foreignKey: 'activityId', as: 'activity' }); // 1-1
 
-        Task.hasMany(models.Event, { foreignKey: 'taskId', as: 'events' }); // 1-n
+        // Task.hasMany(models.Event, { foreignKey: 'taskId', as: 'events' }); // 1-n
 
-        Task.belongsToMany(models.User, { through: models.TasksAssignment, foreignKey: 'taskId', as: 'users' })
+        // Task.belongsToMany(models.User, { through: models.TasksAssignment, foreignKey: 'taskId', as: 'users' })
     }
     return Task;
 }

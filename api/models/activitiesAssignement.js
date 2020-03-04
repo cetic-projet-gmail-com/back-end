@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-    const ActivitiesAssignement = sequelize.define('activitiesAssignement', {
+    const ActivitiesAssignment = sequelize.define('activitiesAssignment', {
         userId: {
             type: type.INTEGER,
             // primaryKey: true,
@@ -27,11 +27,10 @@ module.exports = (sequelize, type) => {
         // timestamps: false
     });
 
-    ActivitiesAssignement.associate = (models) => {
-        // console.log(models);
-        ActivitiesAssignement.belongsTo(models.User, { foreignKey: 'userId', as: 'user' }); // 1-1
+    ActivitiesAssignment.associate = (models) => {
+        // ActivitiesAssignment.belongsTo(models.User, { foreignKey: 'userId', as: 'user' }); // 1-1
 
-        ActivitiesAssignement.belongsTo(models.Activity, { foreignKey: 'ActivityId', as: 'Activity' }); // 1-1
+        // ActivitiesAssignment.belongsTo(models.Activity, { foreignKey: 'ActivityId', as: 'Activity' }); // 1-1
     }
-    return ActivitiesAssignement;
+    return ActivitiesAssignment;
 }

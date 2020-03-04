@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-    const TasksAssignement = sequelize.define('tasksAssignement', {
+    const TasksAssignment = sequelize.define('tasksAssignment', {
         userId: {
             type: type.INTEGER
         },
@@ -21,11 +21,10 @@ module.exports = (sequelize, type) => {
     }, {
     });
 
-    TasksAssignement.associate = (models) => {
-        // console.log(models);
-        TasksAssignement.belongsTo(models.User, { foreignKey: 'userId', as: 'user' }); // 1-1
+    TasksAssignment.associate = (models) => {
+        // TasksAssignment.belongsTo(models.User, { foreignKey: 'userId', as: 'user' }); // 1-1
 
-        TasksAssignement.belongsTo(models.Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
+        // TasksAssignment.belongsTo(models.Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
     }
-    return TasksAssignement;
+    return TasksAssignment;
 }

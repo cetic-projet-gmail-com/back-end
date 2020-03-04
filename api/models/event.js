@@ -36,10 +36,9 @@ module.exports = (sequelize, type) => {
     });
 
     Event.associate = (models) => {
-        // console.log(models);
-        Event.belongsTo(models.User, { foreignKey: 'userId', as: 'user' }); // 1-1
+        // Event.belongsTo(models.User, { foreignKey: 'userId', as: 'user' }); // 1-1
 
-        Event.belongsTo(models.Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
+        // Event.belongsTo(models.Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
     }
     return Event;
 }

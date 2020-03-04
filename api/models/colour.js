@@ -8,8 +8,7 @@ module.exports = (sequelize, type) => {
     });
 
     Colour.associate = (models) => {
-        // console.log(models);
-        Colour.hasMany(models.Activity, {foreignKey: 'colourId', as: 'colour'}); // 1-n
+        // Colour.hasMany(models.Activity, {foreignKey: 'colourId', as: 'colour'}); // 1-n
     }
     return Colour;
 }
