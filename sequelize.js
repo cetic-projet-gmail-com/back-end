@@ -7,8 +7,8 @@ const TaskModel = require('./api/models/task')
 const EventModel = require('./api/models/event')
 const ColourModel = require('./api/models/colour')
 const ActivityModel = require('./api/models/activity')
-const ActivitiesAssignmentModel = require('./api/models/activitiesAssignement')
-const TasksAssignmentModel = require('./api/models/tasksAssignement')
+const ActivitiesAssignmentModel = require('./api/models/activitiesAssignment')
+const TasksAssignmentModel = require('./api/models/tasksAssignment')
 const ATypeModel = require('./api/models/aType')
 
 const Sequelize = require('sequelize');
@@ -40,7 +40,7 @@ User.belongsTo(Department, { foreignKey: 'departmentId', as: 'department' }); //
 User.hasMany(Activity, { foreignKey: 'projectManagerId', as: 'managedActivities' }); // 1-n
 User.hasMany(Event, { foreignKey: 'userId', as: 'events' }); // 1-n
 User.belongsToMany(Task, { through: TasksAssignment, foreignKey: 'userId', as: 'tasks' })
-User.belongsToMany(Activity, { through: ActivitiesAssignment, foreignKey: 'userId', as: 'activity' })
+User.belongsToMany(Activity, { through: ActivitiesAssignment, foreignKey: 'userId', as: 'activities' })
 Role.hasMany(User, { foreignKey: 'roleId', as: 'users' }); // 1-n
 Department.hasMany(User, { foreignKey: 'departmentId', as: 'employees' }); // 1-n
 Department.belongsTo(User, { foreignKey: 'responsibleId', as: 'responsible', constraints: false }); // 1-1
@@ -53,11 +53,11 @@ ActivitiesAssignment.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // 1
 ActivitiesAssignment.belongsTo(Activity, { foreignKey: 'ActivityId', as: 'Activity' }); // 1-1
 Activity.belongsTo(AType, { foreignKey: 'aTypeId', as: 'type' }); // 1-1
 Activity.belongsTo(Colour, { foreignKey: 'colourId', as: 'colour' }); // 1-1
-Activity.belongsTo(User, {foreignKey: 'projectManagerId', as: 'projectManager'}); // 1-1
-Activity.hasMany(Task, { foreignKey: 'activityId', as: 'tasks'}); // 1-n
+Activity.belongsTo(User, { foreignKey: 'projectManagerId', as: 'projectManager' }); // 1-1
+Activity.hasMany(Task, { foreignKey: 'activityId', as: 'tasks' }); // 1-n
 Activity.belongsToMany(User, { through: ActivitiesAssignment, foreignKey: 'activityId', as: 'users' })
-AType.hasMany(Activity, {foreignKey: 'aTypeId', as: 'type'}); // 1-n
-Colour.hasMany(Activity, {foreignKey: 'colourId', as: 'colour'}); // 1-n
+AType.hasMany(Activity, { foreignKey: 'aTypeId', as: 'type' }); // 1-n
+Colour.hasMany(Activity, { foreignKey: 'colourId', as: 'colour' }); // 1-n
 Event.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // 1-1
 Event.belongsTo(Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
 

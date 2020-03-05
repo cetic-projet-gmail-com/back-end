@@ -3,6 +3,10 @@ module.exports = (sequelize, type) => {
         name: {
             type: type.STRING,
             allowNull: false
+        },
+        code: {
+            type: type.STRING,
+            allowNull: false
         }
     }, {
     });

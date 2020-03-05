@@ -1,20 +1,37 @@
-const User = require('../models/user')
+const User = require(`${process.cwd()}/sequelize`)
 
-exports.findOne = async (req, res) => {
-    try{
-        let { id } = req.params;
-        let user = await User.findOne({id: id});
-        res.json({data:{user: [user]}})
-    } catch(e) {
-        res.status(500).json({error : {message: e.message}})
-    }
+exports.findById = async (req, res) => {
+    let { id } = req.params;
+    console.log(id);
+    let user = await User
+        .findOne({
+            where: { id: id },
+            include: ['role', 'department']
+        })
+        .then((user) => {
+            if (user) {
+                return { user: user };
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
+    res.status(200).json(user);
 }
 
 exports.find = async (req, res) => {
-    try{
-        let user = await User.findAll();
-        res.json({data:{users: [user]}})
-    } catch(e) {
-        res.status(500).json({error : {message: e.message}})
-    }
+    let users = await User
+        .findAll({
+            include: ['role', 'department']
+        })
+        .then((users) => {
+                console.log('test 2');
+            if (users.length > 0) {
+                return { users: users }
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
+    res.stats(200).json(users);
 }

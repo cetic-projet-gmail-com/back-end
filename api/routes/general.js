@@ -17,7 +17,7 @@ Router.route('/home')
     .post(validator.createEvent, homeController.createEvent)
 ;
 Router.route('/profile')
-    .get(profileController.findProfile)
+    .get(profileController.find)
     .patch(profileController.updateProfile)
 ;
 Router.use('/', (req, res) => {

@@ -36,6 +36,8 @@ passport.use(new LocalStrategy({
   usernameField: 'login'
   },
   async (username, password, done) => {
+    //! supp this
+    return done(null, {id : 99})
     /*
       let usersArr = fs.readFileSync(process.cwd()+'/api/models/users.json');
 
@@ -63,11 +65,13 @@ var auth = expressJwt({
   secret: process.env.JWT_SECRET,
   userProperty: 'payload'
 });
+
 const Login = require(process.cwd() + '/api/controllers/login');
-app.use('/login', Login);
+app.post('/login', Login);
 //TODO app.use('/administration',auth, AdminRouter);
 
-app.use('/', /*auth,*/ GeneralRouter);
+app.use('/administration', auth, AdminRouter);
+app.use('/', auth, GeneralRouter);
 
   // app.listen(process.env.PORT, () => {
   //   console.log(`Express app is running at port : ${process.env.PORT}`)
@@ -81,5 +85,4 @@ app.use('/', /*auth,*/ GeneralRouter);
     // Role.bulkCreate([{name: "user"},{name: "moderator"},{name: "administrator"}]).then(role => {
     //   console.log(role);;
     // });
-
 module.exports = app;

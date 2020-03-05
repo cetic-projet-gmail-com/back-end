@@ -1,35 +1,42 @@
-const { User, Department, Role } = require('../../sequelize');
+const { User } = require('../../sequelize');
 let resErrors = require(process.cwd() + '/api/helpers/res-errors');
 
 
-exports.findProfile = async (req, res) => {
+exports.find = async (req, res) => {
+    let userId = req.payload.id
     let user = await User
         .findOne({
-            where: { id: 99 },
+            where: { id: userId },
             include: ['role', 'department']
         })
         .then((user) => {
-            return { user };
+            if (user) {
+                return { user: user };
+            }
         })
         .catch((err) => {
-            console.log("Error while find user : ", err)
+            console.log(`Error while finding user(${userId}) : ${err}`)
         })
-    // Department
-    //     .findOne({
-    //         where: { id: 9 },
-    //         // include: [{ model: User }]
-    //     })
-    //     .then((department) => {
-    //         console.log(department)
-    //     })
-    //     .catch((err) => {
-    //         console.log("Error while find user : ", err)
-    //     })
     res.json(user);
 }
 
 exports.updateProfile = async (req, res) => {
-    let user_id = req.payload.id;
-
-    res.json({ "infos": "profile updated" });
+    let userId = req.payload.id;
+    let updatedUser = req.body;
+    User
+        .findOne({
+            where: { id: userId }
+        })
+        .then((user) => {
+            if (user) {
+                user.update(
+                    {
+                        email: updatedUser.email,
+                        roleId: updatedUser.roleId,
+                        departmentId: updatedUser.departmentId
+                    }
+                )
+            }
+        })
+    res.status(200).json({ "infos": "profile updated" });
 }
