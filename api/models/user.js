@@ -42,6 +42,7 @@ module.exports = (sequelize, type) => {
             allowNull: false
         }
     }, {
+        timestamps:false
     });
     User.associate = (models) => {
         // User.belongsTo(models.Role, { foreignKey: 'roleId', as: 'role' }); // 1-1

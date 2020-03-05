@@ -19,11 +19,13 @@ exports.findById = async (req, res) => {
 }
 
 exports.find = async (req, res) => {
+    console.log('here');
     let tasks = await Task
         .findAll({
             include: ['activity']
         })
         .then((tasks) => {
+            console.log(tasks);
             if (tasks.length > 0) {
                 return { tasks: tasks }
             }

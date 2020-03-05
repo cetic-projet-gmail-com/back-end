@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
         // }
 
         // if (index !== -1) {
-            token = generateJwt({id: 99});
+            token = generateJwt({id: 1});
             res.status(200);
             res.json({
                 "token": token

@@ -1,10 +1,12 @@
 const express = require('express')
 const check = require('express-validator')
 const Router = express.Router();
-const UserController = require('../controllers/user')
-const DepartmentController = require('../controllers/department')
-const ActivityController = require('../controllers/activity')
-const TaskController = require('../controllers/task')
+const UserController = require(`${process.cwd()}/api/controllers/user`)
+const DepartmentController = require(`${process.cwd()}/api/controllers/department`)
+const ActivityController = require(`${process.cwd()}/api/controllers/activity`)
+const TaskController = require(`${process.cwd()}/api/controllers/task`)
+const RoleController = require(`${process.cwd()}/api/controllers/role`)
+const ATypeController = require(`${process.cwd()}/api/controllers/aType`)
 
 
 // //      Department      //
@@ -17,8 +19,8 @@ Router.route('/departments')
 
 Router.route('/department/:id')
     .get(DepartmentController.findById)
-    // .patch(DepartmentController.update)
-    // .delete(DepartmentController.delete)
+// .patch(DepartmentController.update)
+// .delete(DepartmentController.delete)
 
 // //      Activity      //
 
@@ -58,5 +60,25 @@ Router.route('/task/:id')
     .get(TaskController.findById)
 //     .patch(TaskController.update)
 //     .delete(TaskController.delete)
+
+// //      Role      //
+
+// //check section//
+
+Router.route('/roles')
+    .get(RoleController.find)
+
+Router.route('/role/:id')
+    .get(RoleController.findById)
+
+    // //      AType      //
+
+// //check section//
+
+Router.route('/atypes')
+.get(ATypeController.find)
+
+Router.route('/atype/:id')
+.get(ATypeController.findById)
 
 module.exports = Router;

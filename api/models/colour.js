@@ -9,6 +9,7 @@ module.exports = (sequelize, type) => {
             allowNull: false
         }
     }, {
+        timestamps: false
     });
 
     Colour.associate = (models) => {

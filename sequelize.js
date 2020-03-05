@@ -56,7 +56,7 @@ Activity.belongsTo(Colour, { foreignKey: 'colourId', as: 'colour' }); // 1-1
 Activity.belongsTo(User, { foreignKey: 'projectManagerId', as: 'projectManager' }); // 1-1
 Activity.hasMany(Task, { foreignKey: 'activityId', as: 'tasks' }); // 1-n
 Activity.belongsToMany(User, { through: ActivitiesAssignment, foreignKey: 'activityId', as: 'users' })
-AType.hasMany(Activity, { foreignKey: 'aTypeId', as: 'type' }); // 1-n
+AType.hasMany(Activity, { foreignKey: 'aTypeId', as: 'activities' }); // 1-n
 Colour.hasMany(Activity, { foreignKey: 'colourId', as: 'colour' }); // 1-n
 Event.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // 1-1
 Event.belongsTo(Task, { foreignKey: 'taskId', as: 'task' }); // 1-1

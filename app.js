@@ -37,7 +37,7 @@ passport.use(new LocalStrategy({
   },
   async (username, password, done) => {
     //! supp this
-    return done(null, {id : 99})
+    return done(null, {id : 1})
     /*
       let usersArr = fs.readFileSync(process.cwd()+'/api/models/users.json');
 

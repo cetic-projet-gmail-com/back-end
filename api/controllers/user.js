@@ -1,8 +1,7 @@
-const User = require(`${process.cwd()}/sequelize`)
+const { User } = require(`${process.cwd()}/sequelize`)
 
 exports.findById = async (req, res) => {
     let { id } = req.params;
-    console.log(id);
     let user = await User
         .findOne({
             where: { id: id },
@@ -25,13 +24,14 @@ exports.find = async (req, res) => {
             include: ['role', 'department']
         })
         .then((users) => {
-                console.log('test 2');
             if (users.length > 0) {
                 return { users: users }
+            } else {
+                return {users:[]}
             }
         })
         .catch((err) => {
-            res.status(500).json({ error: err })
+            return res.status(500).json({ error: err })
         })
-    res.stats(200).json(users);
+    res.status(200).json(users);
 }

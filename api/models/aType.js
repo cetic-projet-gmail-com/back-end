@@ -5,6 +5,7 @@ module.exports = (sequelize, type) => {
             allowNull: false
         }
     }, {
+        timestamps: false
     });
 
     AType.associate = (models) => {

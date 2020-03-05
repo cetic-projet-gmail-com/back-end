@@ -16,7 +16,7 @@ CREATE TABLE activities (
   crmId varchar(255),
   PRIMARY KEY (id),
   KEY index_activites_on_project_managerId (projectManagerId)
-) ENGINE=InnoDB AUTO_INCREMENT=3706 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS tasks;
 CREATE TABLE tasks (
@@ -26,10 +26,10 @@ CREATE TABLE tasks (
   activityId int(11) DEFAULT NULL,
   createdAt datetime DEFAULT NULL,
   updatedAt datetime DEFAULT NULL,
-  cloturee tinyint(1) NOT NULL DEFAULT '0',
+  ended tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   KEY index_activites_on_activityId (activityId)
-) ENGINE=InnoDB AUTO_INCREMENT=3706 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS activitiesAssignments;
@@ -63,7 +63,7 @@ CREATE TABLE departments (
   updatedAt datetime DEFAULT NULL,
   PRIMARY KEY (id),
   KEY responsibleId (responsibleId)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS events;
 CREATE TABLE events (
@@ -79,8 +79,8 @@ CREATE TABLE events (
   PRIMARY KEY (id),
   KEY taskId (taskId),
   KEY userId (userId)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-update departments set departments.responsibleId = 99 where departments.id = 9;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -96,7 +96,7 @@ CREATE TABLE users (
   PRIMARY KEY (id),
   UNIQUE KEY index_personnes_on_email (email),
   KEY departementId (departmentId)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS colours;
 CREATE TABLE colours (
@@ -125,7 +125,7 @@ CREATE TABLE roles (
 
 
 ALTER TABLE tasks ADD CONSTRAINT tasks_ibfk_1 FOREIGN KEY (activityId) REFERENCES activities (id);
-ALTER TABLE activitiesAssignments ADD CONSTRAINT activity_assignments_ibfk_2 FOREIGN KEY (activityId) REFERENCES activities (id); 
+ALTER TABLE activitiesAssignments ADD CONSTRAINT activity_assignments_ibfk_2 FOREIGN KEY (activityId) REFERENCES activities (id);
 ALTER TABLE activitiesAssignments ADD CONSTRAINT activity_assignments_ibfk_1 FOREIGN KEY (userId) REFERENCES users (id);
 ALTER TABLE departments ADD CONSTRAINT departments_ibfk_1 FOREIGN KEY (responsibleId) REFERENCES users (id);
 ALTER TABLE events ADD CONSTRAINT events_ibfk_1 FOREIGN KEY (taskId) REFERENCES tasks (id);
@@ -138,6 +138,11 @@ ALTER TABLE activities ADD CONSTRAINT activities_ibfk_2 FOREIGN KEY (colourId) R
 ALTER TABLE activities ADD CONSTRAINT activities_ibfk_3 FOREIGN KEY (projectManagerId) REFERENCES users (id);
 ALTER TABLE users ADD CONSTRAINT users_ibfk_2 FOREIGN KEY (roleId) REFERENCES roles (id);
   
-insert into roles (name ) values ('user'), ('project manager'), ('moderator'), ('administrator');
-INSERT INTO departments (name , createdAt , updatedAt) values ('R&D', '2020-03-02', '2020-03-02'); 
-insert into users (departmentId , email , firstName , lastName , roleId , createdAt , updatedAt) values (9, 'emailpourtest@test.test', 'Test', 'TEST', 1, '2020-03-02', '2020-03-02');
+INSERT INTO roles (name ) VALUES ('Utilisateur'), ('Chef de projet'), ('Moderateur'), ('Administrateur');
+INSERT INTO departments (name , createdAt , updatedAt) VALUES ('R&D', '2020-03-02', '2020-03-02');
+INSERT INTO aTypes (name ) VALUES ('Projet'), ('Mission'), ('Autre');
+INSERT INTO users (departmentId , email , firstName , lastName , roleId , createdAt , updatedAt) VALUES (1, 'emailpourtest@test.test', 'Test', 'TEST', 1, '2020-03-02', '2020-03-02');
+INSERT INTO users (departmentId , email , firstName , lastName , roleId , createdAt , updatedAt) VALUES (1, 'emailtest@test.test', 'Test', 'TEST', 2, '2020-03-02', '2020-03-02');
+UPDATE departments SET departments.responsibleId = 1 WHERE departments.id = 1;
+INSERT INTO colours (name , code ) VALUES ('rouge', '#ff0000'), ('vert', '#00ff00'), ('bleu', '#0000ff');
+INSERT INTO activities (aTypeId , colourId , createdAt, updatedAt , description , ended , name , projectManagerId ) VALUES (1, 2, '2020-03-02','2020-03-02' , 'on fait des tests', 0, 'Tests', 2)
