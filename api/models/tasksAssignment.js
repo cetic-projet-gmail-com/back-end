@@ -10,14 +10,14 @@ module.exports = (sequelize, type) => {
             type: type.TEXT,
             allowNull: false
         },
-        createdAt: {
-            type: type.DATE,
-            allowNull: false
-        },
-        updatedAt: {
-            type: type.DATE,
-            allowNull: false
-        }
+        // createdAt: {
+        //     type: type.DATE,
+        //     allowNull: false
+        // },
+        // updatedAt: {
+        //     type: type.DATE,
+        //     allowNull: false
+        // }
     }, {
     });
 

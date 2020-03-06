@@ -13,7 +13,7 @@ Router.route('/home/:id')
     .delete(homeController.deleteEvent)
 ;
 Router.route('/home')
-    .get(homeController.findEvents)
+    .get(homeController.find)
     .post(validator.createEvent, homeController.createEvent)
 ;
 Router.route('/profile')

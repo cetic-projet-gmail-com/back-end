@@ -1,43 +1,107 @@
 const fs = require('fs');
-let { getWeek, format, addDays, getWeekYear, getISOWeeksInYear } = require('date-fns');
+let { setISOWeek, getWeek, format, endOfWeek, startOfWeek, addDays, getWeekYear, getISOWeeksInYear, formatISO9075 } = require('date-fns');
 let resErrors = require(process.cwd() + '/api/helpers/res-errors');
-const {  validationResult } = require('express-validator');
-exports.findEvents = async (req, res) => {
-    
-    //*let user_id = req.payload.id;
-    let today = new Date(Date.now());
+const { validationResult } = require('express-validator');
+const { Op } = require('sequelize')
+const { User, Task, Activity, Event } = require(`${process.cwd()}/sequelize`)
 
-    if (req.query.display === "day") {
-        let dateFormat = 'dd-MM-yyyy';
-        let day = req.query.date ? urlDate(req.query.date) : today;
-        
-        //? JSPlus A QUOI ca sert les links? let dayFormated = format(new Date(day), dateFormat);
-        function urlDate(date) {
-            date = date.split('-');
-            return date[2] + "-" + date[1] + "-" + date[0];
-        }
+exports.find = async (req, res) => {
 
-    } else if (req.query.display === "month") {
-        let month = req.query.month ? parseInt(req.query.month) - 1 : today.getMonth();
-        let year = req.query.year ? parseInt(req.query.year) : today.getFullYear();
+    let display = req.query.display || 'week';
+    let month = (parseInt(req.query.month) > 0 && 13 > parseInt(req.query.month)) ? req.query.month : undefined;
 
+    let userId = req.payload.id;
+    let home = {}
 
-    } else {
-        let weekNumber = req.query.week ? parseInt(req.query.week) : getWeek(today);
-        let year = req.query.year ? parseInt(req.query.year) : today.getFullYear();
-    }
-    
-    let err = "dfhkqdfl";
-    if (err) { return resErrors(req, res, err)}
-    else {
-        res.json({
-            "data": {
-                "activities": "user_activities",
-                "tasks": "user_tasks",
-                "events": "user_events"
+    let periodStart = formatISO9075(startOfWeek(Date.now(), { weekStartsOn: 1 }))
+    let periodEnd = formatISO9075(endOfWeek(Date.now(), { weekStartsOn: 1 }))
+    //methode pour recuperer une date de la semaine passee par son index/52
+    //let weekdate = setISOWeek(Date.now(), 10)
+
+    let user = await User
+        .findOne({
+            where: { id: userId },
+            include: ['role', 'department']
+        })
+        .then((user) => {
+            if (user) {
+                return user;
             }
-        });
-    }
+            else {
+                return {};
+            }
+        })
+    home['user'] = user
+
+    let activities = await Activity
+        .findAll({
+            where: { id: userId, ended: false },
+            include: ['tasks', 'colour', 'type']
+        })
+        .then((activities) => {
+            if (activities.length > 0) {
+                return activities;
+            } else {
+                return [];
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
+    home['activities'] = activities;
+
+    let events = await Event
+        .findAll({
+            where: {
+                userId: userId, startAt: {
+                    [Op.between]: [periodStart, periodEnd]
+                }
+            }
+        })
+        .then((events) => {
+            if (events.length > 0) {
+                return events;
+            } else {
+                return [];
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
+    home['events'] = events
+
+    res.status(200).json(home);
+    // if (req.query.display === "day") {
+    //     let dateFormat = 'dd-MM-yyyy';
+    //     let day = req.query.date ? urlDate(req.query.date) : today;
+
+    //     //? JSPlus A QUOI ca sert les links? let dayFormated = format(new Date(day), dateFormat);
+    //     function urlDate(date) {
+    //         date = date.split('-');
+    //         return date[2] + "-" + date[1] + "-" + date[0];
+    //     }
+
+    // } else if (req.query.display === "month") {
+    //     let month = req.query.month ? parseInt(req.query.month) - 1 : today.getMonth();
+    //     let year = req.query.year ? parseInt(req.query.year) : today.getFullYear();
+
+
+    // } else {
+    //     let weekNumber = req.query.week ? parseInt(req.query.week) : getWeek(today);
+    //     let year = req.query.year ? parseInt(req.query.year) : today.getFullYear();
+    // }
+
+    // let err = "dfhkqdfl";
+    // if (err) { return resErrors(req, res, err)}
+    // else {
+    //     res.json({
+    //         "data": {
+    //             "activities": "user_activities",
+    //             "tasks": "user_tasks",
+    //             "events": "user_events"
+    //         }
+    //     });
+    // }
 
 }
 
@@ -79,7 +143,7 @@ exports.updateEvent = async (req, res) => {
         "tasks_id": event.tasks_id
     }
         */
-    res.json({ "infos": "event modified", "data": "event modified"});
+    res.json({ "infos": "event modified", "data": "event modified" });
 }
 
 exports.deleteEvent = async (req, res) => {

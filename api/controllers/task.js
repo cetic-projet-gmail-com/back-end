@@ -25,7 +25,6 @@ exports.find = async (req, res) => {
             include: ['activity']
         })
         .then((tasks) => {
-            console.log(tasks);
             if (tasks.length > 0) {
                 return { tasks: tasks }
             }
