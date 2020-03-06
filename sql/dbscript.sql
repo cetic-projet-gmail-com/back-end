@@ -73,8 +73,8 @@ CREATE TABLE events (
   duration float DEFAULT NULL,
   createdAt datetime DEFAULT NULL,
   updatedAt datetime DEFAULT NULL,
-  start datetime DEFAULT NULL,
-  end datetime DEFAULT NULL,
+  startAt datetime DEFAULT NULL,
+  endAt datetime DEFAULT NULL,
   id int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id),
   KEY taskId (taskId),
@@ -145,4 +145,15 @@ INSERT INTO users (departmentId , email , firstName , lastName , roleId , create
 INSERT INTO users (departmentId , email , firstName , lastName , roleId , createdAt , updatedAt) VALUES (1, 'emailtest@test.test', 'Test', 'TEST', 2, '2020-03-02', '2020-03-02');
 UPDATE departments SET departments.responsibleId = 1 WHERE departments.id = 1;
 INSERT INTO colours (name , code ) VALUES ('rouge', '#ff0000'), ('vert', '#00ff00'), ('bleu', '#0000ff');
-INSERT INTO activities (aTypeId , colourId , createdAt, updatedAt , description , ended , name , projectManagerId ) VALUES (1, 2, '2020-03-02','2020-03-02' , 'on fait des tests', 0, 'Tests', 2)
+INSERT INTO activities (aTypeId , colourId , createdAt, updatedAt , description , ended , name , projectManagerId ) VALUES (1, 2, '2020-03-02','2020-03-02' , 'on fait des tests', 0, 'Tests', 2);
+INSERT INTO tasks (activityId, ended, createdAt, updatedAt , name, description ) VALUES (1, 0, '2020-03-02',  '2020-03-02', 'tache test', 'ceci est un petit test');
+INSERT INTO tasks (activityId, ended, createdAt, updatedAt , name, description ) VALUES (1, 0, '2020-03-03',  '2020-03-04', 'tache test 2', 'ceci est un autre petit test');
+INSERT INTO tasksAssignments (taskId , userId , description , createdAt , updatedAt ) VALUES (1, 1, 'premiere assignation de tache', '2020-03-02', '2020-03-02');
+INSERT INTO activitiesAssignments (activityId , userId , description , createdAt , updatedAt ) VALUES (1, 1, 'premiere assignation d\'assignation', '2020-03-02', '2020-03-02');
+INSERT INTO events (taskId , userId , description , startAt, endAt, duration , createdAt , updatedAt ) VALUES (1, 1, 'la description 1', '2020-03-03 8:30:00', '2020-03-03 10:30:00', 2, '2020-03-02', '2020-03-02'), (1, 1, 'la description 1', '2020-03-03 11:00:00', '2020-03-03 13:00:00', 2, '2020-03-02', '2020-03-02'), (1, 1, 'la description 1', '2020-03-03 13:30:00', '2020-03-03 15:00:00', 2, '2020-03-02', '2020-03-02');
+
+
+
+
+
+
