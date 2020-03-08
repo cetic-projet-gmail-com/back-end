@@ -1,14 +1,47 @@
 const fs = require('fs');
-let { setISOWeek, getWeek, format, endOfWeek, startOfWeek, addDays, getWeekYear, getISOWeeksInYear, formatISO9075 } = require('date-fns');
+let { startOfMonth, endOfMonth, getISOWeeksInYear, setISOWeek, getWeek, format, endOfWeek, startOfWeek, addDays, getWeekYear, getISOWeeksInYear, formatISO9075 } = require('date-fns');
 let resErrors = require(process.cwd() + '/api/helpers/res-errors');
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize')
 const { User, Task, Activity, Event } = require(`${process.cwd()}/sequelize`)
+const periodHelper = require(`${process()}/api/helpers/period-helper`)
 
 exports.find = async (req, res) => {
 
     let display = req.query.display || 'week';
-    let month = (parseInt(req.query.month) > 0 && 13 > parseInt(req.query.month)) ? req.query.month : undefined;
+    let month = (parseInt(req.query.month) > 0 && 13 > parseInt(req.query.month)) ? parseInt(req.query.month) : undefined;
+    let periodStart;
+    let periodEnd;
+    let weeksInYear = getISOWeeksInYear(req.query.year || Date.now())
+
+    switch (display) {
+        case 'day':
+            if (req.query.week > 0 || weeksInYear >= req.query.week) {
+                periodStart = formatISO9075(startOfWeek(setISOWeek(Date.now(), parseInt(req.query.week)), { weekStartsOn: 1 }))
+                periodEnd = formatISO9075(endOfWeek(periodStart, { weekStartsOn: 1 }))
+            } else {
+                //need to return an error to indicate the week query was wrong
+            }
+            break
+        case 'week':
+            if (req.query.week > 0 || weeksInYear >= req.query.week) {
+                periodStart = formatISO9075(startOfWeek(setISOWeek(Date.now(), parseInt(req.query.week)), { weekStartsOn: 1 }))
+                periodEnd = formatISO9075(endOfWeek(periodStart, { weekStartsOn: 1 }))
+            } else {
+                //need to return an error to indicate the week query was wrong
+            }
+            break
+        case 'month':
+            if (month >= 0 || month < 12) {
+                periodStart = formatISO9075(startOfMonth(setISOWeek(Date.now(), parseInt(req.query.week)), { weekStartsOn: 1 }))
+                periodEnd = formatISO9075(endOfMonth(periodStart))
+            } else {
+                //need to return an error to indicate the month query was wrong
+            }
+            break
+        default:
+            break
+    }
 
     let userId = req.payload.id;
     let home = {}

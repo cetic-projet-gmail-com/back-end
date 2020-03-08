@@ -1,0 +1,1 @@
+//helper to return an object containing a startDate and an endDate for preriod searches
