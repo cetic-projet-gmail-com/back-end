@@ -16,14 +16,14 @@ module.exports = (sequelize, type) => {
             type: type.FLOAT,
             allowNull: false
         },
-        // createdAt: {
-        //     type: type.DATE,
-        //     allowNull: false
-        // },
-        // updatedAt: {
-        //     type: type.DATE,
-        //     allowNull: false
-        // },
+        createdAt: {
+            type: type.DATE,
+            allowNull: false
+        },
+        updatedAt: {
+            type: type.DATE,
+            allowNull: false
+        },
         startAt: {
             type: type.DATE,
             allowNull: true

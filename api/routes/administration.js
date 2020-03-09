@@ -71,7 +71,7 @@ Router.route('/roles')
 Router.route('/role/:id')
     .get(RoleController.findById)
 
-    // //      AType      //
+// //      AType      //
 
 // //check section//
 
@@ -79,6 +79,16 @@ Router.route('/atypes')
 .get(ATypeController.find)
 
 Router.route('/atype/:id')
+.get(ATypeController.findById)
+
+//      Event      //
+
+//check section//
+
+Router.route('/events')
+.get(ATypeController.find)
+
+Router.route('/event/:id')
 .get(ATypeController.findById)
 
 module.exports = Router;

@@ -19,7 +19,6 @@ exports.findById = async (req, res) => {
 }
 
 exports.find = async (req, res) => {
-    console.log('here');
     let tasks = await Task
         .findAll({
             include: ['activity']
@@ -33,4 +32,22 @@ exports.find = async (req, res) => {
             res.status(500).json({ error: err })
         })
     res.status(200).json(tasks);
+}
+
+exports.create = async (req, res) => {
+    let newTask = req.body;
+    await Task
+    .create({
+        name: newTask.name,
+        description: newTask.description,
+        activityId: newTask.activityId,
+        ended: newTask.ended
+    })
+    .then((task) => {
+        this.newTask = task
+    })
+    .catch((err) => {
+        res.status(500).json({ error: err })
+    })
+    res.status(200).json(newTask)
 }
