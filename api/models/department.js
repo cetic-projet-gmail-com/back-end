@@ -23,9 +23,6 @@ module.exports = (sequelize, type) => {
     }, {
     });
     Department.associate = (models) => {
-        // Department.hasMany(models.User, { foreignKey: 'departmentId', as: 'employees' }); // 1-n
-
-        // Department.belongsTo(models.User, { foreignKey: 'responsibleId', as: 'responsible', constraints: false }); // 1-1
     }
     return Department;
 }

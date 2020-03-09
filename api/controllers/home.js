@@ -1,55 +1,15 @@
 const fs = require('fs');
-let { startOfMonth, endOfMonth, getISOWeeksInYear, setISOWeek, getWeek, format, endOfWeek, startOfWeek, addDays, getWeekYear, getISOWeeksInYear, formatISO9075 } = require('date-fns');
+let { getYear, getMonth, startOfMonth, endOfMonth, setISOWeek, getWeek, format, endOfWeek, startOfWeek, addDays, getWeekYear, getISOWeeksInYear, formatISO9075 } = require('date-fns');
 let resErrors = require(process.cwd() + '/api/helpers/res-errors');
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize')
 const { User, Task, Activity, Event } = require(`${process.cwd()}/sequelize`)
-const periodHelper = require(`${process()}/api/helpers/period-helper`)
+const periodHelper = require(`${process.cwd()}/api/helpers/period-helper`)
 
 exports.find = async (req, res) => {
-
-    let display = req.query.display || 'week';
-    let month = (parseInt(req.query.month) > 0 && 13 > parseInt(req.query.month)) ? parseInt(req.query.month) : undefined;
-    let periodStart;
-    let periodEnd;
-    let weeksInYear = getISOWeeksInYear(req.query.year || Date.now())
-
-    switch (display) {
-        case 'day':
-            if (req.query.week > 0 || weeksInYear >= req.query.week) {
-                periodStart = formatISO9075(startOfWeek(setISOWeek(Date.now(), parseInt(req.query.week)), { weekStartsOn: 1 }))
-                periodEnd = formatISO9075(endOfWeek(periodStart, { weekStartsOn: 1 }))
-            } else {
-                //need to return an error to indicate the week query was wrong
-            }
-            break
-        case 'week':
-            if (req.query.week > 0 || weeksInYear >= req.query.week) {
-                periodStart = formatISO9075(startOfWeek(setISOWeek(Date.now(), parseInt(req.query.week)), { weekStartsOn: 1 }))
-                periodEnd = formatISO9075(endOfWeek(periodStart, { weekStartsOn: 1 }))
-            } else {
-                //need to return an error to indicate the week query was wrong
-            }
-            break
-        case 'month':
-            if (month >= 0 || month < 12) {
-                periodStart = formatISO9075(startOfMonth(setISOWeek(Date.now(), parseInt(req.query.week)), { weekStartsOn: 1 }))
-                periodEnd = formatISO9075(endOfMonth(periodStart))
-            } else {
-                //need to return an error to indicate the month query was wrong
-            }
-            break
-        default:
-            break
-    }
-
     let userId = req.payload.id;
-    let home = {}
-
-    let periodStart = formatISO9075(startOfWeek(Date.now(), { weekStartsOn: 1 }))
-    let periodEnd = formatISO9075(endOfWeek(Date.now(), { weekStartsOn: 1 }))
-    //methode pour recuperer une date de la semaine passee par son index/52
-    //let weekdate = setISOWeek(Date.now(), 10)
+    let home = {};
+    let [startDate, endDate] = periodHelper.getPeriod(req.query.year, req.query.month, req.query.week, req.query.day);
 
     let user = await User
         .findOne({
@@ -82,12 +42,11 @@ exports.find = async (req, res) => {
             res.status(500).json({ error: err })
         })
     home['activities'] = activities;
-
     let events = await Event
         .findAll({
             where: {
                 userId: userId, startAt: {
-                    [Op.between]: [periodStart, periodEnd]
+                    [Op.between]: [startDate, endDate]
                 }
             }
         })
@@ -102,40 +61,12 @@ exports.find = async (req, res) => {
             res.status(500).json({ error: err })
         })
     home['events'] = events
-
+    home['display'] = {
+        display,
+        startDate,
+        endDate
+    }
     res.status(200).json(home);
-    // if (req.query.display === "day") {
-    //     let dateFormat = 'dd-MM-yyyy';
-    //     let day = req.query.date ? urlDate(req.query.date) : today;
-
-    //     //? JSPlus A QUOI ca sert les links? let dayFormated = format(new Date(day), dateFormat);
-    //     function urlDate(date) {
-    //         date = date.split('-');
-    //         return date[2] + "-" + date[1] + "-" + date[0];
-    //     }
-
-    // } else if (req.query.display === "month") {
-    //     let month = req.query.month ? parseInt(req.query.month) - 1 : today.getMonth();
-    //     let year = req.query.year ? parseInt(req.query.year) : today.getFullYear();
-
-
-    // } else {
-    //     let weekNumber = req.query.week ? parseInt(req.query.week) : getWeek(today);
-    //     let year = req.query.year ? parseInt(req.query.year) : today.getFullYear();
-    // }
-
-    // let err = "dfhkqdfl";
-    // if (err) { return resErrors(req, res, err)}
-    // else {
-    //     res.json({
-    //         "data": {
-    //             "activities": "user_activities",
-    //             "tasks": "user_tasks",
-    //             "events": "user_events"
-    //         }
-    //     });
-    // }
-
 }
 
 exports.createEvent = async (req, res) => {

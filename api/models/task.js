@@ -29,11 +29,6 @@ module.exports = (sequelize, type) => {
     });
 
     Task.associate = (models) => {
-        // Task.belongsTo(models.Activity, { foreignKey: 'activityId', as: 'activity' }); // 1-1
-
-        // Task.hasMany(models.Event, { foreignKey: 'taskId', as: 'events' }); // 1-n
-
-        // Task.belongsToMany(models.User, { through: models.TasksAssignment, foreignKey: 'taskId', as: 'users' })
     }
     return Task;
 }

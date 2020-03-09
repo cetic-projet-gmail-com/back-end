@@ -15,7 +15,7 @@ const ATypeController = require(`${process.cwd()}/api/controllers/aType`)
 
 Router.route('/departments')
     .get(DepartmentController.find)
-//     .post(DepartmentController.create)
+    .post(DepartmentController.create)
 
 Router.route('/department/:id')
     .get(DepartmentController.findById)
@@ -41,7 +41,7 @@ Router.route('/activity/:id')
 
 Router.route('/users')
     .get(UserController.find)
-//     .post(UserController.create)
+    .post(UserController.create)
 
 Router.route('/user/:id')
     .get(UserController.findById)

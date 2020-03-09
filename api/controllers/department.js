@@ -33,3 +33,19 @@ exports.find = async (req, res) => {
         })
     res.status(200).json(departments);
 }
+
+exports.create = async (req, res) => {
+    let newDepartment = req.body;
+    await Department
+        .create({
+            name: newDepartment.name,
+            responsibleId: newDepartment.responsibleId
+        })
+        .then((department) => {
+            newDepartment = department
+        })
+        .catch((err) => {
+            console.log(`The following error has occured: ${err}`);
+        })
+    res.status(200).json(newDepartment);
+}

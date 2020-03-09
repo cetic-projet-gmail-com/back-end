@@ -31,7 +31,6 @@ CREATE TABLE tasks (
   KEY index_activites_on_activityId (activityId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 DROP TABLE IF EXISTS activitiesAssignments;
 CREATE TABLE activitiesAssignments (
   userId int(11) NOT NULL DEFAULT '0',
@@ -119,9 +118,6 @@ CREATE TABLE roles (
   name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
 
 
 ALTER TABLE tasks ADD CONSTRAINT tasks_ibfk_1 FOREIGN KEY (activityId) REFERENCES activities (id);

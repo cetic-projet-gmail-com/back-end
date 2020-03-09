@@ -7,7 +7,7 @@ module.exports = (sequelize, type) => {
         },
         login: {
             type: type.STRING,
-            allowNull: false
+            allowNull: true
         },
         firstName: {
             type: type.STRING,
@@ -35,14 +35,15 @@ module.exports = (sequelize, type) => {
             allowNull: true
         },
         email: {
-            type: type.STRING
+            type: type.STRING,
+            allowNull: true
         },
         passw: {
             type: type.STRING,
             allowNull: false
         }
     }, {
-        timestamps:false
+        // timestamps:false
     });
     User.associate = (models) => {
         // User.belongsTo(models.Role, { foreignKey: 'roleId', as: 'role' }); // 1-1
