@@ -7,6 +7,7 @@ const ActivityController = require(`${process.cwd()}/api/controllers/activity`)
 const TaskController = require(`${process.cwd()}/api/controllers/task`)
 const RoleController = require(`${process.cwd()}/api/controllers/role`)
 const ATypeController = require(`${process.cwd()}/api/controllers/aType`)
+const EventController = require(`${process.cwd()}/api/controllers/event`)
 
 
 // //      Department      //
@@ -28,7 +29,7 @@ Router.route('/department/:id')
 
 Router.route('/activities')
     .get(ActivityController.find)
-//     .post(ActivityController.create)
+    .post(ActivityController.create)
 
 Router.route('/activity/:id')
     .get(ActivityController.findById)
@@ -54,7 +55,7 @@ Router.route('/user/:id')
 
 Router.route('/tasks')
     .get(TaskController.find)
-//     .post(TaskController.create)
+    .post(TaskController.create)
 
 Router.route('/task/:id')
     .get(TaskController.findById)
@@ -86,7 +87,8 @@ Router.route('/atype/:id')
 //check section//
 
 Router.route('/events')
-.get(ATypeController.find)
+.get(EventController.find)
+.post(EventController.create)
 
 Router.route('/event/:id')
 .get(ATypeController.findById)

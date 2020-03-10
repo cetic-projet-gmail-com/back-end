@@ -43,7 +43,7 @@ exports.create = async (req, res) => {
             firstName: newUser.firstName,
             lastName: newUser.lastName,
             login: newUser.login,
-            passw: newUser.password,
+            password: newUser.password,
             roleId: newUser.roleId,
             email: newUser.email,
             departmentId: newUser.departmentId

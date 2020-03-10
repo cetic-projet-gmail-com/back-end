@@ -4,8 +4,8 @@ const fs = require('fs');
 const express= require('express');
 const Router = express.Router();
 const dotEnv = require('dotenv');
-dotEnv.config({ path: process.cwd() +'/development.env' });
-let resErrors = require(process.cwd() + '/api/helpers/res-errors');
+dotEnv.config({ path: `${process.cwd()}/development.env` });
+let resErrors = require(`${process.cwd()}/api/helpers/res-errors`);
 
 module.exports = async (req, res) => {
     // user = {id:"user_id"}; 

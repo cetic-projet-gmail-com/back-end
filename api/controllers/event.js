@@ -34,8 +34,9 @@ exports.find = async (req, res) => {
     res.status(200).json(events);
 }
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     let newEvent = req.body;
+    console.log(newEvent.startAt);
     await Event
     .create({
         taskId: newEvent.taskId,
@@ -51,5 +52,5 @@ exports.create = (req, res) => {
     .catch((err) => {
         res.status(500).json({ error: err })
     })
-res.status(200).json(event);
+res.status(200).json(newEvent);
 }

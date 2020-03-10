@@ -38,7 +38,7 @@ module.exports = (sequelize, type) => {
             allowNull: true
         }
     }, {
-        timestamps: false
+        
     });
 
     Activity.associate = (models) => {

@@ -20,5 +20,5 @@ exports.getPeriod = (year, month, week, day) => {
         startDate = formatISO9075(startOfWeek(setISOWeek(new Date(year, 0, 0), week), { weekStartsOn: 1 }))
         endDate = formatISO9075(endOfWeek(new Date(startDate), { weekStartsOn: 1 }))
     }
-    return [startDate, endDate]
+    return {startDate, endDate}
 }

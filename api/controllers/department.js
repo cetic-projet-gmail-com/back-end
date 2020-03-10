@@ -1,4 +1,4 @@
-const { User, Department, Role } = require('../../sequelize');
+const { Department } = require(`${process.cwd()}/sequelize`);
 
 exports.findById = async (req, res) => {
     let { id } = req.params;

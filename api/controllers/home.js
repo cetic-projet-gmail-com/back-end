@@ -1,16 +1,14 @@
-const fs = require('fs');
-let { getYear, getMonth, startOfMonth, endOfMonth, setISOWeek, getWeek, format, endOfWeek, startOfWeek, addDays, getWeekYear, getISOWeeksInYear, formatISO9075 } = require('date-fns');
-let resErrors = require(process.cwd() + '/api/helpers/res-errors');
+
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize')
-const { User, Task, Activity, Event } = require(`${process.cwd()}/sequelize`)
+const resErrors = require(process.cwd() + '/api/helpers/res-errors');
+const { User, Activity, Event } = require(`${process.cwd()}/sequelize`)
 const periodHelper = require(`${process.cwd()}/api/helpers/period-helper`)
 
 exports.find = async (req, res) => {
     let userId = req.payload.id;
     let home = {};
-    let [startDate, endDate] = periodHelper.getPeriod(req.query.year, req.query.month, req.query.week, req.query.day);
-
+    let {startDate, endDate} = periodHelper.getPeriod(req.query.year, req.query.month, req.query.week, req.query.day);
     let user = await User
         .findOne({
             where: { id: userId },
@@ -24,6 +22,7 @@ exports.find = async (req, res) => {
                 return {};
             }
         })
+
     home['user'] = user
 
     let activities = await Activity
@@ -41,7 +40,9 @@ exports.find = async (req, res) => {
         .catch((err) => {
             res.status(500).json({ error: err })
         })
+
     home['activities'] = activities;
+
     let events = await Event
         .findAll({
             where: {
@@ -60,12 +61,13 @@ exports.find = async (req, res) => {
         .catch((err) => {
             res.status(500).json({ error: err })
         })
+
     home['events'] = events
     home['display'] = {
-        display,
         startDate,
         endDate
     }
+
     res.status(200).json(home);
 }
 
@@ -87,8 +89,7 @@ exports.createEvent = async (req, res) => {
         "description": body.description,
         "user_id": user,
         "tasks_id": body.tasks_id
-    }
-    */
+    }*/
 }
 
 exports.updateEvent = async (req, res) => {

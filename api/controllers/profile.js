@@ -1,5 +1,5 @@
-const { User } = require('../../sequelize');
-let resErrors = require(process.cwd() + '/api/helpers/res-errors');
+const { User } = require(`${process.cwd()}/sequelize`);
+let resErrors = require(`${process.cwd()}/api/helpers/res-errors`);
 
 
 exports.find = async (req, res) => {
