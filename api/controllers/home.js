@@ -9,6 +9,7 @@ exports.find = async (req, res) => {
     let userId = req.payload.id;
     let home = {};
     let {startDate, endDate} = periodHelper.getPeriod(req.query.year, req.query.month, req.query.week, req.query.day);
+    console.log(startDate, endDate);
     let user = await User
         .findOne({
             where: { id: userId },

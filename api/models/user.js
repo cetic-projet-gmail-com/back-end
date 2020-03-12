@@ -43,20 +43,8 @@ module.exports = (sequelize, type) => {
             allowNull: false
         }
     }, {
-        // timestamps:false
     });
     User.associate = (models) => {
-        // User.belongsTo(models.Role, { foreignKey: 'roleId', as: 'role' }); // 1-1
-
-        // User.belongsTo(models.Department, { foreignKey: 'departmentId', as: 'department' }); // 1-1
-
-        // User.hasMany(models.Activity, { foreignKey: 'projectManagerId', as: 'managedActivities' }); // 1-n
-
-        // User.hasMany(models.Event, { foreignKey: 'userId', as: 'events' }); // 1-n
-
-        // User.belongsToMany(models.Task, { through: models.TasksAssignment, foreignKey: 'userId', as: 'tasks' })
-
-        // User.belongsToMany(models.Activity, { through: models.ActivityAssignment, foreignKey: 'userId', as: 'activity' })
     }
     return User;
 }

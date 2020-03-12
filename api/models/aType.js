@@ -1,5 +1,10 @@
 module.exports = (sequelize, type) => {
     const AType = sequelize.define('aType', {
+        id: {
+            type: type.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         name: {
             type: type.STRING,
             allowNull: false
@@ -9,7 +14,6 @@ module.exports = (sequelize, type) => {
     });
 
     AType.associate = (models) => {
-        // AType.hasMany(models.Activity, {foreignKey: 'aTypeId', as: 'type'}); // 1-n
     }
     return AType;
 }

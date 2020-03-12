@@ -10,18 +10,23 @@ const ActivityModel = require('./api/models/activity')
 const ActivitiesAssignmentModel = require('./api/models/activitiesAssignment')
 const TasksAssignmentModel = require('./api/models/tasksAssignment')
 const ATypeModel = require('./api/models/aType')
-
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, '', {
   host: process.env.DB_HOST,
   dialect: 'mysql',
+  charset: 'utf8',
+  collate: 'utf8_general_ci',
   pool: {
     max: 10,
     min: 0,
     acquire: 30000,
     idle: 10000
-  }
+  },
+  // timezone: '+0:00'
+  // "timezone": 'Europe/Berlin'
 });
+
+/*      models initialization      */
 User = UserModel(sequelize, Sequelize)
 Department = DepartmentModel(sequelize, Sequelize)
 Role = RoleModel(sequelize, Sequelize)
@@ -62,10 +67,7 @@ Event.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // 1-1
 Event.belongsTo(Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
 
 
-
-
-
-
+/*connection initializing */
 
 sequelize
   .authenticate()

@@ -1,4 +1,5 @@
 const { User } = require(`${process.cwd()}/sequelize`)
+const { formatISO } = require('date-fns')
 
 exports.findById = async (req, res) => {
     let { id } = req.params;
@@ -15,7 +16,7 @@ exports.findById = async (req, res) => {
         .catch((err) => {
             res.status(500).json({ error: err })
         })
-    res.status(200).json(user);
+    res.status(200).json({ user });
 }
 
 exports.find = async (req, res) => {
@@ -33,7 +34,7 @@ exports.find = async (req, res) => {
         .catch((err) => {
             return res.status(500).json({ error: err })
         })
-    res.status(200).json(users);
+    res.status(200).json({ users });
 }
 
 exports.create = async (req, res) => {
@@ -49,11 +50,51 @@ exports.create = async (req, res) => {
             departmentId: newUser.departmentId
         })
         .then((user) => {
-            user.passw = undefined;
+            user.password = undefined;
             newUser = user;
         })
         .catch((err) => {
             console.log(`The following error has occured: ${err}`);
         })
-    res.status(200).json(newUser);
+    res.status(200).json({ newUser });
+}
+
+exports.update = async (req, res) => {
+    let { id } = req.params;
+    let updatedUser = req.body;
+
+    await User
+        .update(
+            {
+                login: updatedUser.login ? updatedUser.login : undefined,
+                firstName: updatedUser.firstName ? updatedUser.firstName : undefined,
+                lastName: updatedUser.lastName ? updatedUser.lastName : undefined,
+                password: updatedUser.password ? updatedUser.password : undefined,
+                roleId: updatedUser.roleId ? updatedUser.roleId : undefined,
+                email: updatedUser.email ? updatedUser.email : undefined,
+                departmentId: updatedUser.departmentId ? updatedUser.departmentId : undefined
+            },
+            {
+                where: { id: id }
+            }
+        )
+        .catch((err) => {
+            console.log(`The following error has occured: ${err}`);
+        })
+    let user = await User
+        .findOne({
+            where: { id: id },
+            include: ['role', 'department']
+        })
+        .then((user) => {
+            if (user) {
+                user.password = undefined
+                console.log(user.updatedAt, formatISO(user.updatedAt));
+                return user
+            }
+        })
+        .catch((err) => {
+            console.log(`The following error has occured: ${err}`);
+        })
+    res.status(200).json({ user });
 }

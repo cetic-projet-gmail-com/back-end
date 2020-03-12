@@ -1,5 +1,10 @@
 module.exports = (sequelize, type) => {
     const Colour = sequelize.define('colour', {
+        id: {
+            type: type.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         name: {
             type: type.STRING,
             allowNull: false
@@ -13,7 +18,6 @@ module.exports = (sequelize, type) => {
     });
 
     Colour.associate = (models) => {
-        // Colour.hasMany(models.Activity, {foreignKey: 'colourId', as: 'colour'}); // 1-n
     }
     return Colour;
 }

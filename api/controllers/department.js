@@ -49,3 +49,33 @@ exports.create = async (req, res) => {
         })
     res.status(200).json(newDepartment);
 }
+
+exports.update = async (req, res) => {
+    let updatedDepartment = req.body;
+    let { id } = req.params;
+
+    await Department
+        .update({
+            name: updatedDepartment.name ? updatedDepartment.name : undefined,
+            responsibleId: updatedDepartment.responsibleId ? updatedDepartment.responsibleId : undefined
+        })
+        .catch((err) => {
+            console.log(`The following error has occured: ${err}`);
+        })
+
+    let department = await Department
+        .findOne({
+            where: { id: id },
+            include:['responsible','employees']
+        })
+        .then((department) => {
+            if (department) {
+                return department
+            }
+        })
+        .catch((err) => {
+            console.log(`The following error has occured: ${err}`);
+        })
+
+    res.status(200).json(department)
+}

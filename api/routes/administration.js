@@ -46,7 +46,7 @@ Router.route('/users')
 
 Router.route('/user/:id')
     .get(UserController.findById)
-//     .patch(UserController.update)
+    .patch(UserController.update)
 //     .delete(UserController.delete)
 
 // //      Task      //

@@ -17,10 +17,6 @@ module.exports = (sequelize, type) => {
             type: type.TEXT,
             allowNull: true
         },
-        duration: {
-            type: type.FLOAT,
-            allowNull: false
-        },
         createdAt: {
             type: type.DATE,
             allowNull: false
@@ -41,9 +37,6 @@ module.exports = (sequelize, type) => {
     });
 
     Event.associate = (models) => {
-        // Event.belongsTo(models.User, { foreignKey: 'userId', as: 'user' }); // 1-1
-
-        // Event.belongsTo(models.Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
     }
     return Event;
 }

@@ -1,5 +1,10 @@
 module.exports = (sequelize, type) => {
     const Activity = sequelize.define('activity', {
+        id: {
+            type: type.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         name: {
             type: type.STRING,
             allowNull: false
@@ -42,16 +47,6 @@ module.exports = (sequelize, type) => {
     });
 
     Activity.associate = (models) => {
-        // Activity.belongsTo(models.AType, { foreignKey: 'aTypeId', as: 'type' }); // 1-1
-
-        // Activity.belongsTo(models.Colour, { foreignKey: 'colourId', as: 'colour' }); // 1-1
-
-        // Activity.belongsTo(models.User, {foreignKey: 'projectManagerId', as: 'projectManager'}); // 1-1
-
-        // Activity.hasMany(models.Task, { foreignKey: 'activityId', as: 'tasks'}); // 1-n
-
-        // Activity.belongsToMany(models.User, { through: models.ActivityAssignment, foreignKey: 'activityId', as: 'users' })
-
     }
     return Activity;
 }

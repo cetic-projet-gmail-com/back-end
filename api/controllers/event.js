@@ -43,7 +43,6 @@ exports.create = async (req, res) => {
         userId: newEvent.userId,
         startAt:newEvent.startAt,
         endAt: newEvent.endAt,
-        duration: newEvent.duration,
         description: newEvent.description
     })
     .then((event) => {

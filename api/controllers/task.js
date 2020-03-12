@@ -37,17 +37,50 @@ exports.find = async (req, res) => {
 exports.create = async (req, res) => {
     let newTask = req.body;
     await Task
-    .create({
-        name: newTask.name,
-        description: newTask.description,
-        activityId: newTask.activityId,
-        ended: newTask.ended
-    })
-    .then((task) => {
-        this.newTask = task
-    })
-    .catch((err) => {
-        res.status(500).json({ error: err })
-    })
+        .create({
+            name: newTask.name,
+            description: newTask.description,
+            activityId: newTask.activityId,
+            ended: newTask.ended
+        })
+        .then((task) => {
+            this.newTask = task
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
     res.status(200).json(newTask)
+}
+
+exports.update = async (req, res) => {
+    let updatedTask = req.body;
+    let { id } = req.params;
+    await Task
+        .update({
+            name: updatedTask.name ? updatedTask.name : undefined,
+            description: updatedTask.description ? updatedTask.description : undefined,
+            activityId: updatedTask.activityId ? updatedTask.activityId : undefined,
+            ended: updatedTask.ended ? updatedTask.ended : undefined,
+
+            where: { id: id }
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
+
+        let task = await Task
+        .findOne({
+            where:{id:id},
+            include:['activity']
+        })
+        .then((task) => {
+            if (task) {
+                return task;
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
+
+        res.status(200).json({task})
 }

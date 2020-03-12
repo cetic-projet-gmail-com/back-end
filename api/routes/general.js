@@ -18,7 +18,7 @@ Router.route('/home')
 ;
 Router.route('/profile')
     .get(profileController.find)
-    .patch(profileController.updateProfile)
+    .patch(profileController.update)
 ;
 Router.use('/', (req, res) => {
     res.status(404).json({errors: "404 not found"})

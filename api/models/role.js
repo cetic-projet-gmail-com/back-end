@@ -10,12 +10,10 @@ module.exports = (sequelize, type) => {
             allowNull: false
         }
     }, {
-        // underscored: true,
         timestamps: false
     });
 
     Role.associate = (models) => {
-        // Role.hasMany(models.User, { foreignKey: 'roleId', as: 'users' }); // 1-n
     }
     return Role;
 }

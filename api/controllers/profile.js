@@ -20,23 +20,40 @@ exports.find = async (req, res) => {
     res.json(user);
 }
 
-exports.updateProfile = async (req, res) => {
-    let userId = req.payload.id;
+exports.update = async (req, res) => {
+    let { id } = req.payload;
     let updatedUser = req.body;
-    User
+
+    await User
+        .update({
+            login: updatedUser.login ? updatedUser.login : undefined,
+            firstName: updatedUser.firstName ? updatedUser.firstName : undefined,
+            lastName: updatedUser.lastName ? updatedUser.lastName : undefined,
+            password: updatedUser.password ? updatedUser.password : undefined,
+            roleId: updatedUser.roleId ? updatedUser.roleId : undefined,
+            email: updatedUser.email ? updatedUser.email : undefined,
+            departmentId: updatedUser.departmentId ? updatedUser.departmentId : undefined
+        },
+            {
+                where: { id: id }
+            })
+        .catch((err) => {
+            console.log(`The following error has occured: ${err}`);
+        })
+
+    let user = await User
         .findOne({
-            where: { id: userId }
+            where: { id: id },
+            include: ['role', 'department','']
         })
         .then((user) => {
             if (user) {
-                user.update(
-                    {
-                        email: updatedUser.email,
-                        roleId: updatedUser.roleId,
-                        departmentId: updatedUser.departmentId
-                    }
-                )
+                user.password = undefined
+                return user;
             }
         })
-    res.status(200).json({ "infos": "profile updated" });
+        .catch((err) => {
+            console.log(`The following error has occured: ${err}`);
+        })
+    res.status(200).json({ user });
 }
