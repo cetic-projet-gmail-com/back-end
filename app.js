@@ -19,6 +19,9 @@ const GeneralRouter = require(process.cwd() +'/api/routes/general');
 
 const app = express();
 
+/* --------------------------------- Tables --------------------------------- */
+const { User } = require(`${process.cwd()}/sequelize`)
+
 /* ------------------------------- Middlewares ------------------------------ */
 
 app.use(express.json());
@@ -31,13 +34,35 @@ app.use(cors({
 app.use(cookieParser());
 app.use(passport.initialize());
 
-//TODO Relier à la DB
+app.all('*', (req, res, next) => {
+  console.log(req.method + " " +req.originalUrl);
+  
+  next();
+});
 passport.use(new LocalStrategy({
   usernameField: 'login'
   },
   async (username, password, done) => {
-    //! supp this
-    return done(null, {id : 1})
+    await User
+      .findOne({
+          where: { login: username },
+          include: ['role']
+      }).then((userFound) => {
+        if (userFound) {
+            if(userFound.password === password) {
+              return done(null, userFound)
+            } else {
+              return done(null, false, {
+                message: 'Password is wrong.'
+              });
+            }
+            
+        } else {
+          return done(null, false, {
+            message: 'User not found'
+        });
+        }
+    })
     /*
       let usersArr = fs.readFileSync(process.cwd()+'/api/models/users.json');
 
@@ -72,6 +97,7 @@ app.post('/login', Login);
 
 app.use('/administration', auth, AdminRouter);
 app.use('/', auth, GeneralRouter);
+
 
   // app.listen(process.env.PORT, () => {
   //   console.log(`Express app is running at port : ${process.env.PORT}`)
