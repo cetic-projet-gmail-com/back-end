@@ -35,7 +35,6 @@ DROP TABLE IF EXISTS activitiesAssignments;
 CREATE TABLE activitiesAssignments (
   userId int(11) NOT NULL DEFAULT '0',
   activityId int(11) NOT NULL DEFAULT '0',
-  description text COLLATE utf8_unicode_ci,
   createdAt datetime DEFAULT NULL,
   updatedAt datetime DEFAULT NULL,
   PRIMARY KEY (userId,activityId),
@@ -46,7 +45,6 @@ DROP TABLE IF EXISTS tasksAssignments;
 CREATE TABLE tasksAssignments (
   userId int(11) NOT NULL DEFAULT '0',
   taskId int(11) NOT NULL DEFAULT '0',
-  description text COLLATE utf8_unicode_ci,
   createdAt datetime DEFAULT NULL,
   updatedAt datetime DEFAULT NULL,
   PRIMARY KEY (userId,taskId),
@@ -66,6 +64,7 @@ CREATE TABLE departments (
 
 DROP TABLE IF EXISTS events;
 CREATE TABLE events (
+  id int(11) NOT NULL AUTO_INCREMENT,
   userId int(11) DEFAULT NULL,
   taskId int(11) DEFAULT NULL,
   description text COLLATE utf8_unicode_ci,
@@ -91,7 +90,7 @@ CREATE TABLE users (
   updatedAt datetime DEFAULT NULL,
   roleId int(11)  DEFAULT null,
   email varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  passw varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `password` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (id),
   UNIQUE KEY index_personnes_on_email (email),
   KEY departementId (departmentId)
