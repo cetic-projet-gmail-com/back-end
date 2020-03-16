@@ -34,9 +34,29 @@ exports.find = async (req, res) => {
     res.status(200).json(events);
 }
 
+exports.update = async (req, res) => {
+    let {id} = req.params;
+    let updatedEvent = req.params;
+
+    await Event
+    .update({
+        
+        where:{id:id}
+    })
+    .then((event) => {
+        if (event) {
+            return event
+        }
+    })
+    .catch((err) => {
+        res.status(500).json({ error: err })
+    })
+
+    res.status(200).json(updatedEvent)
+}
+ 
 exports.create = async (req, res) => {
     let newEvent = req.body;
-    console.log(newEvent.startAt);
     await Event
     .create({
         taskId: newEvent.taskId,
@@ -46,6 +66,7 @@ exports.create = async (req, res) => {
         description: newEvent.description
     })
     .then((event) => {
+        if(event)
         this.newEvent = event;
     })
     .catch((err) => {

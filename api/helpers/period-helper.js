@@ -1,4 +1,4 @@
-const { formatISO, getYear, getISOWeek, formatISO9075, setISOWeek, startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth } = require('date-fns')
+const { addHours, formatISO, getYear, getISOWeek, formatISO9075, setISOWeek, startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth } = require('date-fns')
 
 
 
@@ -17,8 +17,8 @@ exports.getPeriod = (year, month, week, day) => {
         startDate = formatISO(startOfMonth(new Date(year, month)))
         endDate = formatISO(endOfMonth(new Date(year, month)))
     } else {
-        startDate = formatISO(startOfWeek(setISOWeek(new Date(year, 0, 0), week), { weekStartsOn: 1 }))
-        endDate = formatISO(endOfWeek(new Date(startDate), { weekStartsOn: 1 }))
+        startDate = formatISO(addHours(startOfWeek(setISOWeek(new Date(year, 0, 0), week), { weekStartsOn: 1 }),1))
+        endDate = formatISO(addHours(endOfWeek(new Date(startDate), { weekStartsOn: 1 }),1))
     }
     return {startDate, endDate}
 }

@@ -8,23 +8,23 @@ const periodHelper = require(`${process.cwd()}/api/helpers/period-helper`)
 exports.find = async (req, res) => {
     let userId = req.payload.id;
     let home = {};
-    let {startDate, endDate} = periodHelper.getPeriod(req.query.year, req.query.month, req.query.week, req.query.day);
-    console.log(startDate, endDate);
-    let user = await User
-        .findOne({
-            where: { id: userId },
-            include: ['role', 'department']
-        })
-        .then((user) => {
-            if (user) {
-                return user;
-            }
-            else {
-                return {};
-            }
-        })
+    let { startDate, endDate } = periodHelper.getPeriod(req.query.year, req.query.month, req.query.week, req.query.day);
 
-    home['user'] = user
+    // let user = await User
+    //     .findOne({
+    //         where: { id: userId },
+    //         include: ['role', 'department']
+    //     })
+    //     .then((user) => {
+    //         if (user) {
+    //             return user;
+    //         }
+    //         else {
+    //             return {};
+    //         }
+    //     })
+
+    // home['user'] = user
 
     let activities = await Activity
         .findAll({
@@ -69,7 +69,7 @@ exports.find = async (req, res) => {
         endDate
     }
 
-    res.status(200).json(home);
+    res.status(200).json({ data: home });
 }
 
 exports.createEvent = async (req, res) => {

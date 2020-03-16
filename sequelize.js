@@ -11,6 +11,9 @@ const ActivitiesAssignmentModel = require('./api/models/activitiesAssignment')
 const TasksAssignmentModel = require('./api/models/tasksAssignment')
 const ATypeModel = require('./api/models/aType')
 const Sequelize = require('sequelize');
+
+/*      connection string       */
+
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, '', {
   host: process.env.DB_HOST,
   dialect: 'mysql',
@@ -22,11 +25,10 @@ const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, ''
     acquire: 30000,
     idle: 10000
   },
-  // timezone: '+0:00'
-  // "timezone": 'Europe/Berlin'
 });
 
 /*      models initialization      */
+
 User = UserModel(sequelize, Sequelize)
 Department = DepartmentModel(sequelize, Sequelize)
 Role = RoleModel(sequelize, Sequelize)

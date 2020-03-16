@@ -5,7 +5,7 @@ exports.findById = async (req, res) => {
     let activity = await Activity
         .findOne({
             where: { id: id },
-            include: ['projectManager', 'tasks', 'colour', 'type']
+            include: ['projectManager', 'tasks', 'colour', 'type', 'users']
         })
         .then((activity) => {
             if (activity) {
@@ -59,15 +59,16 @@ exports.update = async (req, res) => {
     let updatedActivity = req.body;
     let { id } = req.params;
 
-    await Activity.update({
-        name: updatedActivity.name ? updatedActivity.name : undefined,
-        description: updatedActivity.description ? updatedActivity.description : undefined,
-        projectManagerId: updatedActivity.projectManagerId ? updatedActivity.projectManagerId : undefined,
-        colourId: updatedActivity.colourId ? updatedActivity.colourId : undefined,
-        aTypeId: updatedActivity.aTypeId ? updatedActivity.aTypeId : undefined,
-        ended: updatedActivity.ended ? updatedActivity.ended : undefined,
-        where: { id, id }
-    })
+    await Activity
+        .update({
+            name: updatedActivity.name ? updatedActivity.name : undefined,
+            description: updatedActivity.description ? updatedActivity.description : undefined,
+            projectManagerId: updatedActivity.projectManagerId ? updatedActivity.projectManagerId : undefined,
+            colourId: updatedActivity.colourId ? updatedActivity.colourId : undefined,
+            aTypeId: updatedActivity.aTypeId ? updatedActivity.aTypeId : undefined,
+            ended: updatedActivity.ended ? updatedActivity.ended : undefined,
+            where: { id: id }
+        })
         .catch((err) => {
             console.log(`The following error has occured : ${err}`);
         })

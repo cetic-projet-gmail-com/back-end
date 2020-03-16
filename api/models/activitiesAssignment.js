@@ -2,17 +2,11 @@ module.exports = (sequelize, type) => {
     const ActivitiesAssignment = sequelize.define('activitiesAssignment', {
         userId: {
             type: type.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
+            primaryKey: true
         },
         activityId: {
             type: type.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        description: {
-            type: type.TEXT,
-            allowNull: false
+            primaryKey: true
         },
         createdAt: {
             type: type.DATE,
