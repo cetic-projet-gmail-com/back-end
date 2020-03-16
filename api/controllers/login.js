@@ -11,21 +11,20 @@ module.exports = async (req, res) => {
     // user = {id:"user_id"}; 
     passport.authenticate('local', async function (err, user, info) {
         var token;
-        // if (err) {
-        //     resErrors(req, res, err)
-        //     return;
-        // }
-
-        // if (index !== -1) {
-            token = generateJwt({id: 1});
+        if (err) {
+            resErrors(req, res, err)
+            return;
+        }
+        if (user) {
+            token = generateJwt(user);
             res.status(200);
             res.json({
                 "token": token
             });
-        // } else {
-        //     res.status(401);
-        //     res.json({"errors" : info});
-        // }
+        } else {
+            res.status(401);
+            res.json({"errors" : info});
+        }
     })(req, res);
 }
 // module.exports = Router;
@@ -36,6 +35,9 @@ function generateJwt(user) {
 
     return jwt.sign({
         id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role.id
         // login: this.login,
         // exp: parseInt(expiry.getTime() / 1000),
     }, process.env.JWT_SECRET); 
