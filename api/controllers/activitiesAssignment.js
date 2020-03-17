@@ -2,9 +2,10 @@ const { ActivitiesAssignment } = require(`${process.cwd()}/sequelize`)
 
 exports.findByUserId = async (req, res) => {
     let { id } = req.params;
+    console.log(id);
     let activityAssignment = await ActivitiesAssignment
         .findAll({
-            where: { id: id },
+            where: { userId: id },
             include: ['activity']
         })
         .then((activityAssignment) => {
@@ -13,7 +14,7 @@ exports.findByUserId = async (req, res) => {
             }
         })
         .catch((err) => {
-            res.status(500).json({ error: err })
+            res.status(500).json({ error: err, check: 'check' })
         })
     res.status(200).json(activityAssignment);
 }
@@ -42,20 +43,20 @@ exports.findOne = async (req, res) => {
 
 exports.create = async (req, res) => {
     let newActivitiesAssignment = req.body;
-    await ActivitiesAssignment
+    let activityAssignment = await ActivitiesAssignment
         .create({
             userId: newActivitiesAssignment.userId ? newActivitiesAssignment.userId : undefined,
             activityId: newActivitiesAssignment.activityId ? newActivitiesAssignment.activityId : undefined,
         })
         .then((activityAssignment) => {
             if (activityAssignment) {
-                this.newActivitiesAssignment = activityAssignment;
+                return activityAssignment;
             }
         })
         .catch((err) => {
             res.status(500).json({ error: err })
         })
-    res.status(200).json(newActivitiesAssignment)
+    res.status(200).json(activityAssignment)
 }
 
 exports.delete = async (req, res) => {

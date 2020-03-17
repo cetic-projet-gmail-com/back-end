@@ -36,7 +36,7 @@ exports.find = async (req, res) => {
 
 exports.create = async (req, res) => {
     let newTask = req.body;
-    await Task
+    let task = await Task
         .create({
             name: newTask.name,
             description: newTask.description,
@@ -44,12 +44,12 @@ exports.create = async (req, res) => {
             ended: newTask.ended
         })
         .then((task) => {
-            this.newTask = task
+            return task
         })
         .catch((err) => {
             res.status(500).json({ error: err })
         })
-    res.status(200).json(newTask)
+    res.status(200).json(task)
 }
 
 exports.update = async (req, res) => {

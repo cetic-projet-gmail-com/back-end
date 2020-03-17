@@ -57,7 +57,8 @@ exports.update = async (req, res) => {
     await Department
         .update({
             name: updatedDepartment.name ? updatedDepartment.name : undefined,
-            responsibleId: updatedDepartment.responsibleId ? updatedDepartment.responsibleId : undefined
+            responsibleId: updatedDepartment.responsibleId ? updatedDepartment.responsibleId : undefined,
+            where: { id: id }
         })
         .catch((err) => {
             console.log(`The following error has occured: ${err}`);
@@ -66,7 +67,7 @@ exports.update = async (req, res) => {
     let department = await Department
         .findOne({
             where: { id: id },
-            include:['responsible','employees']
+            include: ['responsible', 'employees']
         })
         .then((department) => {
             if (department) {

@@ -10,35 +10,28 @@ exports.find = async (req, res) => {
     let home = {};
     let { startDate, endDate } = periodHelper.getPeriod(req.query.year, req.query.month, req.query.week, req.query.day);
 
-    // let user = await User
-    //     .findOne({
-    //         where: { id: userId },
-    //         include: ['role', 'department']
-    //     })
-    //     .then((user) => {
-    //         if (user) {
-    //             return user;
-    //         }
-    //         else {
-    //             return {};
-    //         }
-    //     })
-
-    // home['user'] = user
-
-    let activities = await Activity
-        .findAll({
-            where: { id: userId, ended: false },
-            include: ['tasks', 'colour', 'type']
+    let activities = await User
+        .findOne({
+            where: { id: userId },
+            include: {
+                model: Activity,
+                as: 'activities',
+                where: { ended: false },
+                include: {
+                    model: Task,
+                    as: 'tasks'
+                }
+            }
         })
-        .then((activities) => {
-            if (activities.length > 0) {
-                return activities;
+        .then((user) => {
+            if (user.activities.length > 0) {
+                return user.activities;
             } else {
                 return [];
             }
         })
         .catch((err) => {
+            console.log(err);
             res.status(500).json({ error: err })
         })
 
@@ -80,12 +73,12 @@ exports.createEvent = async (req, res) => {
     req.body['userId'] = req.payload.id;
     await Event.create(req.body)
         .then(event => {
-            return res.status(200).json({event : event.dataValues});
+            return res.status(200).json({ event: event.dataValues });
         }).catch(err => {
             return resErrors(req, res, err);
         })
 
-        // let body = req.body;
+    // let body = req.body;
 
     //*let user_id = req.payload.id;
     /* CHAMPS
@@ -103,24 +96,25 @@ exports.createEvent = async (req, res) => {
 
 exports.updateEvent = async (req, res) => {
     //*let user_id zzzs= req.payload.id;
-    let {startAt, endAt, description} = req.body;
+    let { startAt, endAt, description } = req.body;
     // let body = req.body;
-    await  Event.findOne({where: {id:req.params.id}})
+    await Event.findOne({ where: { id: req.params.id } })
         .then(event => {
             if (event) {
                 event.update({
                     startAt,
                     endAt,
-                    description});
-                return res.status(200).json({event: event.dataValues});
+                    description
+                });
+                return res.status(200).json({ event: event.dataValues });
             }
-            return resErrors(req,res, 'event not found');
+            return resErrors(req, res, 'event not found');
         }).catch(err => {
             return resErrors(req, res, err);
         })
-        
-    
-        
+
+
+
     /* CHAMPS
     let eventModified = {
         "id": event.id,
@@ -139,7 +133,7 @@ exports.updateEvent = async (req, res) => {
 
 exports.deleteEvent = async (req, res) => {
     // let user_id = req.payload.id;
-    await Event.findOne({where: {id:req.params.id}})
+    await Event.findOne({ where: { id: req.params.id } })
         .then(event => {
             if (event) {
                 event.destroy();

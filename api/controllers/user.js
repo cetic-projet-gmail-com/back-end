@@ -22,7 +22,10 @@ exports.findById = async (req, res) => {
 exports.find = async (req, res) => {
     let users = await User
         .findAll({
-            include: ['role', 'department']
+            include: ['role', 'department'],
+            attributes:{
+                exclude:['password']
+            }
         })
         .then((users) => {
             if (users.length > 0) {

@@ -110,7 +110,7 @@ Router.route('/tasksassignments/:id')
 
 //      check section       //
 
-Router.route('/activitiesassignments')
+Router.route('/activitiesassignments/:id')
     .get(ActivitiesAssignmentController.findByUserId)
     .post(ActivitiesAssignmentController.create)
 
@@ -122,11 +122,11 @@ Router.route('/activitiesassignments/:userId/:activityId')
 
 //      check section       //
 
-Router.route('/activitiesassignments')
+Router.route('/tasksassignments/:id')
     .get(TasksAssignmentController.findByUserId)
     .post(TasksAssignmentController.create)
 
-Router.route('/activitiesassignments/:userId/:activityId')
+Router.route('/tasksassignments/:userId/:activityId')
     .get(TasksAssignmentController.findOne)
     .delete(TasksAssignmentController.delete)
 

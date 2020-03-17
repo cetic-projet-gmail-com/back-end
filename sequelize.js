@@ -48,23 +48,32 @@ User.hasMany(Activity, { foreignKey: 'projectManagerId', as: 'managedActivities'
 User.hasMany(Event, { foreignKey: 'userId', as: 'events' }); // 1-n
 User.belongsToMany(Task, { through: TasksAssignment, foreignKey: 'userId', as: 'tasks' })
 User.belongsToMany(Activity, { through: ActivitiesAssignment, foreignKey: 'userId', as: 'activities' })
+
 Role.hasMany(User, { foreignKey: 'roleId', as: 'users' }); // 1-n
+
 Department.hasMany(User, { foreignKey: 'departmentId', as: 'employees' }); // 1-n
 Department.belongsTo(User, { foreignKey: 'responsibleId', as: 'responsible', constraints: false }); // 1-1
+
 Task.belongsTo(Activity, { foreignKey: 'activityId', as: 'activity' }); // 1-1
 Task.hasMany(Event, { foreignKey: 'taskId', as: 'events' }); // 1-n
 Task.belongsToMany(User, { through: TasksAssignment, foreignKey: 'taskId', as: 'users' });
+
 TasksAssignment.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // 1-1
 TasksAssignment.belongsTo(Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
+
 ActivitiesAssignment.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // 1-1
-ActivitiesAssignment.belongsTo(Activity, { foreignKey: 'ActivityId', as: 'Activity' }); // 1-1
+ActivitiesAssignment.belongsTo(Activity, { foreignKey: 'activityId', as: 'activity' }); // 1-1
+
 Activity.belongsTo(AType, { foreignKey: 'aTypeId', as: 'type' }); // 1-1
 Activity.belongsTo(Colour, { foreignKey: 'colourId', as: 'colour' }); // 1-1
 Activity.belongsTo(User, { foreignKey: 'projectManagerId', as: 'projectManager' }); // 1-1
 Activity.hasMany(Task, { foreignKey: 'activityId', as: 'tasks' }); // 1-n
 Activity.belongsToMany(User, { through: ActivitiesAssignment, foreignKey: 'activityId', as: 'users' })
+
 AType.hasMany(Activity, { foreignKey: 'aTypeId', as: 'activities' }); // 1-n
+
 Colour.hasMany(Activity, { foreignKey: 'colourId', as: 'colour' }); // 1-n
+
 Event.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // 1-1
 Event.belongsTo(Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
 

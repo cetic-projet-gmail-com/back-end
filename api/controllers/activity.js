@@ -36,7 +36,7 @@ exports.find = async (req, res) => {
 
 exports.create = async (req, res) => {
     let newActivity = req.body;
-    await Activity
+    let activity = await Activity
         .create({
             name: newActivity.name,
             description: newActivity.description,
@@ -46,13 +46,15 @@ exports.create = async (req, res) => {
             ended: newActivity.ended
         })
         .then((activity) => {
-            this.newActivity = activity;
+            if (activity){
+                return activity;
+            }
         })
         .catch((err) => {
             console.log(`The following error has occured : ${err}`);
         })
 
-    res.status(200).json(newActivity);
+    res.status(200).json(activity);
 }
 
 exports.update = async (req, res) => {
