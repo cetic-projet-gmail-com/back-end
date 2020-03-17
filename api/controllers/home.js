@@ -73,13 +73,21 @@ exports.find = async (req, res) => {
 }
 
 exports.createEvent = async (req, res) => {
-    //*let user_id = req.payload.id;
-    let body = req.body;
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return resErrors(req, res, errors.array());
     }
+    req.body['userId'] = req.payload.id;
+    await Event.create(req.body)
+        .then(event => {
+            return res.status(200).json({event : event.dataValues});
+        }).catch(err => {
+            return resErrors(req, res, err);
+        })
+
+        // let body = req.body;
+
+    //*let user_id = req.payload.id;
     /* CHAMPS
     let newEvent = {
         "duration": end - start,
@@ -94,8 +102,25 @@ exports.createEvent = async (req, res) => {
 }
 
 exports.updateEvent = async (req, res) => {
-    //*let user_id = req.payload.id;
-    let body = req.body;
+    //*let user_id zzzs= req.payload.id;
+    let {startAt, endAt, description} = req.body;
+    // let body = req.body;
+    await  Event.findOne({where: {id:req.params.id}})
+        .then(event => {
+            if (event) {
+                event.update({
+                    startAt,
+                    endAt,
+                    description});
+                return res.status(200).json({event: event.dataValues});
+            }
+            return resErrors(req,res, 'event not found');
+        }).catch(err => {
+            return resErrors(req, res, err);
+        })
+        
+    
+        
     /* CHAMPS
     let eventModified = {
         "id": event.id,
@@ -113,7 +138,15 @@ exports.updateEvent = async (req, res) => {
 }
 
 exports.deleteEvent = async (req, res) => {
-    let user_id = req.payload.id;
-
-    res.json({ "infos": "event.description" + " deleted" });
+    // let user_id = req.payload.id;
+    await Event.findOne({where: {id:req.params.id}})
+        .then(event => {
+            if (event) {
+                event.destroy();
+                return res.status(200).json({ "infos": "event deleted" });
+            }
+            return resErrors(req, res, 'event not found');
+        }).catch(err => {
+            return resErrors(req, res, err);
+        });
 }
