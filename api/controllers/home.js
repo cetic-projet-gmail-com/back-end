@@ -17,10 +17,10 @@ exports.find = async (req, res) => {
                 model: Activity,
                 as: 'activities',
                 where: { ended: false },
-                include: {
+                include: [{
                     model: Task,
                     as: 'tasks'
-                }
+                }, 'colour']
             }
         })
         .then((user) => {
