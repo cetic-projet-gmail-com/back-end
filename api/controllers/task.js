@@ -89,19 +89,20 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     let { id } = req.params;
+
     try {
         const result = await sequelize.transaction(async (t) => {
 
             await Event
                 .destroy(
                     {
-                        where: { userId: id }
+                        where: { taskId: id }
                     }, { transaction: t })
 
             await TasksAssignment
                 .destroy(
                     {
-                        where: { userId: id }
+                        where: { taskId: id }
                     }, { transaction: t })
 
             await Task

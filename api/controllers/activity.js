@@ -92,57 +92,57 @@ exports.update = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-    // let { id } = req.params;
+    let { id } = req.params;
 
-    // try {
-    //     const result = await sequelize.transaction(async (t) => {
-
-
-    //         await Event
-    //             .destroy({
-    //                 include:
-    //                 {
-    //                     model: Task,
-    //                     as: 'task',
-    //                     where: { activityId: id },
-    //                     required: true
-    //                 }
-    //             }, { transaction: t })
-
-    //         // await TasksAssignment
-    //         //     .destroy(
-    //         //         {
-    //         //             where: { userId: id }
-    //         //         }, { transaction: t })
-
-    //         await Task
-    //             .destroy(
-    //                 {
-    //                     include:
-    //                     {
-    //                         model: TasksAssignment,
-    //                         as: 'users'
-    //                     },
-    //                     where: { activityId: id }
-    //                 }, { transaction: t })
+    try {
+        const result = await sequelize.transaction(async (t) => {
 
 
-    //         await ActivitiesAssignment
-    //             .destroy(
-    //                 {
-    //                     where: { activityId: id }
-    //                 }, { transaction: t })
+            await Event
+                .destroy({
+                    include:
+                    {
+                        model: Task,
+                        as: 'task',
+                        where: { activityId: id },
+                        required: true
+                    }
+                }, { transaction: t })
+
+            // await TasksAssignment
+            //     .destroy(
+            //         {
+            //             where: { userId: id }
+            //         }, { transaction: t })
+
+            await Task
+                .destroy(
+                    {
+                        include:
+                        {
+                            model: TasksAssignment,
+                            as: 'users'
+                        },
+                        where: { activityId: id }
+                    }, { transaction: t })
 
 
-    //         await Activity
-    //             .destroy(
-    //                 {
-    //                     where: { id: id }
-    //                 }, { transaction: t })
-    //     });
-    //     res.status(200).json({ success: 'reussi' })
-    // } catch (error) {
-    //     console.log(error);
-    //     res.status(422).json(error);
-    // }
+            await ActivitiesAssignment
+                .destroy(
+                    {
+                        where: { activityId: id }
+                    }, { transaction: t })
+
+
+            await Activity
+                .destroy(
+                    {
+                        where: { id: id }
+                    }, { transaction: t })
+        });
+        res.status(200).json({ success: 'reussi' })
+    } catch (error) {
+        console.log(error);
+        res.status(422).json(error);
+    }
 }
