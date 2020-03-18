@@ -21,7 +21,7 @@ exports.findById = async (req, res) => {
 
 exports.find = async (req, res) => {
     let route = '/administration/users?page=';
-    let nbre = req.query.nbre ? parseInt(req.query.nbre) : 20;
+    let nbre = req.query.nbre ? parseInt(req.query.nbre) : 10;
     let page = req.query.page ? parseInt(req.query.page) : 1;
     let paginate = req.query.paginate ? !(req.query.paginate == 'false') : true;
 

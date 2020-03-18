@@ -87,7 +87,8 @@ CREATE TABLE users (
   departmentId int(11) DEFAULT NULL,
   createdAt datetime DEFAULT NULL,
   updatedAt datetime DEFAULT NULL,
-  roleId int(11)  DEFAULT null,
+  roleId int(11)  DEFAULT NULL,
+  archived tinyint(1)  DEFAULT 0,
   email varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `password` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (id),
@@ -139,7 +140,7 @@ INSERT INTO users (departmentId , email , firstName , lastName , roleId , create
 INSERT INTO users (departmentId , email , firstName , lastName , roleId , createdAt , updatedAt) VALUES (1, 'emailtest@test.test', 'Test', 'TEST', 2, '2020-03-02', '2020-03-02');
 INSERT INTO users (departmentId , email , firstName , lastName , roleId , createdAt , updatedAt) VALUES (1, 'emaiergltest@test.test', 'Teergst', 'TEergergST', 2, '2020-03-02', '2020-03-02');
 UPDATE departments SET departments.responsibleId = 1 WHERE departments.id = 1;
-INSERT INTO colours (name , code ) VALUES ('rouge', '#ff0000'), ('vert', '#00ff00'), ('bleu', '#0000ff');
+INSERT INTO colours (name , code ) VALUES ('Vert Fonce', '#53853d'), ('Vert CETIC', '#6fb052'), ('Vert clair', '#d7e6cc'), ('Gris Fonce', '#5a5a5a'), ('Gris Moyen', '#808080'), ('Gris clair', '#cccccc'), ('Rouge ECS', '#f62f00'), ('Jaune SSE', '#feb602'), ('Bleu SST', '#00b0f0'), ('Bleu fonce', '#0070c0'), ('Mauve', '#7030a0');
 INSERT INTO activities (aTypeId , colourId , createdAt, updatedAt , description , ended , name , projectManagerId ) VALUES (1, 2, '2020-03-02','2020-03-02' , 'on fait des tests', 0, 'Tests', 2);
 INSERT INTO activities (aTypeId , colourId , createdAt, updatedAt , description , ended , name , projectManagerId ) VALUES (1, 2, '2020-03-02','2020-03-02' , 'on fait des tests', 0, 'ergerg', 2);
 INSERT INTO activities (aTypeId , colourId , createdAt, updatedAt , description , ended , name , projectManagerId ) VALUES (1, 2, '2020-03-02','2020-03-02' , 'on fawergests', 0, 'ergerg', 2);
