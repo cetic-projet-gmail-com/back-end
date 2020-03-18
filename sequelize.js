@@ -62,7 +62,7 @@ TasksAssignment.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // 1-1
 TasksAssignment.belongsTo(Task, { foreignKey: 'taskId', as: 'task' }); // 1-1
 
 ActivitiesAssignment.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // 1-1
-ActivitiesAssignment.belongsTo(Activity, { foreignKey: 'activityId', as: 'activity' }); // 1-1
+ActivitiesAssignment.belongsTo(Activity, { foreignKey: 'activityId', as: 'activity', onDelete: null }); // 1-1
 
 Activity.belongsTo(AType, { foreignKey: 'aTypeId', as: 'type' }); // 1-1
 Activity.belongsTo(Colour, { foreignKey: 'colourId', as: 'colour' }); // 1-1
@@ -89,4 +89,4 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-module.exports = { User, Department, Role, Task, Event, Colour, Activity, ActivitiesAssignment, TasksAssignment, AType }
+module.exports = { User, Department, Role, Task, Event, Colour, Activity, ActivitiesAssignment, TasksAssignment, AType, sequelize }

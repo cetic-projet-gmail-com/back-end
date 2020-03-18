@@ -60,7 +60,7 @@ exports.create = async (req, res) => {
 
 exports.delete = async (req, res) => {
     let { userId, taskId } = req.params;
-    let qqch = await TasksAssignment
+    await TasksAssignment
         .destroy({
             where:
             {
@@ -68,12 +68,13 @@ exports.delete = async (req, res) => {
                 taskId: taskId
             }
         })
-        .then((unTruc) => {
-            console.log(unTruc);
+        .then((deleted) => {
+            if (deleted)
+                res.status(200).json({ message: 'successfuly deleted the entry' })
+            else
+                return { message: 'the entry does not exist or couldn\'t be deleted' }
         })
         .catch((err) => {
             res.status(500).json({ error: err })
         })
-
-    res.status(200).json(qqch);
 }

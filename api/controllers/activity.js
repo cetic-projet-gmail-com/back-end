@@ -90,3 +90,23 @@ exports.update = async (req, res) => {
         })
     res.status(200).json(activity);
 }
+
+exports.delete = async (req, res) => {
+    let { id } = req.params;
+    await Activity
+        .destroy({
+            where:
+            {
+                id: id
+            }
+        })
+        .then((deleted) => {
+            if (deleted)
+                res.status(200).json({ message: 'successfuly deleted the entry' })
+            else
+                return { message: 'the entry does not exist or couldn\'t be deleted' }
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
+}

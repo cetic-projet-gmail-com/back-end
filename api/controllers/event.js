@@ -21,17 +21,17 @@ exports.findById = async (req, res) => {
 exports.find = async (req, res) => {
     let events = await Event
         .findAll({
-            include: ['activity']
+            include: ['task']
         })
         .then((events) => {
             if (events.length > 0) {
-                return { events: events }
+                return events;
             }
         })
         .catch((err) => {
             res.status(500).json({ error: err })
         })
-    res.status(200).json(events);
+    res.status(200).json({events});
 }
 
 exports.update = async (req, res) => {

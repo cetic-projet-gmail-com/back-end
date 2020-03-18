@@ -1,4 +1,4 @@
-const { User } = require(`${process.cwd()}/sequelize`)
+const { User, TasksAssignment, ActivitiesAssignment, Event, Activity, Department, sequelize } = require(`${process.cwd()}/sequelize`)
 const { formatISO } = require('date-fns')
 
 exports.findById = async (req, res) => {
@@ -39,11 +39,11 @@ exports.find = async (req, res) => {
                     let links = {
                         current: `${route}${page}&nbre${nbre}`,
                         previous: page > 1 ? route + (page - 1) + '&nbre=' + nbre : undefined,
-                        next: page < tmpUsers.length / nbre ? route + (page + 1) + '&nbre=' + nbre : undefined,
+                        next: page < (users.length / nbre) ? (route + (page + 1) + '&nbre=' + nbre) : undefined,
                         first: page > 1 ? route + '1&nbre' + nbre : undefined,
-                        last: page < tmpUsers.length / nbre ? route + Math.round(Math.ceil(tmpUsers.length / nbre)) + '&nbre=' + nbre : undefined
+                        last: page < users.length / nbre ? route + Math.round(Math.ceil(users.length / nbre)) + '&nbre=' + nbre : undefined
                     }
-                    return {users: tmpUsers, links}
+                    return { users: tmpUsers, links }
                 }
                 else { return { users: users } }
             } else {
@@ -58,7 +58,7 @@ exports.find = async (req, res) => {
 
 exports.create = async (req, res) => {
     let newUser = req.body
-    await User
+    let user = await User
         .create({
             firstName: newUser.firstName,
             lastName: newUser.lastName,
@@ -69,13 +69,15 @@ exports.create = async (req, res) => {
             departmentId: newUser.departmentId
         })
         .then((user) => {
-            user.password = undefined;
-            newUser = user;
+            if (user) {
+                user.password = undefined;
+                return user;
+            }
         })
         .catch((err) => {
             console.log(`The following error has occured: ${err}`);
         })
-    res.status(200).json({ newUser });
+    res.status(200).json({ user });
 }
 
 exports.update = async (req, res) => {
@@ -116,4 +118,62 @@ exports.update = async (req, res) => {
             console.log(`The following error has occured: ${err}`);
         })
     res.status(200).json({ user });
+}
+
+exports.delete = async (req, res) => {
+    let { id } = req.params;
+
+    try {
+        const result = await sequelize.transaction(async (t) => {
+
+            await Event
+                .update({
+                    userId: 0
+                },
+                    {
+                        where: { userId: id }
+                    }, { transaction: t })
+
+            await ActivitiesAssignment
+                .update({
+                    userId: 0
+                },
+                    {
+                        where: { userId: id }
+                    }, { transaction: t })
+
+            await TasksAssignment
+                .update({
+                    userId: 0
+                },
+                    {
+                        where: { userId: id }
+                    }, { transaction: t })
+
+            await Activity
+                .update({
+                    projectManagerId: 0
+                },
+                    {
+                        where: { projectManagerId: id }
+                    }, { transaction: t })
+
+            await Department
+                .update({
+                    responsibleId: 0
+                },
+                    {
+                        where: { responsibleId: id }
+                    }, { transaction: t })
+
+            await User
+                .destroy({
+                    where: { id: id }
+                }, { transaction: t })
+        });
+        res.json({ success: 'reussi' })
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
 }

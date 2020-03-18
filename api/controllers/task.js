@@ -86,3 +86,7 @@ exports.update = async (req, res) => {
 
     res.status(200).json({ task })
 }
+
+exports.delete = async (req, res) => {
+    
+}

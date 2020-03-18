@@ -7,6 +7,7 @@ const ActivityController = require(`${process.cwd()}/api/controllers/activity`)
 const TaskController = require(`${process.cwd()}/api/controllers/task`)
 const RoleController = require(`${process.cwd()}/api/controllers/role`)
 const ATypeController = require(`${process.cwd()}/api/controllers/aType`)
+const ColourController = require(`${process.cwd()}/api/controllers/colour`)
 const EventController = require(`${process.cwd()}/api/controllers/event`)
 const ActivitiesAssignmentController = require(`${process.cwd()}/api/controllers/activitiesAssignment`)
 const TasksAssignmentController = require(`${process.cwd()}/api/controllers/tasksAssignment`)
@@ -49,7 +50,7 @@ Router.route('/users')
 Router.route('/users/:id')
     .get(UserController.findById)
     .patch(UserController.update)
-//     .delete(UserController.delete)
+    .delete(UserController.delete)
 
 //      Task      //
 
@@ -93,7 +94,7 @@ Router.route('/events')
     .post(EventController.create)
 
 Router.route('/events/:id')
-    .get(ATypeController.findById)
+    .get(EventController.findById)
 
 //      TasksAssignment      //
 
@@ -129,6 +130,16 @@ Router.route('/tasksassignments/:id')
 Router.route('/tasksassignments/:userId/:activityId')
     .get(TasksAssignmentController.findOne)
     .delete(TasksAssignmentController.delete)
+
+    //      Colour      //
+    
+    //check section//
+    
+    Router.route('/colours')
+        .get(ColourController.find)
+    
+    Router.route('/atypes/:id')
+        .get(ColourController.findById)
 
 
 module.exports = Router;
