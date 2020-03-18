@@ -44,12 +44,14 @@ exports.create = async (req, res) => {
             ended: newTask.ended
         })
         .then((task) => {
-            return task
+            if (task) {
+                return task
+            }
         })
         .catch((err) => {
             res.status(500).json({ error: err })
         })
-    res.status(200).json(task)
+    res.status(200).json({task})
 }
 
 exports.update = async (req, res) => {
@@ -68,10 +70,10 @@ exports.update = async (req, res) => {
             res.status(500).json({ error: err })
         })
 
-        let task = await Task
+    let task = await Task
         .findOne({
-            where:{id:id},
-            include:['activity']
+            where: { id: id },
+            include: ['activity']
         })
         .then((task) => {
             if (task) {
@@ -82,5 +84,5 @@ exports.update = async (req, res) => {
             res.status(500).json({ error: err })
         })
 
-        res.status(200).json({task})
+    res.status(200).json({ task })
 }

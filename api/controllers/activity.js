@@ -54,7 +54,7 @@ exports.create = async (req, res) => {
             console.log(`The following error has occured : ${err}`);
         })
 
-    res.status(200).json(activity);
+    res.status(200).json({activity});
 }
 
 exports.update = async (req, res) => {

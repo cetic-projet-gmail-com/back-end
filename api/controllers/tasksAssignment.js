@@ -42,20 +42,20 @@ exports.findOne = async (req, res) => {
 
 exports.create = async (req, res) => {
     let newTasksAssignment = req.body;
-    await TasksAssignment
+    let taskAssignment = await TasksAssignment
         .create({
             userId: newTasksAssignment.userId ? newTasksAssignment.userId : undefined,
             taskId: newTasksAssignment.taskId ? newTasksAssignment.taskId : undefined,
         })
         .then((taskAssignment) => {
             if (taskAssignment) {
-                this.newTasksAssignment = taskAssignment;
+                return taskAssignment;
             }
         })
         .catch((err) => {
             res.status(500).json({ error: err })
         })
-    res.status(200).json(newTasksAssignment)
+    res.status(200).json({tasksAssignment})
 }
 
 exports.delete = async (req, res) => {

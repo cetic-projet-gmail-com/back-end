@@ -35,42 +35,43 @@ exports.find = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    let {id} = req.params;
+    let { id } = req.params;
     let updatedEvent = req.params;
 
     await Event
-    .update({
-        
-        where:{id:id}
-    })
-    .then((event) => {
-        if (event) {
-            return event
-        }
-    })
-    .catch((err) => {
-        res.status(500).json({ error: err })
-    })
+        .update({
+
+            where: { id: id }
+        })
+        .then((event) => {
+            if (event) {
+                return event
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
 
     res.status(200).json(updatedEvent)
 }
- 
+
 exports.create = async (req, res) => {
     let newEvent = req.body;
-    await Event
-    .create({
-        taskId: newEvent.taskId,
-        userId: newEvent.userId,
-        startAt:newEvent.startAt,
-        endAt: newEvent.endAt,
-        description: newEvent.description
-    })
-    .then((event) => {
-        if(event)
-        this.newEvent = event;
-    })
-    .catch((err) => {
-        res.status(500).json({ error: err })
-    })
-res.status(200).json(newEvent);
+    let event = await Event
+        .create({
+            taskId: newEvent.taskId,
+            userId: newEvent.userId,
+            startAt: newEvent.startAt,
+            endAt: newEvent.endAt,
+            description: newEvent.description
+        })
+        .then((event) => {
+            if (event) {
+                return event;
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err })
+        })
+    res.status(200).json({event});
 }

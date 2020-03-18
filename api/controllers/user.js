@@ -20,16 +20,32 @@ exports.findById = async (req, res) => {
 }
 
 exports.find = async (req, res) => {
+    let route = '/administration/users?page=';
+    let nbre = req.query.nbre ? parseInt(req.query.nbre) : 20;
+    let page = req.query.page ? parseInt(req.query.page) : 1;
+    let paginate = req.query.paginate ? !(req.query.paginate == 'false') : true;
+
     let users = await User
         .findAll({
             include: ['role', 'department'],
-            attributes:{
-                exclude:['password']
+            attributes: {
+                exclude: ['password']
             }
         })
         .then((users) => {
             if (users.length > 0) {
-                return { users: users }
+                if (paginate) {
+                    let tmpUsers = users.slice((page - 1) * nbre, page * nbre);
+                    let links = {
+                        current: `${route}${page}&nbre${nbre}`,
+                        previous: page > 1 ? route + (page - 1) + '&nbre=' + nbre : undefined,
+                        next: page < tmpUsers.length / nbre ? route + (page + 1) + '&nbre=' + nbre : undefined,
+                        first: page > 1 ? route + '1&nbre' + nbre : undefined,
+                        last: page < tmpUsers.length / nbre ? route + Math.round(Math.ceil(tmpUsers.length / nbre)) + '&nbre=' + nbre : undefined
+                    }
+                    return {users: tmpUsers, links}
+                }
+                else { return { users: users } }
             } else {
                 return { users: [] }
             }
