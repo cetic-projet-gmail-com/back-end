@@ -2,7 +2,6 @@ const { ActivitiesAssignment } = require(`${process.cwd()}/sequelize`)
 
 exports.findByUserId = async (req, res) => {
     let { id } = req.params;
-    console.log(id);
     let activityAssignment = await ActivitiesAssignment
         .findAll({
             where: { userId: id },
@@ -16,7 +15,7 @@ exports.findByUserId = async (req, res) => {
         .catch((err) => {
             res.status(500).json({ error: err, check: 'check' })
         })
-    res.status(200).json(activityAssignment);
+    res.status(200).json({activityAssignment});
 }
 
 exports.findOne = async (req, res) => {

@@ -24,7 +24,7 @@ Router.route('/departments')
 Router.route('/departments/:id')
     .get(DepartmentController.findById)
     .patch(DepartmentController.update)
-// .delete(DepartmentController.delete)
+    .delete(DepartmentController.delete)
 
 //      Activity      //
 
@@ -95,24 +95,14 @@ Router.route('/events')
 
 Router.route('/events/:id')
     .get(EventController.findById)
-
-//      TasksAssignment      //
-
-//      check section       //
-
-Router.route('/tasksassignments')
-    .get(EventController.find)
-    .post(EventController.create)
-
-Router.route('/tasksassignments/:id')
-    .get(ATypeController.findById)
+    // .delete(EventController.delete)    handled in home controller
 
 //      ActivitiesAssignment      //
 
 //      check section       //
 
-Router.route('/activitiesassignments/:id')
-    .get(ActivitiesAssignmentController.findByUserId)
+Router.route('/activitiesassignments')
+    // .get(ActivitiesAssignmentController.findByUserId)
     .post(ActivitiesAssignmentController.create)
 
 Router.route('/activitiesassignments/:userId/:activityId')
@@ -131,15 +121,15 @@ Router.route('/tasksassignments/:userId/:activityId')
     .get(TasksAssignmentController.findOne)
     .delete(TasksAssignmentController.delete)
 
-    //      Colour      //
-    
-    //check section//
-    
-    Router.route('/colours')
-        .get(ColourController.find)
-    
-    Router.route('/atypes/:id')
-        .get(ColourController.findById)
+//      Colour      //
+
+//check section//
+
+Router.route('/colours')
+    .get(ColourController.find)
+
+Router.route('/atypes/:id')
+    .get(ColourController.findById)
 
 
 module.exports = Router;

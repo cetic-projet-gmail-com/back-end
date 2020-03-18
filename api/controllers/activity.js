@@ -100,6 +100,7 @@ exports.delete = async (req, res) => {
 
             await Event
                 .destroy({
+                    where: {},
                     include:
                     {
                         model: Task,
@@ -109,20 +110,15 @@ exports.delete = async (req, res) => {
                     }
                 }, { transaction: t })
 
-            // await TasksAssignment
-            //     .destroy(
-            //         {
-            //             where: { userId: id }
-            //         }, { transaction: t })
+            await TasksAssignment
+                .destroy(
+                    {
+                        where: { userId: id }
+                    }, { transaction: t })
 
             await Task
                 .destroy(
                     {
-                        include:
-                        {
-                            model: TasksAssignment,
-                            as: 'users'
-                        },
                         where: { activityId: id }
                     }, { transaction: t })
 
