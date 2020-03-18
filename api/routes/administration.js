@@ -63,7 +63,7 @@ Router.route('/tasks')
 Router.route('/tasks/:id')
     .get(TaskController.findById)
     .patch(TaskController.update)
-//     .delete(TaskController.delete)
+    .delete(TaskController.delete)
 
 //      Role      //
 
