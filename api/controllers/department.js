@@ -1,4 +1,4 @@
-const { Department } = require(`${process.cwd()}/sequelize`);
+const { Department, User, sequelize } = require(`${process.cwd()}/sequelize`);
 
 exports.findById = async (req, res) => {
     let { id } = req.params;
@@ -47,7 +47,7 @@ exports.create = async (req, res) => {
         .catch((err) => {
             console.log(`The following error has occured: ${err}`);
         })
-    res.status(200).json({department});
+    res.status(200).json({ department });
 }
 
 exports.update = async (req, res) => {
@@ -83,20 +83,25 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     let { id } = req.params;
-    await Department
-        .destroy({
-            where:
-            {
-                id: id
-            }
-        })
-        .then((deleted) => {
-            if (deleted)
-                res.status(200).json({ message: 'successfuly deleted the entry' })
-            else
-                return { message: 'the entry does not exist or couldn\'t be deleted' }
-        })
-        .catch((err) => {
-            res.status(500).json({ error: err })
-        })
+    try {
+        const result = await sequelize.transaction(async (t) => {
+
+            await User
+                .update({
+                    departmentId: null
+                },
+                    {
+                        where: { departmentId: id }
+                    }, { transaction: t })
+
+            await Department
+                .destroy(
+                    {
+                        where: { id: id }
+                    }, { transaction: t })
+        });
+        res.status(200).json({ success: 'reussi' })
+    } catch (error) {
+        res.status(422).json(error);
+    }
 }

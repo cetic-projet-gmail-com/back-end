@@ -11,19 +11,18 @@ exports.find = async (req, res) => {
         })
         .then((user) => {
             if (user) {
-                return { user: user };
+                return user;
             }
         })
         .catch((err) => {
             console.log(`Error while finding user(${userId}) : ${err}`)
         })
-    res.json(user);
+    res.status(200).json({user});
 }
 
 exports.update = async (req, res) => {
     let { id } = req.payload;
     let updatedUser = req.body;
-    console.log(updatedUser)
     await User
         .update({
             // login: updatedUser.login ? updatedUser.login : undefined,
@@ -44,7 +43,6 @@ exports.update = async (req, res) => {
         .catch((err) => {
             return res.status(422).json({"infos": "errors"})
 
-            console.log(`The following error has occured: ${err}`);
         })
 
     // let user = await User

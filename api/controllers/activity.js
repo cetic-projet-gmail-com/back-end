@@ -1,4 +1,4 @@
-const { Activity } = require(`${process.cwd()}/sequelize`)
+const { Activity, ActivitiesAssignment, TasksAssignment, Event, Task, sequelize } = require(`${process.cwd()}/sequelize`)
 
 exports.findById = async (req, res) => {
     let { id } = req.params;
@@ -46,7 +46,7 @@ exports.create = async (req, res) => {
             ended: newActivity.ended
         })
         .then((activity) => {
-            if (activity){
+            if (activity) {
                 return activity;
             }
         })
@@ -54,7 +54,7 @@ exports.create = async (req, res) => {
             console.log(`The following error has occured : ${err}`);
         })
 
-    res.status(200).json({activity});
+    res.status(200).json({ activity });
 }
 
 exports.update = async (req, res) => {
@@ -92,21 +92,57 @@ exports.update = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-    let { id } = req.params;
-    await Activity
-        .destroy({
-            where:
-            {
-                id: id
-            }
-        })
-        .then((deleted) => {
-            if (deleted)
-                res.status(200).json({ message: 'successfuly deleted the entry' })
-            else
-                return { message: 'the entry does not exist or couldn\'t be deleted' }
-        })
-        .catch((err) => {
-            res.status(500).json({ error: err })
-        })
+    // let { id } = req.params;
+
+    // try {
+    //     const result = await sequelize.transaction(async (t) => {
+
+
+    //         await Event
+    //             .destroy({
+    //                 include:
+    //                 {
+    //                     model: Task,
+    //                     as: 'task',
+    //                     where: { activityId: id },
+    //                     required: true
+    //                 }
+    //             }, { transaction: t })
+
+    //         // await TasksAssignment
+    //         //     .destroy(
+    //         //         {
+    //         //             where: { userId: id }
+    //         //         }, { transaction: t })
+
+    //         await Task
+    //             .destroy(
+    //                 {
+    //                     include:
+    //                     {
+    //                         model: TasksAssignment,
+    //                         as: 'users'
+    //                     },
+    //                     where: { activityId: id }
+    //                 }, { transaction: t })
+
+
+    //         await ActivitiesAssignment
+    //             .destroy(
+    //                 {
+    //                     where: { activityId: id }
+    //                 }, { transaction: t })
+
+
+    //         await Activity
+    //             .destroy(
+    //                 {
+    //                     where: { id: id }
+    //                 }, { transaction: t })
+    //     });
+    //     res.status(200).json({ success: 'reussi' })
+    // } catch (error) {
+    //     console.log(error);
+    //     res.status(422).json(error);
+    // }
 }

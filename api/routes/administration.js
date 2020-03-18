@@ -37,7 +37,7 @@ Router.route('/activities')
 Router.route('/activities/:id')
     .get(ActivityController.findById)
     .patch(ActivityController.update)
-//     .delete(ActivityController.delete)
+    .delete(ActivityController.delete)
 
 //      User      //
 

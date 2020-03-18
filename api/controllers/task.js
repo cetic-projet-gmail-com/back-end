@@ -1,4 +1,4 @@
-const { Task } = require(`${process.cwd()}/sequelize`);
+const { Task, sequelize, Event, TasksAssignment } = require(`${process.cwd()}/sequelize`);
 
 exports.findById = async (req, res) => {
     let { id } = req.params;
@@ -51,7 +51,7 @@ exports.create = async (req, res) => {
         .catch((err) => {
             res.status(500).json({ error: err })
         })
-    res.status(200).json({task})
+    res.status(200).json({ task })
 }
 
 exports.update = async (req, res) => {
@@ -88,5 +88,29 @@ exports.update = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-    
+    let { id } = req.params;
+    try {
+        const result = await sequelize.transaction(async (t) => {
+
+            await Event
+                .destroy(
+                    {
+                        where: { userId: id }
+                    }, { transaction: t })
+
+            await TasksAssignment
+                .destroy(
+                    {
+                        where: { userId: id }
+                    }, { transaction: t })
+
+            await Task
+                .destroy({
+                    where: { id: id }
+                }, { transaction: t })
+        });
+        res.status(200).json({ success: 'reussi' })
+    } catch (error) {
+        res.status(422).json(error);
+    }
 }

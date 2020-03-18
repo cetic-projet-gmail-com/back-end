@@ -118,7 +118,6 @@ CREATE TABLE roles (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 ALTER TABLE tasks ADD CONSTRAINT tasks_ibfk_1 FOREIGN KEY (activityId) REFERENCES activities (id);
 ALTER TABLE activitiesAssignments ADD CONSTRAINT activity_assignments_ibfk_2 FOREIGN KEY (activityId) REFERENCES activities (id);
 ALTER TABLE activitiesAssignments ADD CONSTRAINT activity_assignments_ibfk_1 FOREIGN KEY (userId) REFERENCES users (id);

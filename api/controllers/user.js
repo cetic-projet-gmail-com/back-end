@@ -127,32 +127,26 @@ exports.delete = async (req, res) => {
         const result = await sequelize.transaction(async (t) => {
 
             await Event
-                .update({
-                    userId: 0
-                },
+                .destroy(
                     {
                         where: { userId: id }
                     }, { transaction: t })
 
             await ActivitiesAssignment
-                .update({
-                    userId: 0
-                },
+                .destroy(
                     {
                         where: { userId: id }
                     }, { transaction: t })
 
             await TasksAssignment
-                .update({
-                    userId: 0
-                },
+                .destroy(
                     {
                         where: { userId: id }
                     }, { transaction: t })
 
             await Activity
                 .update({
-                    projectManagerId: 0
+                    projectManagerId: null
                 },
                     {
                         where: { projectManagerId: id }
@@ -160,7 +154,7 @@ exports.delete = async (req, res) => {
 
             await Department
                 .update({
-                    responsibleId: 0
+                    responsibleId: null
                 },
                     {
                         where: { responsibleId: id }
@@ -171,9 +165,8 @@ exports.delete = async (req, res) => {
                     where: { id: id }
                 }, { transaction: t })
         });
-        res.json({ success: 'reussi' })
+        res.status(200).json({ success: 'reussi' })
     } catch (error) {
-        console.log(error);
-        res.json(error);
+        res.status(422).json(error);
     }
 }
