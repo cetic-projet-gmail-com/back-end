@@ -8,13 +8,13 @@ exports.find = async (req, res) => {
             if (colours.length > 0) {
                 return colours
             } else {
-                return {colours:[]}
+                return []
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json({colours});
+    res.status(200).json({ colours });
 }
 
 exports.findById = async (req, res) => {
@@ -28,8 +28,8 @@ exports.findById = async (req, res) => {
                 return colour;
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json({colour});
+    res.status(200).json({ colour });
 }

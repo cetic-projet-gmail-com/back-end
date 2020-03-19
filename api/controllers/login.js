@@ -27,7 +27,6 @@ module.exports = async (req, res) => {
         }
     })(req, res);
 }
-// module.exports = Router;
 
 function generateJwt(user) {
     var expiry = new Date();

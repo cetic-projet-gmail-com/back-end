@@ -9,13 +9,13 @@ exports.findById = async (req, res) => {
         })
         .then((task) => {
             if (task) {
-                return { task: task }
+                return task
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(task);
+    res.status(200).json({ task });
 }
 
 exports.find = async (req, res) => {
@@ -25,13 +25,13 @@ exports.find = async (req, res) => {
         })
         .then((tasks) => {
             if (tasks.length > 0) {
-                return { tasks: tasks }
+                return tasks
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(tasks);
+    res.status(200).json({ tasks });
 }
 
 exports.create = async (req, res) => {
@@ -48,8 +48,8 @@ exports.create = async (req, res) => {
                 return task
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
     res.status(200).json({ task })
 }
@@ -66,8 +66,8 @@ exports.update = async (req, res) => {
 
             where: { id: id }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
 
     let task = await Task
@@ -80,8 +80,8 @@ exports.update = async (req, res) => {
                 return task;
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
 
     res.status(200).json({ task })
@@ -112,6 +112,6 @@ exports.delete = async (req, res) => {
         });
         res.status(200).json({ success: 'reussi' })
     } catch (error) {
-        res.status(422).json(error);
+        res.status(422).json({ error });
     }
 }

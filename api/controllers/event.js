@@ -9,13 +9,13 @@ exports.findById = async (req, res) => {
         })
         .then((event) => {
             if (event) {
-                return { event: event }
+                return event
             }
         })
         .catch((err) => {
             res.status(500).json({ error: err })
         })
-    res.status(200).json(event);
+    res.status(200).json({ event });
 }
 
 exports.find = async (req, res) => {
@@ -28,31 +28,10 @@ exports.find = async (req, res) => {
                 return events;
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json({events});
-}
-
-exports.update = async (req, res) => {
-    let { id } = req.params;
-    let updatedEvent = req.params;
-
-    await Event
-        .update({
-
-            where: { id: id }
-        })
-        .then((event) => {
-            if (event) {
-                return event
-            }
-        })
-        .catch((err) => {
-            res.status(500).json({ error: err })
-        })
-
-    res.status(200).json(updatedEvent)
+    res.status(200).json({ events });
 }
 
 exports.create = async (req, res) => {
@@ -70,8 +49,8 @@ exports.create = async (req, res) => {
                 return event;
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json({event});
+    res.status(200).json({ event });
 }

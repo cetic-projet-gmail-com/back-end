@@ -7,15 +7,15 @@ exports.find = async (req, res) => {
         })
         .then((roles) => {
             if (roles.length > 0) {
-                return { roles: roles }
+                return roles
             } else {
-                return {roles:[]}
+                return []
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(roles);
+    res.status(200).json({ roles });
 }
 
 exports.findById = async (req, res) => {
@@ -27,11 +27,11 @@ exports.findById = async (req, res) => {
         })
         .then((role) => {
             if (role) {
-                return { role: role };
+                return role
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(role);
+    res.status(200).json({ role });
 }

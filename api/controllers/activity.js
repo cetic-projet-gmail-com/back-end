@@ -9,13 +9,13 @@ exports.findById = async (req, res) => {
         })
         .then((activity) => {
             if (activity) {
-                return { activity: activity }
+                return activity
             }
         })
-        .catch((err) => {
-            console.log(`The following error occured : ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(activity);
+    res.status(200).json({ activity });
 }
 
 exports.find = async (req, res) => {
@@ -25,13 +25,13 @@ exports.find = async (req, res) => {
         })
         .then((activities) => {
             if (activities.length > 0) {
-                return { activities: activities }
+                return activities
             }
         })
-        .catch((err) => {
-            console.log(`The following error has occured : ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(activities)
+    res.status(200).json({ activities })
 }
 
 exports.create = async (req, res) => {
@@ -50,8 +50,8 @@ exports.create = async (req, res) => {
                 return activity;
             }
         })
-        .catch((err) => {
-            console.log(`The following error has occured : ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
 
     res.status(200).json({ activity });
@@ -71,8 +71,8 @@ exports.update = async (req, res) => {
             ended: updatedActivity.ended ? updatedActivity.ended : undefined,
             where: { id: id }
         })
-        .catch((err) => {
-            console.log(`The following error has occured : ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
 
     let activity = await Activity
@@ -85,10 +85,10 @@ exports.update = async (req, res) => {
                 return activity
             }
         })
-        .catch((err) => {
-            console.log(`The following error has occured : ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(activity);
+    res.status(200).json({ activity });
 }
 
 exports.delete = async (req, res) => {
@@ -97,24 +97,15 @@ exports.delete = async (req, res) => {
     try {
         const result = await sequelize.transaction(async (t) => {
 
+            await sequelize
+                .query("DELETE e.* FROM events e INNER JOIN tasks t ON e.taskId = t.id WHERE t.activityId = ?",
+                    { replacements: [id] },
+                    { transaction: t })
 
-            await Event
-                .destroy({
-                    where: {},
-                    include:
-                    {
-                        model: Task,
-                        as: 'task',
-                        where: { activityId: id },
-                        required: true
-                    }
-                }, { transaction: t })
-
-            await TasksAssignment
-                .destroy(
-                    {
-                        where: { userId: id }
-                    }, { transaction: t })
+            await sequelize
+                .query("DELETE ta.* FROM tasksAssignments ta INNER JOIN tasks t ON ta.taskId = t.id WHERE t.activityId = ?",
+                    { replacements: [id] },
+                    { transaction: t })
 
             await Task
                 .destroy(
@@ -122,13 +113,11 @@ exports.delete = async (req, res) => {
                         where: { activityId: id }
                     }, { transaction: t })
 
-
             await ActivitiesAssignment
                 .destroy(
                     {
                         where: { activityId: id }
                     }, { transaction: t })
-
 
             await Activity
                 .destroy(
@@ -138,7 +127,6 @@ exports.delete = async (req, res) => {
         });
         res.status(200).json({ success: 'reussi' })
     } catch (error) {
-        console.log(error);
-        res.status(422).json(error);
+        res.status(422).json({ error });
     }
 }

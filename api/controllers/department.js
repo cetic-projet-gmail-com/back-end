@@ -12,8 +12,8 @@ exports.findById = async (req, res) => {
                 return department;
             }
         })
-        .catch((err) => {
-            console.log(err);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
     res.status(200).json({ department })
 }
@@ -25,13 +25,13 @@ exports.find = async (req, res) => {
         })
         .then((departments) => {
             if (departments.length > 0) {
-                return { departments: departments }
+                return departments
             }
         })
-        .catch((err) => {
-            console.log(`The following error has occured: ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(departments);
+    res.status(200).json({ departments });
 }
 
 exports.create = async (req, res) => {
@@ -42,10 +42,10 @@ exports.create = async (req, res) => {
             responsibleId: newDepartment.responsibleId
         })
         .then((department) => {
-            return department
+            return department;
         })
-        .catch((err) => {
-            console.log(`The following error has occured: ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
     res.status(200).json({ department });
 }
@@ -57,11 +57,11 @@ exports.update = async (req, res) => {
     await Department
         .update({
             name: updatedDepartment.name ? updatedDepartment.name : undefined,
-            responsibleId: updatedDepartment.responsibleId ? updatedDepartment.responsibleId : undefined,
-            where: { id: id }
-        })
-        .catch((err) => {
-            console.log(`The following error has occured: ${err}`);
+            responsibleId: updatedDepartment.responsibleId ? updatedDepartment.responsibleId : undefined
+        },
+            { where: { id: id } })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
 
     let department = await Department
@@ -74,11 +74,11 @@ exports.update = async (req, res) => {
                 return department
             }
         })
-        .catch((err) => {
-            console.log(`The following error has occured: ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
 
-    res.status(200).json(department)
+    res.status(200).json({ department })
 }
 
 exports.delete = async (req, res) => {
@@ -102,6 +102,6 @@ exports.delete = async (req, res) => {
         });
         res.status(200).json({ success: 'reussi' })
     } catch (error) {
-        res.status(422).json(error);
+        res.status(422).json({ error });
     }
 }

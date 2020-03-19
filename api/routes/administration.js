@@ -13,9 +13,9 @@ const ActivitiesAssignmentController = require(`${process.cwd()}/api/controllers
 const TasksAssignmentController = require(`${process.cwd()}/api/controllers/tasksAssignment`)
 
 
-//      Department      //
+/* ------------------------------- Department ------------------------------- */
 
-//check section//
+//  check section to implement
 
 Router.route('/departments')
     .get(DepartmentController.find)
@@ -26,9 +26,9 @@ Router.route('/departments/:id')
     .patch(DepartmentController.update)
     .delete(DepartmentController.delete)
 
-//      Activity      //
+/* -------------------------------- Activity -------------------------------- */
 
-//check section//
+//  check section to implement
 
 Router.route('/activities')
     .get(ActivityController.find)
@@ -39,9 +39,9 @@ Router.route('/activities/:id')
     .patch(ActivityController.update)
     .delete(ActivityController.delete)
 
-//      User      //
+/* ---------------------------------- User ---------------------------------- */
 
-//check section//
+//  check section to implement
 
 Router.route('/users')
     .get(UserController.find)
@@ -52,9 +52,9 @@ Router.route('/users/:id')
     .patch(UserController.update)
     .delete(UserController.delete)
 
-//      Task      //
+/* ---------------------------------- Task ---------------------------------- */
 
-//check section//
+//  check section to implement
 
 Router.route('/tasks')
     .get(TaskController.find)
@@ -65,9 +65,9 @@ Router.route('/tasks/:id')
     .patch(TaskController.update)
     .delete(TaskController.delete)
 
-//      Role      //
+/* ---------------------------------- Role ---------------------------------- */
 
-//check section//
+//  check section to implement
 
 Router.route('/roles')
     .get(RoleController.find)
@@ -75,9 +75,9 @@ Router.route('/roles')
 Router.route('/roles/:id')
     .get(RoleController.findById)
 
-//      AType      //
+/* ---------------------------------- AType --------------------------------- */
 
-//check section//
+//  check section to implement
 
 Router.route('/atypes')
     .get(ATypeController.find)
@@ -85,9 +85,9 @@ Router.route('/atypes')
 Router.route('/atypes/:id')
     .get(ATypeController.findById)
 
-//      Event      //
+/* ---------------------------------- Event --------------------------------- */
 
-//check section//
+//  check section to implement
 
 Router.route('/events')
     .get(EventController.find)
@@ -96,10 +96,11 @@ Router.route('/events')
 Router.route('/events/:id')
     .get(EventController.findById)
     // .delete(EventController.delete)    handled in home controller
+    // .update(EventController.update)    handled in home controller
 
-//      ActivitiesAssignment      //
+/* -------------------------- ActivitiesAssignment -------------------------- */
 
-//      check section       //
+//  check section to implement
 
 Router.route('/activitiesassignments')
     // .get(ActivitiesAssignmentController.findByUserId)
@@ -109,9 +110,9 @@ Router.route('/activitiesassignments/:userId/:activityId')
     .get(ActivitiesAssignmentController.findOne)
     .delete(ActivitiesAssignmentController.delete)
 
-//      TasksAssignment      //
+/* ----------------------------- TasksAssignment ---------------------------- */
 
-//      check section       //
+//  check section to implement
 
 Router.route('/tasksassignments/:id')
     .get(TasksAssignmentController.findByUserId)
@@ -121,9 +122,9 @@ Router.route('/tasksassignments/:userId/:activityId')
     .get(TasksAssignmentController.findOne)
     .delete(TasksAssignmentController.delete)
 
-//      Colour      //
+/* --------------------------------- Colour --------------------------------- */
 
-//check section//
+//  check section to implement
 
 Router.route('/colours')
     .get(ColourController.find)

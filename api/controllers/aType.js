@@ -9,13 +9,13 @@ exports.find = async (req, res) => {
             if (aTypes.length > 0) {
                 return { aTypes: aTypes }
             } else {
-                return {aTypes:[]}
+                return []
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(aTypes);
+    res.status(200).json({ aTypes });
 }
 
 exports.findById = async (req, res) => {
@@ -27,11 +27,11 @@ exports.findById = async (req, res) => {
         })
         .then((aType) => {
             if (aType) {
-                return { aType: aType };
+                return aType
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(aType);
+    res.status(200).json({ aType });
 }

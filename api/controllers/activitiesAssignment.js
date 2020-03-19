@@ -12,10 +12,10 @@ exports.findByUserId = async (req, res) => {
                 return activityAssignment;
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err, check: 'check' })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json({activityAssignment});
+    res.status(200).json({ activityAssignment });
 }
 
 exports.findOne = async (req, res) => {
@@ -34,10 +34,10 @@ exports.findOne = async (req, res) => {
                 return activityAssignment;
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
-    res.status(200).json(activityAssignment);
+    res.status(200).json({ activityAssignment });
 }
 
 exports.create = async (req, res) => {
@@ -52,8 +52,8 @@ exports.create = async (req, res) => {
                 return activityAssignment;
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
     res.status(200).json({ activityAssignment })
 }
@@ -69,12 +69,11 @@ exports.delete = async (req, res) => {
             }
         })
         .then((deleted) => {
-            if (deleted)
+            if (deleted) {
                 res.status(200).json({ message: 'successfuly deleted the entry' })
-            else
-                return { message: 'the entry does not exist or couldn\'t be deleted' }
+            }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
 }

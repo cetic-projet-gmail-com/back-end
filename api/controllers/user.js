@@ -10,11 +10,11 @@ exports.findById = async (req, res) => {
         })
         .then((user) => {
             if (user) {
-                return { user: user };
+                return user;
             }
         })
-        .catch((err) => {
-            res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
     res.status(200).json({ user });
 }
@@ -45,13 +45,13 @@ exports.find = async (req, res) => {
                     }
                     return { users: tmpUsers, links }
                 }
-                else { return { users: users } }
+                else { return { users } }
             } else {
                 return { users: [] }
             }
         })
-        .catch((err) => {
-            return res.status(500).json({ error: err })
+        .catch((error) => {
+            res.status(422).json({ error });
         })
     res.status(200).json({ users });
 }
@@ -74,8 +74,8 @@ exports.create = async (req, res) => {
                 return user;
             }
         })
-        .catch((err) => {
-            console.log(`The following error has occured: ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
     res.status(200).json({ user });
 }
@@ -99,8 +99,8 @@ exports.update = async (req, res) => {
                 where: { id: id }
             }
         )
-        .catch((err) => {
-            console.log(`The following error has occured: ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
     let user = await User
         .findOne({
@@ -109,13 +109,12 @@ exports.update = async (req, res) => {
         })
         .then((user) => {
             if (user) {
-                user.password = undefined
-                console.log(user.updatedAt, formatISO(user.updatedAt));
+                user.password = undefined;
                 return user
             }
         })
-        .catch((err) => {
-            console.log(`The following error has occured: ${err}`);
+        .catch((error) => {
+            res.status(422).json({ error });
         })
     res.status(200).json({ user });
 }
@@ -167,6 +166,6 @@ exports.delete = async (req, res) => {
         });
         res.status(200).json({ success: 'reussi' })
     } catch (error) {
-        res.status(422).json(error);
+        res.status(422).json({ error });
     }
 }
