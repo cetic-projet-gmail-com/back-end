@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
+/* import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
 import { User } from './User'
 
 @Entity()
@@ -15,3 +15,4 @@ export class Role extends BaseEntity {
   @ManyToOne(() => User, (user) => user.role)
   user: User
 }
+*/
