@@ -10,6 +10,7 @@
   "author": "ElianC <54775334+ElianC@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
+    "class-validator": "^0.12.2",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.1",
     "pg": "^8.5.1",
