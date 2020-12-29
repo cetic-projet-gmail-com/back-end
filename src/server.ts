@@ -8,7 +8,7 @@ import app from './app'
 dotenv.config()
 
 const {
-  PORT,
+  HTTP_PORT,
   DB_HOST,
   DB_NAME,
   DB_PASSWORD,
@@ -40,8 +40,8 @@ try {
 
 try {
   http.createServer(app)
-    .listen(PORT, () => {
-    console.log(`server starded: http://localhost:${PORT}`)
+    .listen(HTTP_PORT, () => {
+    console.log(`server starded: http://localhost:${HTTP_PORT}`)
   });
 
 } catch (error) {
