@@ -1,9 +1,10 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typeorm'
-/* import { Department } from './Department'
-import { Role } from './Role' */
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm'
+import { IsEmail, IsOptional } from 'class-validator'
+import { Department } from './Department'
+import { Role } from './Role'
 
 @Entity()
-export class User extends BaseEntity {
+export class User {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -15,14 +16,23 @@ export class User extends BaseEntity {
 
   @Column()
   firstName: string
-  /*
-  @OneToMany(() => Department, (departments) => departments.user)
+
+  @Column({
+    nullable: false,
+  })
+  roleId: number
+
+  @OneToMany(() => Department, departments => departments.user)
   departments: Department[]
 
-  @OneToOne(() => Role, (role) => role.user)
+  @ManyToOne(type => Role, role => role.user)
+  @JoinColumn({ name: 'roleId' })
   role: Role
-  */
+
+  @IsEmail()
+  @IsOptional()
   @Column({
+    nullable: true,
     unique: true,
   })
   email: string

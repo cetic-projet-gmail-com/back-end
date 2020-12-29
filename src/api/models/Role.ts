@@ -1,8 +1,8 @@
-/* import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 import { User } from './User'
 
 @Entity()
-export class Role extends BaseEntity {
+export class Role {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -12,7 +12,6 @@ export class Role extends BaseEntity {
   })
   name: string
 
-  @ManyToOne(() => User, (user) => user.role)
-  user: User
+  @OneToMany(() => User, user => user.role)
+  user: User[]
 }
-*/
