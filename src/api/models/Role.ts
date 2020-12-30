@@ -12,6 +12,8 @@ export class Role {
   })
   name: string
 
-  @OneToMany(() => User, user => user.role)
+  @OneToMany(type => User, user => user.role, {
+    cascade: true,
+  })
   user: User[]
 }

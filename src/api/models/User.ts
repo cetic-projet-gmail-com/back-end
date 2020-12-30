@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm'
-import { IsEmail, IsOptional } from 'class-validator'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany } from 'typeorm'
+import { IsEmail, IsOptional, MinLength } from 'class-validator'
 import { Department } from './Department'
 import { Role } from './Role'
 
@@ -17,16 +17,10 @@ export class User {
   @Column()
   firstName: string
 
-  @Column({
-    nullable: false,
-  })
-  roleId: number
-
-  @OneToMany(() => Department, departments => departments.user)
-  departments: Department[]
+  @ManyToMany(type => Department, department => department.user)
+  department: Department[]
 
   @ManyToOne(type => Role, role => role.user)
-  @JoinColumn({ name: 'roleId' })
   role: Role
 
   @IsEmail()
@@ -37,5 +31,25 @@ export class User {
   })
   email: string
 
-  // Created + updated at
+  @MinLength(8)
+  @Column({
+    nullable: false,
+  })
+  password: string
+
+  @Column({
+    type: 'timestamp without time zone',
+    readonly: true,
+  })
+  createdAt: Date
+
+  @Column({
+    type: 'timestamp without time zone',
+    readonly: true,
+  })
+  updatedAt: Date
+
+  checkPassword(password :string) {
+    return password === this.password
+  }
 }
