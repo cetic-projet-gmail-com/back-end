@@ -2,11 +2,19 @@ import { getRepository, QueryFailedError } from 'typeorm'
 import { validate } from 'class-validator'
 
 import { User } from '../models/User'
+import { Role } from '../models/Role'
 import { invalidData, itemNotFound, dbError } from '../helpers/errors'
 
+//? Set role 'USER' by default
 export const create = async (req, res, next) => {
   try {
-    const user = Object.assign(new User(), req.body)
+    const user = Object.assign(new User(), {
+      ...req.body,
+      role: await getRepository(Role).findOne(1),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+
 
     const errors = await validate(user)
     if (errors.length) {
