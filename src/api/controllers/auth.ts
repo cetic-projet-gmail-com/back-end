@@ -6,10 +6,10 @@ import { User } from '../models/User'
 export const login = async (req, res, next) => {
   try {
     const { password, login } = req.body
+
     const user = await getRepository(User).findOne({ login }, { relations: ['role'] })
 
     if (user?.checkPassword(password)) {
-      console.log(user.id)
       const token = jwt.sign(
         {
           user: user.id,

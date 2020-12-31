@@ -1,11 +1,10 @@
 import http from 'http'
-import dotenv from 'dotenv-flow'
 import { createConnection } from 'typeorm'
 import "reflect-metadata";
+import dotenv from 'dotenv-flow'
+dotenv.config()
 
 import app from './app'
-
-dotenv.config()
 
 const {
   HTTP_PORT,
@@ -41,8 +40,8 @@ try {
 try {
   http.createServer(app)
     .listen(HTTP_PORT, () => {
-    console.log(`server starded: http://localhost:${HTTP_PORT}`)
-  });
+    console.log(`server start: http://localhost:${HTTP_PORT}`)
+  })
 
 } catch (error) {
   console.error('Problem during launch server')
