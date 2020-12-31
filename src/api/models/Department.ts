@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, JoinTable } from 'typeorm'
 import { User } from './User'
 
 @Entity()
@@ -15,8 +15,8 @@ export class Department {
   @ManyToOne(type => User)
   responsible
 
-  @ManyToMany(type => User, user => user.department)
-  user: User[]
+  @ManyToMany(type => User, user => user.departments)
+  users: User[]
 
   @Column({
     type: 'timestamp without time zone',
