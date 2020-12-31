@@ -15,8 +15,8 @@ const {
   DB_USER,
 } = process.env
 
-try {
-  (async () => {
+;(async () => {
+  try {
     await createConnection({
       type: "postgres",
       host: DB_HOST,
@@ -30,19 +30,18 @@ try {
         `${process.cwd()}/src/api/models/*.ts`,
       ],
     })
-
     console.log('DB Connected')
-  })()
-} catch (error) {
-  console.error('Problem during launch DB')
-}
+  } catch (error) {
+    console.error('Problem during launch DB')
+  }
 
-try {
-  http.createServer(app)
-    .listen(HTTP_PORT, () => {
-    console.log(`server start: http://localhost:${HTTP_PORT}`)
-  })
+  try {
+    http.createServer(app)
+      .listen(HTTP_PORT, () => {
+      console.log(`server start: http://localhost:${HTTP_PORT}`)
+    })
 
-} catch (error) {
-  console.error('Problem during launch server')
-}
+  } catch (error) {
+    console.error('Problem during launch server')
+  }
+})()
