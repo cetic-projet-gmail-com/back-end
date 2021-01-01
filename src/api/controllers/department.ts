@@ -7,20 +7,20 @@ import { Department } from '../models/Department'
 
 export const create = async (req, res, next) => {
   try {
-    const department = Object.assign(new Department(), {
+    const item = Object.assign(new Department(), {
       ...req.body,
       createdAt: new Date(),
       updatedAt: new Date(),
     })
 
-    const errors = await validate(department)
+    const errors = await validate(item)
     if (errors.length) {
       return invalidData({ res, errors })
     }
 
-    const departmentCreated = await getRepository(Department).save(department)
+    const itemCreated = await getRepository(Department).save(item)
 
-    return res.send(departmentCreated)
+    return res.send(itemCreated)
   } catch (error) {
     if (error instanceof QueryFailedError) {
       return dbError({ res, error })
@@ -32,9 +32,9 @@ export const create = async (req, res, next) => {
 
 export const list = async (req, res, next) => {
   try {
-    const departments = await getRepository(Department).find()
+    const items = await getRepository(Department).find()
 
-    return res.json({ data: departments || [] })
+    return res.json({ data: items || [] })
   } catch (error) {
     next(error)
   }

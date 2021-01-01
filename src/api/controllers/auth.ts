@@ -7,9 +7,9 @@ export const login = async (req, res, next) => {
   try {
     const { password, login } = req.body
 
-    const user = await getRepository(User).findOne({ login }, { relations: ['role'] })
+    const user = await getRepository(User).findOneOrFail({ login }, { relations: ['role'] })
 
-    if (user?.checkPassword(password)) {
+    if (user.checkPassword(password)) {
       const token = jwt.sign(
         {
           user: user.id,

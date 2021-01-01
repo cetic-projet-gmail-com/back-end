@@ -1,7 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm'
 import { IsEmail, IsOptional, MinLength } from 'class-validator'
+
 import { Department } from './Department'
 import { Role } from './Role'
+import { Event } from './Event'
 
 @Entity()
 export class User {
@@ -24,6 +26,9 @@ export class User {
   @ManyToOne(type => Role, role => role.user, { eager: true })
   role: Role
 
+  @OneToMany(type => Event, events => events.user, { eager: true })
+  events: Event[]
+
   @IsEmail()
   @IsOptional()
   @Column({
@@ -38,16 +43,10 @@ export class User {
   })
   password: string
 
-  @Column({
-    type: 'timestamp without time zone',
-    readonly: true,
-  })
+  @CreateDateColumn()
   createdAt: Date
 
-  @Column({
-    type: 'timestamp without time zone',
-    readonly: true,
-  })
+  @UpdateDateColumn()
   updatedAt: Date
 
   checkPassword(password: string) {

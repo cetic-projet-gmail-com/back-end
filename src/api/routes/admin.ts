@@ -3,8 +3,14 @@ import express from 'express'
 import * as departmentController from '../controllers/department'
 import * as roleController from '../controllers/role'
 import * as userController from '../controllers/user'
+import * as activityController from '../controllers/activity'
 
 const Router = express.Router()
+
+//? ACTIVITY
+Router.route('/activity')
+  .get(activityController.list)
+  .post(activityController.create)
 
 //? DEPARTMENT
 Router.route('/department')
@@ -25,10 +31,12 @@ Router.route('/user/:id')
   .get(userController.find)
   .delete(userController.remove)
 
+//? relations
 Router.route('/user/:userId/role/:roleId')
   .patch(userController.setRole)
 
 Router.route('/user/:userId/department/:departmentId')
-  .patch(userController.setDepartment)
+  .post(userController.setDepartment)
+  .delete(userController.unsetDepartment)
 
 export default Router

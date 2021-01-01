@@ -6,16 +6,16 @@ import { invalidData, itemNotFound, dbError } from '../helpers/errors'
 
 export const create = async (req, res, next) => {
   try {
-    const role = Object.assign(new Role(), req.body)
+    const item = Object.assign(new Role(), req.body)
 
-    const errors = await validate(role)
+    const errors = await validate(item)
     if (errors.length) {
       return invalidData({ res, errors })
     }
 
-    const roleCreated = await getRepository(Role).save(role)
+    const itemCreated = await getRepository(Role).save(item)
 
-    return res.send(roleCreated)
+    return res.send(itemCreated)
   } catch (error) {
     if (error instanceof QueryFailedError) {
       return dbError({ res, error })
@@ -27,9 +27,9 @@ export const create = async (req, res, next) => {
 
 export const list = async (req, res, next) => {
   try {
-    const roles = await getRepository(Role).find()
+    const items = await getRepository(Role).find()
 
-    return res.json({ data: roles || [] })
+    return res.json({ data: items || [] })
   } catch (error) {
     next(error)
   }
