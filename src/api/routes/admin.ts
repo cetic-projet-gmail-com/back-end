@@ -1,7 +1,9 @@
 import express from 'express'
 
 import * as departmentController from '../controllers/department'
+import * as eventController from '../controllers/event'
 import * as roleController from '../controllers/role'
+import * as taskController from '../controllers/task'
 import * as userController from '../controllers/user'
 import * as activityController from '../controllers/activity'
 
@@ -17,10 +19,20 @@ Router.route('/department')
   .get(departmentController.list)
   .post(departmentController.create)
 
+//? Event
+Router.route('/event')
+  .get(eventController.list)
+  .post(eventController.create)
+
 //? ROLE
 Router.route('/role')
   .get(roleController.list)
   .post(roleController.create)
+
+//? TASK
+Router.route('/task')
+  .get(taskController.list)
+  .post(taskController.create)
 
 //? USER
 Router.route('/user')
