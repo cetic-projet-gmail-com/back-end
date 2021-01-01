@@ -19,7 +19,9 @@ export class User {
   @Column()
   firstName: string
 
-  @ManyToMany(type => Department, departments => departments.users, { eager: true })
+  @ManyToMany(type => Department, departments => departments.users, {
+    eager: true
+  })
   @JoinTable()
   departments: Department[]
 

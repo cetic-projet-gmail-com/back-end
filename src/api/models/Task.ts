@@ -31,6 +31,7 @@ export class Task {
 
   @OneToMany(type => Event, events => events.task, {
     cascade: true,
+    eager: true,
   })
   events: Event[]
 

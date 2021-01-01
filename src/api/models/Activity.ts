@@ -32,6 +32,7 @@ export class Activity {
 
   @OneToMany(type => Task, tasks => tasks.activity, {
     cascade: true,
+    eager: true,
   })
   tasks: Task[]
 
