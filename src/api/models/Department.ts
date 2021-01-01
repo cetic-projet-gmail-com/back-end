@@ -15,7 +15,7 @@ export class Department {
   @ManyToOne(type => User)
   responsible: User
 
-  @ManyToMany(type => User, user => user.departments)
+  @ManyToMany(type => User, users => users.departments)
   users: User[]
 
   @CreateDateColumn()
