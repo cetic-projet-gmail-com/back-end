@@ -1,7 +1,9 @@
 import { validate } from 'class-validator'
 import { getConnection, getRepository, QueryFailedError } from 'typeorm'
+
 import { invalidData, itemNotFound, dbError } from '../helpers/errors'
-import { Activity } from '../models/Activity'
+
+import Activity from '../models/Activity'
 
 export const create = async (req, res, next) => {
   try {
@@ -24,9 +26,20 @@ export const create = async (req, res, next) => {
   }
 }
 
+export const find = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const item = await getRepository(Activity).findOneOrFail(id)
+
+    return res.send(item)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const list = async (req, res, next)  => {
   try {
-    const items = await getRepository(Activity).find()
+    const items = await getRepository(Activity).find({ relations: ['tasks'] })
 
     return res.json({ data: items || [] })
   } catch (error) {
