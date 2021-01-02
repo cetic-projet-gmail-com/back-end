@@ -1,15 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm'
+import { Entity, Column, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm'
 import { IsEmail, IsOptional, MinLength } from 'class-validator'
 
-import { Department } from './Department'
-import { Role } from './Role'
-import { Event } from './Event'
+import BaseModels from './BaseModels'
+import Department from './Department'
+import Role from './Role'
+import Event from './Event'
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number
-
+export default class User extends BaseModels {
   @Column({
     nullable: false,
     unique: true,
@@ -25,10 +23,14 @@ export class User {
   @JoinTable()
   departments: Department[]
 
-  @ManyToOne(type => Role, role => role.user, { eager: true })
+  @ManyToOne(type => Role, role => role.user, {
+    eager: true
+  })
   role: Role
 
-  @OneToMany(type => Event, events => events.user, { eager: true })
+  @OneToMany(type => Event, events => events.user, {
+    eager: true
+  })
   events: Event[]
 
   @IsEmail()
@@ -44,12 +46,6 @@ export class User {
     nullable: false,
   })
   password: string
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
 
   checkPassword(password: string) {
     return password === this.password

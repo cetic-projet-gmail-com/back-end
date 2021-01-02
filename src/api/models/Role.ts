@@ -1,22 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { User } from './User'
+import { Entity, Column, OneToMany } from 'typeorm'
+
+import BaseModels from './BaseModels'
+import User from './User'
 
 @Entity()
-export class Role {
-  @PrimaryGeneratedColumn()
-  id: number
-
+export default class Role extends BaseModels {
   @Column({
     nullable: false,
     unique: true,
   })
   name: string
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
 
   @OneToMany(type => User, user => user.role, {
     cascade: true,

@@ -1,14 +1,12 @@
 
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm'
+import { Entity, Column, OneToMany, ManyToOne } from 'typeorm'
 
-import { Task } from './Task'
-import { User } from './User'
+import BaseModels from './BaseModels'
+import Task from './Task'
+import User from './User'
 
 @Entity()
-export class Activity {
-  @PrimaryGeneratedColumn()
-  id: number
-
+export default class Activity extends BaseModels {
   @Column({
     nullable: false,
     unique: false,
@@ -24,15 +22,8 @@ export class Activity {
   @Column()
   ended: boolean = false
 
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
-
   @OneToMany(type => Task, tasks => tasks.activity, {
     cascade: true,
-    eager: true,
   })
   tasks: Task[]
 

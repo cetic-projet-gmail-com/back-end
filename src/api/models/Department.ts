@@ -1,11 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, CreateDateColumn, DeleteDateColumn, UpdateDateColumn } from 'typeorm'
-import { User } from './User'
+import { Entity, Column, ManyToMany, ManyToOne } from 'typeorm'
+
+import BaseModels from './BaseModels'
+import User from './User'
 
 @Entity()
-export class Department {
-  @PrimaryGeneratedColumn()
-  id: number
-
+export default class Department extends BaseModels {
   @Column({
     nullable: false,
     unique: true,
@@ -17,10 +16,4 @@ export class Department {
 
   @ManyToMany(type => User, users => users.departments)
   users: User[]
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
 }

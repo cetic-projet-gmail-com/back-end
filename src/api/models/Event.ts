@@ -1,12 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, OneToOne, ManyToOne } from 'typeorm'
-import { User } from './User'
-import { Task } from './Task'
+import { Entity, Column, ManyToOne } from 'typeorm'
+
+import BaseModels from './BaseModels'
+import User from './User'
+import Task from './Task'
 
 @Entity()
-export class Event {
-  @PrimaryGeneratedColumn()
-  id: number
-
+export default class Event extends BaseModels {
   @Column({
     nullable: false,
   })
@@ -22,13 +21,7 @@ export class Event {
   })
   endAt
 
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
-
-  @OneToOne(type => User, user => user.events, {
+  @ManyToOne(type => User, user => user.events, {
     cascade: true,
   })
   user: User
