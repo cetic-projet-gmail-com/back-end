@@ -1,7 +1,6 @@
 import express from 'express'
 
 import * as departmentController from '../controllers/department'
-import * as eventController from '../controllers/event'
 import * as roleController from '../controllers/role'
 import * as taskController from '../controllers/task'
 import * as userController from '../controllers/user'
@@ -14,15 +13,13 @@ Router.route('/activity')
   .get(activityController.list)
   .post(activityController.create)
 
+Router.route('/activity/:id')
+  .get(activityController.find)
+
 //? DEPARTMENT
 Router.route('/department')
   .get(departmentController.list)
   .post(departmentController.create)
-
-//? Event
-Router.route('/event')
-  .get(eventController.list)
-  .post(eventController.create)
 
 //? ROLE
 Router.route('/role')
@@ -33,6 +30,9 @@ Router.route('/role')
 Router.route('/task')
   .get(taskController.list)
   .post(taskController.create)
+
+Router.route('/task/:id')
+  .get(taskController.find)
 
 //? USER
 Router.route('/user')
