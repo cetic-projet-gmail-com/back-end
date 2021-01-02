@@ -1,10 +1,11 @@
 import { getConnection, getRepository, QueryFailedError } from 'typeorm'
 import { validate } from 'class-validator'
 
-import { Department } from '../models/Department'
-import { User } from '../models/User'
-import { Role } from '../models/Role'
 import { invalidData, itemNotFound, dbError } from '../helpers/errors'
+
+import Department from '../models/Department'
+import User from '../models/User'
+import Role  from '../models/Role'
 
 //? Set role 'USER' by default
 export const create = async (req, res, next) => {
@@ -71,11 +72,9 @@ export const setRole = async (req, res, next) => {
     const userRepository = await getRepository(User)
     const role = await getRepository(Role).findOneOrFail({ id: roleId })
 
-    const { affected } = await userRepository.update(userId, { role })
+    await userRepository.update(userId, { role })
 
-    if (affected === 0) return itemNotFound({ res })
-
-    const user = await userRepository.findOne({ id: userId}, { relations: ['role']})
+    const user = await userRepository.findOne({ id: userId })
     return res.send(user)
   } catch (error) {
     next(error)
