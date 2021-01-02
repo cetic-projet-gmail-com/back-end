@@ -17,6 +17,9 @@ export default class User extends BaseModels {
   @Column()
   firstName: string
 
+  @Column()
+  lastName: string
+
   @ManyToMany(type => Department, departments => departments.users, {
     eager: true
   })
