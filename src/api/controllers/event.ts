@@ -1,9 +1,11 @@
 import { validate } from 'class-validator'
 import { getConnection, getRepository, QueryFailedError } from 'typeorm'
+
 import { invalidData, itemNotFound, dbError } from '../helpers/errors'
-import { Activity } from '../models/Activity'
-import { Event } from '../models/Event'
-import { Task } from '../models/Task'
+
+import Activity from '../models/Activity'
+import Event from '../models/Event'
+import Task from '../models/Task'
 
 export const create = async (req, res, next) => {
   try {
@@ -29,9 +31,27 @@ export const create = async (req, res, next) => {
   }
 }
 
+export const find = async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    const item = await getRepository(Event).findOneOrFail(id, {
+      relations: ['task'],
+    })
+
+    return res.send(item)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const list = async (req, res, next)  => {
   try {
-    const items = await getRepository(Event).find()
+    const items = await getRepository(Event).find({ relations: ['task'] })
+      // .createQueryBuilder('event')
+      // .innerJoinAndSelect('event.task', 'task')
+      // .leftJoinAndSelect(Activity, 'activity', 'activity.id = event.task.id')
+      // .getMany()
 
     return res.json({ data: items || [] })
   } catch (error) {
