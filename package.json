@@ -9,9 +9,6 @@
   "repository": "https://github.com/cetic-projet-gmail-com/back-end.git",
   "author": "ElianC <54775334+ElianC@users.noreply.github.com>",
   "license": "MIT",
-  "type": "module",
-  "module": "esnext",
-  "moduleResolution": "node",
   "dependencies": {
     "class-validator": "^0.12.2",
     "cors": "^2.8.5",
