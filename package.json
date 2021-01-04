@@ -27,6 +27,8 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev --respawn -- src/server.ts",
-    "start": "tsc && node dist/server.js"
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "postinstall": "npm run build"
   }
 }
