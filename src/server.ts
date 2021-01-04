@@ -33,6 +33,7 @@ const {
     console.log('DB Connected')
   } catch (error) {
     console.error('Problem during launch DB')
+    console.error(error)
   }
 
   try {
