@@ -1,10 +1,10 @@
 import express from 'express'
 
-import * as departmentController from '../controllers/department'
-import * as roleController from '../controllers/role'
-import * as taskController from '../controllers/task'
-import * as userController from '../controllers/user'
-import * as activityController from '../controllers/activity'
+import * as departmentController from '../controllers/department.js'
+import * as roleController from '../controllers/role.js'
+import * as taskController from '../controllers/task.js'
+import * as userController from '../controllers/user.js'
+import * as activityController from '../controllers/activity.js'
 
 const Router = express.Router()
 

@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 
-import MainRouter from './api/routes/index'
+import MainRouter from './api/routes/index.js'
 
 const app = express()
 

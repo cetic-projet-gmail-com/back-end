@@ -1,11 +1,11 @@
 import { getConnection, getRepository, QueryFailedError } from 'typeorm'
 import { validate } from 'class-validator'
 
-import { invalidData, itemNotFound, dbError } from '../helpers/errors'
+import { invalidData, itemNotFound, dbError } from '../helpers/errors.js'
 
-import Department from '../models/Department'
-import User from '../models/User'
-import Role  from '../models/Role'
+import Department from '../models/Department.js'
+import User from '../models/User.js'
+import Role  from '../models/Role.js'
 
 //? Set role 'USER' by default
 export const create = async (req, res, next) => {

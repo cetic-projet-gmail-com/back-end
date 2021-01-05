@@ -1,9 +1,9 @@
 import { getRepository, QueryFailedError } from 'typeorm'
 import { validate } from 'class-validator'
 
-import { invalidData, itemNotFound, dbError } from '../helpers/errors'
+import { invalidData, itemNotFound, dbError } from '../helpers/errors.js'
 
-import Role from '../models/Role'
+import Role from '../models/Role.js'
 
 export const create = async (req, res, next) => {
   try {

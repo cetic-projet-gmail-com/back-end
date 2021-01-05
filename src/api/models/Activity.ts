@@ -1,9 +1,9 @@
 
 import { Entity, Column, OneToMany, ManyToOne } from 'typeorm'
 
-import BaseModels from './BaseModels'
-import Task from './Task'
-import User from './User'
+import BaseModels from './BaseModels.js'
+import Task from './Task.js'
+import User from './User.js'
 
 @Entity()
 export default class Activity extends BaseModels {

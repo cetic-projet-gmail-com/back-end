@@ -1,12 +1,12 @@
 import express from 'express'
 
-import homeRouter from './home'
-import adminRouter from './admin'
+import homeRouter from './home.js'
+import adminRouter from './admin.js'
 
-import * as authController from '../controllers/auth'
-import * as userController from '../controllers/user'
+import * as authController from '../controllers/auth.js'
+import * as userController from '../controllers/user.js'
 
-import * as authGuard from '../helpers/authGuard'
+import * as authGuard from '../helpers/authGuard.js'
 
 const Router = express.Router()
 

@@ -1,7 +1,7 @@
 import { Entity, Column, OneToMany } from 'typeorm'
 
-import BaseModels from './BaseModels'
-import User from './User'
+import BaseModels from './BaseModels.js'
+import User from './User.js'
 
 @Entity()
 export default class Role extends BaseModels {
