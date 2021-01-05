@@ -1,9 +1,9 @@
 import { validate } from 'class-validator'
 import { getConnection, getRepository, QueryFailedError } from 'typeorm'
 
-import { invalidData, itemNotFound, dbError } from '../helpers/errors'
+import { invalidData, itemNotFound, dbError } from '../helpers/errors.js'
 
-import Activity from '../models/Activity'
+import Activity from '../models/Activity.js'
 
 export const create = async (req, res, next) => {
   try {
