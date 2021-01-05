@@ -1,17 +1,14 @@
 {
-    "compilerOptions": {
-      "lib": [
-         "es5",
-         "es6"
-      ],
-      "target": "es5",
+   "compilerOptions": {
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "removeComments": true,
+
       "module": "esnext",
-      "moduleResolution": "node",
+      "moduleResolution": "Node",
       "outDir": "./dist",
-       "emitDecoratorMetadata": true,
-       "experimentalDecorators": true,
-       "esModuleInterop": true,
-       "allowSyntheticDefaultImports": true,
-       "sourceMap": true
-    }
- }
+      "sourceMap": true
+   }
+}
