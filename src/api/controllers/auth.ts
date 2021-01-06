@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm'
 import jwt from 'jsonwebtoken'
 
-import User from '../models/User.js'
+import User from '../models/User'
 
 export const login = async (req, res, next) => {
   try {
