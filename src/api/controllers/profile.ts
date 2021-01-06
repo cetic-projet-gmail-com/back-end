@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm'
 
-import User from '../models/User.js'
+import User from '../models/User'
 
 export const find = async (req, res, next) => {
   try {

@@ -1,7 +1,7 @@
 import express from 'express'
 
-import * as eventController from '../controllers/event.js'
-import * as profileController from '../controllers/profile.js'
+import * as eventController from '../controllers/event'
+import * as profileController from '../controllers/profile'
 
 const Router = express.Router()
 

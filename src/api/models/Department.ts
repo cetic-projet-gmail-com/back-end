@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToMany, ManyToOne } from 'typeorm'
 
-import BaseModels from './BaseModels.js'
-import User from './User.js'
+import BaseModels from './BaseModels'
+import User from './User'
 
 @Entity()
 export default class Department extends BaseModels {

@@ -1,10 +1,10 @@
 import http from 'http'
 import { createConnection } from 'typeorm'
-import "reflect-metadata"
+import "reflect-metadata";
 import dotenv from 'dotenv-flow'
 dotenv.config()
 
-import app from './app.js'
+import app from './app'
 
 const {
   PORT,
@@ -27,8 +27,7 @@ const {
       synchronize: true,
       logging: false,
       entities: [
-        // `${process.cwd()}/src/api/models/*.ts`,
-        'build/api/models/*.js'
+        `${process.cwd()}/src/api/models/*.ts`,
       ],
     })
     console.log('DB Connected')

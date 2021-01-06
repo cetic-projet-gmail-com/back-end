@@ -1,10 +1,10 @@
 import { Entity, Column, ManyToOne, ManyToMany, JoinTable, OneToMany } from 'typeorm'
 import { IsEmail, IsOptional, MinLength } from 'class-validator'
 
-import BaseModels from './BaseModels.js'
-import Department from './Department.js'
-import Role from './Role.js'
-import Event from './Event.js'
+import BaseModels from './BaseModels'
+import Department from './Department'
+import Role from './Role'
+import Event from './Event'
 
 @Entity()
 export default class User extends BaseModels {

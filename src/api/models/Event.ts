@@ -1,8 +1,8 @@
 import { Entity, Column, ManyToOne } from 'typeorm'
 
-import BaseModels from './BaseModels.js'
-import User from './User.js'
-import Task from './Task.js'
+import BaseModels from './BaseModels'
+import User from './User'
+import Task from './Task'
 
 @Entity()
 export default class Event extends BaseModels {
