@@ -9,18 +9,6 @@ import "reflect-metadata";
 
 import MainRouter from './api/routes/index'
 
-interface Token {
-  id: number
-  role: number
-}
-declare global {
-  namespace Express {
-    interface Request {
-      token: Token
-    }
-  }
-}
-
 try {
   createConnection({
     type: 'postgres',

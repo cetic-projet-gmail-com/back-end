@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 
 import jwt from 'jsonwebtoken'
 
-export const checkToken = async (req: Request, res: Response, next: NextFunction) => {
+export const checkToken = async (req, res: Response, next: NextFunction) => {
   try {
     let token = req.headers?.authorization.split(' ')[1]
 
@@ -21,7 +21,7 @@ export const checkToken = async (req: Request, res: Response, next: NextFunction
   }
 }
 
-export const canAccessAdmin = (req: Request, res: Response, next: NextFunction) => {
+export const canAccessAdmin = (req, res: Response, next: NextFunction) => {
   if (req.token.role < 2) return res.status(401).send()
 
   next()
