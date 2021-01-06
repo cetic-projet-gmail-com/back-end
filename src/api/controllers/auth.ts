@@ -19,7 +19,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         process.env.JWT_SECRET,
         // { expiresIn: "1h" }
       )
-      return res.send({ [process.env.JWT_NAME]: token })
+      return res.send({ bearerToken: token })
     }
     return res.status(401).send()
 
