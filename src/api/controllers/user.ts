@@ -1,3 +1,4 @@
+import { Request, Response, NextFunction } from 'express'
 import { getConnection, getRepository, QueryFailedError } from 'typeorm'
 import { validate } from 'class-validator'
 
@@ -8,7 +9,7 @@ import User from '../models/User'
 import Role  from '../models/Role'
 
 //? Set role 'USER' by default
-export const create = async (req, res, next) => {
+export const create = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const item = Object.assign(new User(), {
       ...req.body,
@@ -30,7 +31,7 @@ export const create = async (req, res, next) => {
   }
 }
 
-export const find = async (req, res, next) => {
+export const find = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params
     const item = await getRepository(User).findOneOrFail(id)
@@ -41,7 +42,7 @@ export const find = async (req, res, next) => {
   }
 }
 
-export const list = async (req, res, next) => {
+export const list = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const items = await getRepository(User).find()
 
@@ -51,7 +52,7 @@ export const list = async (req, res, next) => {
   }
 }
 
-export const remove = async (req, res, next) => {
+export const remove = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params
 
@@ -65,7 +66,7 @@ export const remove = async (req, res, next) => {
   }
 }
 
-export const setRole = async (req, res, next) => {
+export const setRole = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId, roleId } = req.params
 
@@ -81,7 +82,7 @@ export const setRole = async (req, res, next) => {
   }
 }
 
-export const setDepartment = async (req, res, next) => {
+export const setDepartment = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId, departmentId } = req.params
 
@@ -104,7 +105,7 @@ export const setDepartment = async (req, res, next) => {
   }
 }
 
-export const unsetDepartment = async (req, res, next) => {
+export const unsetDepartment = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId, departmentId } = req.params
 

@@ -1,9 +1,10 @@
+import { Request, Response, NextFunction } from 'express'
 import { getRepository } from 'typeorm'
 import jwt from 'jsonwebtoken'
 
 import User from '../models/User'
 
-export const login = async (req, res, next) => {
+export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { password, login } = req.body
 
@@ -27,7 +28,7 @@ export const login = async (req, res, next) => {
   }
 }
 
-export const register = (req, res, next) => {
+export const register = (req: Request, res: Response, next: NextFunction) => {
   try {
 
   } catch (error) {
