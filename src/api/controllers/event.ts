@@ -1,18 +1,22 @@
 import { Request, Response, NextFunction } from 'express'
 import { validate } from 'class-validator'
-import { getConnection, getRepository, QueryFailedError } from 'typeorm'
+import { getConnection, getRepository, QueryFailedError, createQueryBuilder } from 'typeorm'
 
 import { invalidData, itemNotFound, dbError } from '../helpers/errors'
 
 import Activity from '../models/Activity'
 import Event from '../models/Event'
 import Task from '../models/Task'
+import User from '../models/User'
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { id } = req.token
+
     const item = Object.assign(new Event(), {
       ...req.body,
-      task: await getRepository(Task).findOneOrFail(req.body.activityId)
+      task: await getRepository(Task).findOneOrFail(req.body.activityId),
+      user: await getRepository(User).findOneOrFail(id)
     })
 
     const errors = await validate(item)
@@ -48,11 +52,7 @@ export const find = async (req: Request, res: Response, next: NextFunction) => {
 
 export const list = async (req: Request, res: Response, next: NextFunction)  => {
   try {
-    const items = await getRepository(Event).find({ relations: ['task'] })
-      // .createQueryBuilder('event')
-      // .innerJoinAndSelect('event.task', 'task')
-      // .leftJoinAndSelect(Activity, 'activity', 'activity.id = event.task.id')
-      // .getMany()
+    const items = await getRepository(Event).find({ relations: ['task', 'task.activity'] })
 
     return res.json({ data: items || [] })
   } catch (error) {

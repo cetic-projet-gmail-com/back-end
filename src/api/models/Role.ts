@@ -10,9 +10,4 @@ export default class Role extends BaseModels {
     unique: true,
   })
   name: string
-
-  @OneToMany(type => User, user => user.role, {
-    cascade: true,
-  })
-  user: User[]
 }

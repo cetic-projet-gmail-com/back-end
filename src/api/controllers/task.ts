@@ -11,7 +11,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
   try {
     const item = Object.assign(new Task(), {
       ...req.body,
-      activity: await getRepository(Activity).findOneOrFail(req.body.taskId)
+      activity: await getRepository(Activity).findOneOrFail(req.body.activityId)
     })
 
     const errors = await validate(item)

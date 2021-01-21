@@ -2,6 +2,7 @@
 import { Entity, Column, OneToMany, ManyToOne } from 'typeorm'
 
 import BaseModels from './BaseModels'
+import Colour from './Colour'
 import Task from './Task'
 import User from './User'
 
@@ -26,6 +27,9 @@ export default class Activity extends BaseModels {
     cascade: true,
   })
   tasks: Task[]
+
+  @ManyToOne(type => Colour)
+  colour: Colour
 
   @ManyToOne(type => User)
   projectManager: User

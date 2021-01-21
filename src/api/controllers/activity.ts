@@ -40,7 +40,7 @@ export const find = async (req: Request, res: Response, next: NextFunction) => {
 
 export const list = async (req: Request, res: Response, next: NextFunction)  => {
   try {
-    const items = await getRepository(Activity).find({ relations: ['tasks'] })
+    const items = await getRepository(Activity).find({ relations: ['tasks', 'colour'] })
 
     return res.json({ data: items || [] })
   } catch (error) {

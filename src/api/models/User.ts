@@ -26,14 +26,10 @@ export default class User extends BaseModels {
   @JoinTable()
   departments: Department[]
 
-  @ManyToOne(type => Role, role => role.user, {
-    eager: true
-  })
+  @ManyToOne(type => Role)
   role: Role
 
-  @OneToMany(type => Event, events => events.user, {
-    eager: true
-  })
+  @OneToMany(type => Event, events => events.user)
   events: Event[]
 
   @IsEmail()
