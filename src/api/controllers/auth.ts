@@ -4,11 +4,11 @@ import jwt from 'jsonwebtoken'
 
 import User from '../models/User'
 
-export const login = async (req: Request, res: Response, next: NextFunction) => {
+export const login = async (req, res, next) => {
   try {
     const { password, login } = req.body
 
-    const user = await getRepository(User).findOne({ login })
+    const user = await getRepository(User).findOne({ login }, { relations: ['role'] })
 
     if (user?.checkPassword(password)) {
       const token = jwt.sign(
@@ -28,7 +28,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   }
 }
 
-export const register = (req: Request, res: Response, next: NextFunction) => {
+export const register = (req, res, next) => {
   try {
 
   } catch (error) {

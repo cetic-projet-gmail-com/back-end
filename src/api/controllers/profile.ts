@@ -1,12 +1,11 @@
-import { Request, Response, NextFunction } from 'express'
 import { getRepository } from 'typeorm'
 
 import User from '../models/User'
 
-export const find = async (req: Request, res: Response, next: NextFunction) => {
+export const find = async (req, res, next) => {
   try {
     const { id } = req.token
-    const item = await getRepository(User).findOneOrFail(id)
+    const item = await getRepository(User).findOneOrFail(id, { relations: ['role'] })
 
     return res.send(item)
   } catch (error) {
@@ -14,7 +13,7 @@ export const find = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export const update = (req: Request, res: Response, next: NextFunction) => {
+export const update = (req, res, next) => {
   try {
     const { id } = req.token
 
