@@ -1,9 +1,13 @@
 import express from 'express'
 
+import * as activityController from '../controllers/activity'
 import * as eventController from '../controllers/event'
 import * as profileController from '../controllers/profile'
 
 const Router = express.Router()
+//? Activity
+Router.route('/activity')
+  .get(activityController.list)
 
 //? EVENT
 Router.route('/event')
