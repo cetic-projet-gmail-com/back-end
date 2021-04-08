@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express'
 import { validate } from 'class-validator'
 import { getConnection, getRepository, QueryFailedError, createQueryBuilder } from 'typeorm'
 
@@ -9,7 +8,7 @@ import Event from '../models/Event'
 import Task from '../models/Task'
 import User from '../models/User'
 
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+export const create = async (req, res, next) => {
   try {
     const { id } = req.token
 
@@ -36,7 +35,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
-export const find = async (req: Request, res: Response, next: NextFunction) => {
+export const find = async (req, res, next) => {
   try {
     const { id } = req.params
 
@@ -50,7 +49,7 @@ export const find = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export const list = async (req: Request, res: Response, next: NextFunction)  => {
+export const list = async (req, res, next)  => {
   try {
     const items = await getRepository(Event).find({ relations: ['task', 'task.activity'] })
 

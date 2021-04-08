@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express'
 import { validate } from 'class-validator'
 import { getConnection, getRepository, QueryFailedError } from 'typeorm'
 
@@ -7,7 +6,7 @@ import { invalidData, itemNotFound, dbError } from '../helpers/errors'
 import Activity from '../models/Activity'
 import Task from '../models/Task'
 
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+export const create = async (req, res, next) => {
   try {
     const item = Object.assign(new Task(), {
       ...req.body,
@@ -31,7 +30,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
-export const find = async (req: Request, res: Response, next: NextFunction) => {
+export const find = async (req, res, next) => {
   try {
     const { id } = req.params
 
@@ -43,7 +42,7 @@ export const find = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export const list = async (req: Request, res: Response, next: NextFunction)  => {
+export const list = async (req, res, next)  => {
   try {
     const items = await getRepository(Task).find()
 

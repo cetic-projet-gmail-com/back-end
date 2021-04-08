@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express'
 import { getConnection, getRepository, QueryFailedError } from 'typeorm'
 import { validate } from 'class-validator'
 
@@ -9,7 +8,7 @@ import User from '../models/User'
 import Role  from '../models/Role'
 
 //? Set role 'USER' by default
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+export const create = async (req, res, next) => {
   try {
     const item = Object.assign(new User(), {
       ...req.body,
@@ -31,7 +30,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
-export const find = async (req: Request, res: Response, next: NextFunction) => {
+export const find = async (req, res, next) => {
   try {
     const { id } = req.params
     const item = await getRepository(User).findOneOrFail(id)
@@ -42,7 +41,7 @@ export const find = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export const list = async (req: Request, res: Response, next: NextFunction) => {
+export const list = async (req, res, next) => {
   try {
     const items = await getRepository(User).find()
 
@@ -52,7 +51,7 @@ export const list = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export const remove = async (req: Request, res: Response, next: NextFunction) => {
+export const remove = async (req, res, next) => {
   try {
     const { id } = req.params
 
@@ -66,7 +65,7 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
-export const setRole = async (req: Request, res: Response, next: NextFunction) => {
+export const setRole = async (req, res, next) => {
   try {
     const { userId, roleId } = req.params
 
@@ -82,7 +81,7 @@ export const setRole = async (req: Request, res: Response, next: NextFunction) =
   }
 }
 
-export const setDepartment = async (req: Request, res: Response, next: NextFunction) => {
+export const setDepartment = async (req, res, next) => {
   try {
     const { userId, departmentId } = req.params
 
@@ -105,7 +104,7 @@ export const setDepartment = async (req: Request, res: Response, next: NextFunct
   }
 }
 
-export const unsetDepartment = async (req: Request, res: Response, next: NextFunction) => {
+export const unsetDepartment = async (req, res, next) => {
   try {
     const { userId, departmentId } = req.params
 

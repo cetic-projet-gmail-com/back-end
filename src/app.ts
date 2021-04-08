@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config()
-import { Request, Response, NextFunction } from 'express'
+
 import express from 'express'
 import cors from 'cors'
 
@@ -38,7 +38,7 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN,
 }))
 
-app.all('*', (req: Request, res: Response, next: NextFunction) => {
+app.all('*', (req, res, next) => {
   console.log(`${req.method} ${req.originalUrl}`)
   next()
 })

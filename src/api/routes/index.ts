@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 import express from 'express'
 
 import homeRouter from './home'
@@ -16,6 +15,6 @@ Router
   .post('/register', userController.create)
   .use('/', [authGuard.checkToken], homeRouter)
   .use('/admin', [authGuard.checkToken, authGuard.canAccessAdmin], adminRouter)
-  .use('*', (req: Request, res: Response) => res.status(404).json({ message: 'This route doesn\'t exist' }))
+  .use('*', (req, res) => res.status(404).json({ message: 'This route doesn\'t exist' }))
 
 export default Router

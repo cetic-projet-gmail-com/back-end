@@ -1,5 +1,4 @@
 
-import { Request, Response, NextFunction } from 'express'
 import { getRepository, QueryFailedError } from 'typeorm'
 import { validate } from 'class-validator'
 
@@ -7,7 +6,7 @@ import { invalidData, itemNotFound, dbError } from '../helpers/errors'
 
 import Department from '../models/Department'
 
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+export const create = async (req, res, next) => {
   try {
     const item = Object.assign(new Department(), {
       ...req.body,
@@ -32,7 +31,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
-export const list = async (req: Request, res: Response, next: NextFunction) => {
+export const list = async (req, res, next) => {
   try {
     const items = await getRepository(Department).find()
 
